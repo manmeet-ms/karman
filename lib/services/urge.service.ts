@@ -6,27 +6,21 @@ export const UrgeService = {
       const skip = (page - 1) * limit;
       
       const [totalUrges, urges] = await prisma.$transaction([
-          prisma.urge.count({ where: { } }), // Legacy countDocuments() didn't filter by user??
-          // `Urges.find().skip()...` // Legacy controller didn't filter by user either!
-          // But `Urges` model has `uid`.
-          // I will filter by user. This is a fix for correct backend logic.
+          prisma.urge.count({ where: { userId: userId } }),
           prisma.urge.findMany({
-              where: { uid: userId }, // Apply user filter
+              where: { userId: userId },
               skip,
               take: limit,
-              orderBy: { id: 'desc' } // Assuming sort by _id desc in Mongo means newest first
+              orderBy: { id: 'desc' }
           })
       ]);
       
-      // Fix total count to be user specific too if filtering
-      const userTotalUrges = await prisma.urge.count({ where: { uid: userId } });
-
-      const totalPages = Math.ceil(userTotalUrges / limit);
-      
+      const totalPages = Math.ceil(totalUrges / limit);
+            
       return {
           totalPages,
           currentPage: page,
-          totalUrgeCount: userTotalUrges,
+          totalUrgeCount: totalUrges,
           urges
       };
   },
@@ -35,7 +29,7 @@ export const UrgeService = {
       return await prisma.urge.create({
           data: {
               ...data,
-              uid: userId
+              userId: userId
           }
       });
   },
@@ -50,7 +44,7 @@ export const UrgeService = {
        // `Urge` model has `urgeResolved Boolean @default(false)`.
        // I'll assume it sets `urgeResolved: true`.
        
-       const exists = await prisma.urge.findFirst({ where: { id, uid: userId } });
+       const exists = await prisma.urge.findFirst({ where: { id, userId: userId } });
        if (!exists) throw new Error("Urge not found");
 
        return await prisma.urge.update({

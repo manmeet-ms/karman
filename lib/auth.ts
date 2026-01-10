@@ -8,8 +8,8 @@ export const authOptions: NextAuthOptions = {
     // 2. Providers: Define the authentication methods
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
         })
     ],
 
@@ -46,9 +46,6 @@ export const authOptions: NextAuthOptions = {
                 session.user.createdAt = token.createdAt as Date;
 
                 // Custom fields
-                session.user.isStudentSession = token.isStudentSession as boolean;
-                session.user.parentId = token.parentId as string | undefined;
-                session.user.activeStudentId = token.activeStudentId as string | undefined;
             }
             return session;
         },

@@ -29,8 +29,7 @@ export const PointsService = {
 
       await tx.pointsTxn.create({
         data: {
-          uid: userId,
-          user: user.name || "Unknown",
+          userId: userId,
           type: eventKey as TxnType,
           points: delta,
           balanceAfter: finalPoints,
@@ -49,7 +48,7 @@ export const PointsService = {
 
   async getLedger(userId: string) {
     return await prisma.pointsTxn.findMany({
-      where: { uid: userId },
+      where: { userId: userId },
       orderBy: { createdAt: "desc" },
     });
   },

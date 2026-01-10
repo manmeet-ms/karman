@@ -1,0 +1,585 @@
+{
+    "info": {
+        "_postman_id": "karman-postgres-api-collection",
+        "name": "Karman Next.js API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Get Session",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/session",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "session"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Timeblocks",
+            "item": [
+                {
+                    "name": "Get Today's Timeblocks",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timeblocks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timeblocks"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Timeblock",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"task\": \"Deep Work Session\",\n    \"startTime\": \"09:00\",\n    \"endTime\": \"11:00\",\n    \"date\": \"2024-01-01\",\n    \"strict\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timeblocks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timeblocks"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Complete Timeblock",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"completed\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timeblocks/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timeblocks",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "TIMEBLOCK_ID"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Hourly Checkins",
+            "item": [
+                {
+                    "name": "Get Today's Checkins",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/hourly-checkins",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "hourly-checkins"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Checkin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"note\": \"Feeling productive\",\n    \"tag\": \"Work\",\n    \"mood\": {\n        \"moodType\": \"HAPPY\",\n        \"intensity\": 8\n    }\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/hourly-checkins",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "hourly-checkins"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Points",
+            "item": [
+                {
+                    "name": "Apply Points",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"event\": \"TIMEBLOCK_COMPLETE_CREDIT\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/points",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "points"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Points Ledger",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/points/ledger",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "points",
+                                "ledger"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Violations",
+            "item": [
+                {
+                    "name": "Log Violation",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"type\": \"MISSED_BLOCK\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/violations",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "violations"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Resolve Violation",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/violations/:id/resolve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "violations",
+                                ":id",
+                                "resolve"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "VIOLATION_ID"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Urges",
+            "item": [
+                {
+                    "name": "Get Urges",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/urges?page=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "urges"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Log Urge",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"urgeIntensity\": 7,\n    \"urgeType\": \"DISTRACTION\",\n    \"urgeNotes\": \"Wanted to check reddit\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/urges",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "urges"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Resolve Urge",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/urges/:id/resolve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "urges",
+                                ":id",
+                                "resolve"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "URGE_ID"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rituals",
+            "item": [
+                {
+                    "name": "Get Today's Rituals",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/rituals",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "rituals"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Check-in Ritual",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"vow\": \"No screens before 8am\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/rituals",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "rituals"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Timers",
+            "item": [
+                {
+                    "name": "Get Timers",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timers",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Timer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"codename\": \"FOCUS_TIMER\",\n    \"title\": \"Work Focus\",\n    \"failures\": 0,\n    \"timerStarted\": \"2024-01-01T00:00:00Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timers",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timers"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Reset Timer",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"action\": \"reset\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/timers/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "timers",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "TIMER_ID"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Philosophy",
+            "item": [
+                {
+                    "name": "Get Random Quote",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/philosophy/random",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "philosophy",
+                                "random"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Quote",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"philosopher\": {\n        \"name\": \"Marcus Aurelius\"\n    },\n    \"quotes\": [\n        {\n            \"quote\": \"You have power over your mind - not outside events.\"\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/philosophy",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "philosophy"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Notifications",
+            "item": [
+                {
+                    "name": "Trigger Notification",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Test Notification\",\n    \"message\": \"This is a test\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/notifications/trigger",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "notifications",
+                                "trigger"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Get Me",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "me"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ]
+}

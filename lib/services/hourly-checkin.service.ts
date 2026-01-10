@@ -6,7 +6,7 @@ export const HourlyCheckinService = {
   async getTodayCheckins(userId: string) {
     const today = dayjs().format("YYYY-MM-DD");
     return await prisma.hourlyCheckin.findMany({
-        where: { uid: userId, entryDate: today },
+        where: { userId: userId, entryDate: today },
         orderBy: { createdAt: 'desc' },
         include: { mood: true } // Include embedded mood relation if possible
     });
@@ -19,7 +19,7 @@ export const HourlyCheckinService = {
     // Create checkin
     const checkin = await prisma.hourlyCheckin.create({
         data: {
-            uid: userId,
+            userId: userId,
             note: note,
             tag: tag,
             context: context,
@@ -41,7 +41,7 @@ export const HourlyCheckinService = {
   async updateCheckin(userId: string, id: string, data: any) {
     // Check ownership
     const exists = await prisma.hourlyCheckin.findFirst({
-        where: { id, uid: userId }
+        where: { id, userId: userId }
     });
     if (!exists) throw new Error("Check-in not found");
 
@@ -53,7 +53,7 @@ export const HourlyCheckinService = {
 
   async deleteCheckin(userId: string, id: string) {
      const exists = await prisma.hourlyCheckin.findFirst({
-        where: { id, uid: userId }
+        where: { id, userId: userId }
     });
     if (!exists) throw new Error("Check-in not found");
 

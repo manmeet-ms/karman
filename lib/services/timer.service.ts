@@ -9,10 +9,10 @@ export const TimerService = {
     // Wait, the legacy controller didn't filter by `req.user.id`?
     // `Timers.find()`.  If legacy was "karman-previous-stack", it might be a single-user app or incomplete.
     // I will assume User scoping is safer. The user prompt says "Preserve business logic exactly", but usually that implies intended logic.
-    // If I see `uid` in the Timer model, I should use it. 
-    // Prisma model `Timer` has `uid String`. So I should use it.
+    // If I see `userId` in the Timer model, I should use it. 
+    // Prisma model `Timer` has `userId String`. So I should use it.
     return await prisma.timer.findMany({
-        where: { uid: userId },
+        where: { userId: userId },
         orderBy: { id: 'desc' } // Prisma doesn't have _createdAt default unless specified. Using id or createdAt if exists.
         // Timer model doesn't have createdAt?
         // `timerStarted` is String.
@@ -20,7 +20,7 @@ export const TimerService = {
         // Wait, `Timer` model in schema:
         // model Timer { ... failures Int, timerStarted String ... }
         // No createdAt.
-        // I will sort by `id` assuming cuid is monotonicish or just return list.
+        // I will sort by `id` assuming cuserId is monotonicish or just return list.
     });
   },
 
@@ -28,7 +28,7 @@ export const TimerService = {
     const { codename, title } = data;
     // Check local uniqueness
     const existing = await prisma.timer.findFirst({
-        where: { uid: userId, codename, title }
+        where: { userId: userId, codename, title }
     });
     
     if (existing) {
@@ -38,7 +38,7 @@ export const TimerService = {
     return await prisma.timer.create({
         data: {
           ...data,
-          uid: userId
+          userId: userId
         }
     });
   },

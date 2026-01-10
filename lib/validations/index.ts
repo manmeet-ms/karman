@@ -75,7 +75,7 @@ export const UpdateTimerSchema = z.object({
 // Urge
 export const LogUrgeSchema = z.object({
     urgeIntensity: z.number().min(1).max(10).default(6),
-    urgeType: z.nativeEnum(UrgeTypeEnum).default(UrgeTypeEnum.other),
+    urgeType: z.nativeEnum(UrgeTypeEnum).default(UrgeTypeEnum.OTHER),
     urgeTrigger: z.nativeEnum(UrgeTriggerEnum).optional(),
     urgeLocation: z.nativeEnum(UrgeLocationEnum).optional(),
     urgeNotes: z.string().optional()

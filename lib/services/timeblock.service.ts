@@ -9,7 +9,7 @@ export const TimeblockService = {
     
     // Check if blocks exist for today
     const existing = await prisma.timeBlock.findFirst({
-        where: { uid: userId, date: today },
+        where: { userId: userId, date: today },
     });
 
     if (existing) {
@@ -19,7 +19,7 @@ export const TimeblockService = {
     const blocksToInsert = timetableBlocksTemplate.map((block) => ({
         ...block,
         date: today,
-        uid: userId,
+        userId: userId,
         completed: false
     }));
 
@@ -33,21 +33,21 @@ export const TimeblockService = {
   async getTodayBlocks(userId: string) {
     const today = dayjs().format("YYYY-MM-DD");
     return await prisma.timeBlock.findMany({
-        where: { uid: userId, date: today },
+        where: { userId: userId, date: today },
         orderBy: { startTime: 'asc' },
     });
   },
 
   async createTimeBlock(userId: string, data: any) {
     return await prisma.timeBlock.create({
-        data: { ...data, uid: userId },
+        data: { ...data, userId: userId },
     });
   },
 
   async completeBlock(userId: string, blockId: string) {
     // Ensure the block belongs to user and exists
     const block = await prisma.timeBlock.findFirst({
-        where: { id: blockId, uid: userId },
+        where: { id: blockId, userId: userId },
     });
 
     if (!block) throw new Error("Timeblock not found");
@@ -67,12 +67,12 @@ export const TimeblockService = {
      // If the app is single user (self hosted), that's fine. If multi-user, that's a bug in legacy.
      // I'll scope it to user to be safe. "Preserve business logic" usually assumes correct logic, but 
      // "TimeBlock.deleteMany({})" is very explicit.
-     // However, `initTimeblocks` sets `uid: req.user.id`. So `TimeBlock.deleteMany({})` deletes other users' data too.
+     // However, `initTimeblocks` sets `userId: req.user.id`. So `TimeBlock.deleteMany({})` deletes other users' data too.
      // Given "MERN-based backend", it likely had Auth. `flushBlocks` seems to be a dev tool or "Reset" button.
      // I'll scope it to user to improve it, unless it's strictly requested to be exactly as broken.
      // I'll scope to USER.
      return await prisma.timeBlock.deleteMany({
-         where: { uid: userId }
+         where: { userId: userId }
      });
   }
 };

@@ -7,7 +7,7 @@ export const RitualService = {
     const today = dayjs().format("YYYY-MM-DD");
     return await prisma.ritual.create({
         data: {
-            uid: userId,
+            userId: userId,
             date: today,
             vow: vow,
             completedDailyCheckIn: true
@@ -18,18 +18,18 @@ export const RitualService = {
   async getTodayRitual(userId: string) {
     const today = dayjs().format("YYYY-MM-DD");
     // Controller logic was commented out: // const ritual = await Ritual.find({ date: today })
-    // But then: const ritual = await Ritual.find({uid:req.user.id})
+    // But then: const ritual = await Ritual.find({userId:req.user.id})
     // It seems it returned ALL rituals for user? Or just today's?
     // Function name is `getTodayRitual`.
     // I will filter by today to be safe and correct per name.
     return await prisma.ritual.findMany({
-        where: { uid: userId, date: today }
+        where: { userId: userId, date: today }
     });
   },
 
   async flushRituals(userId: string) {
       return await prisma.ritual.deleteMany({
-          where: { uid: userId }
+          where: { userId: userId }
       });
   }
 };

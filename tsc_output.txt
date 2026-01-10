@@ -1,0 +1,82 @@
+.next/dev/types/validator.ts(144,31): error TS2344: Type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/app/api/ping/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/ping">'.
+  Types of property 'GET' are incompatible.
+    Type '(req: Request, res: Response) => Promise<NextResponse<{ backend_status: string; session: Promise<Session | null>; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{}>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters 'res' and 'context' are incompatible.
+        Type '{ params: Promise<{}>; }' is missing the following properties from type 'Response': headers, ok, redirected, status, and 12 more.
+app/api/hourly-checkins/[id]/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/[id]/route.ts(20,75): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/[id]/route.ts(34,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/[id]/route.ts(41,62): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/route.ts(16,79): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/route.ts(27,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/hourly-checkins/route.ts(34,76): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/points/ledger/route.ts(10,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/points/ledger/route.ts(15,63): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/points/route.ts(12,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/points/route.ts(20,65): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(16,69): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(27,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(35,69): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(49,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/rituals/route.ts(54,54): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/[id]/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/[id]/route.ts(23,79): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(16,71): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(27,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(36,75): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(42,74): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(57,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timeblocks/route.ts(62,57): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/[id]/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/[id]/route.ts(22,68): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/route.ts(16,62): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/route.ts(27,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/timers/route.ts(34,66): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/[id]/resolve/route.ts(10,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/[id]/resolve/route.ts(17,67): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/route.ts(20,60): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/route.ts(31,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/urges/route.ts(38,61): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/users/me/route.ts(10,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/users/me/route.ts(15,61): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/users/me/route.ts(29,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/users/me/route.ts(37,69): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/[id]/resolve/route.ts(10,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/[id]/resolve/route.ts(19,77): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(11,34): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(16,74): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(27,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(35,74): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(49,36): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+app/api/violations/route.ts(54,61): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+components/ui/resizable.tsx(11,51): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(13,25): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(34,51): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(38,25): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(49,26): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/Development/Upcoming/KARMAN/karman-postgres/karman/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/sidebar.tsx(25,29): error TS2307: Cannot find module '@/hooks/use-mobile' or its corresponding type declarations.
+lib/auth.ts(11,13): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+lib/auth.ts(12,13): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+lib/auth.ts(24,39): error TS2339: Property 'username' does not exist on type 'User | AdapterUser'.
+  Property 'username' does not exist on type 'User'.
+lib/auth.ts(25,41): error TS2339: Property 'isVerified' does not exist on type 'User | AdapterUser'.
+  Property 'isVerified' does not exist on type 'User'.
+lib/auth.ts(26,40): error TS2339: Property 'createdAt' does not exist on type 'User | AdapterUser'.
+  Property 'createdAt' does not exist on type 'User'.
+lib/auth.ts(42,30): error TS2339: Property 'id' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(43,30): error TS2339: Property 'role' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(44,30): error TS2339: Property 'username' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(45,30): error TS2339: Property 'isVerified' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(46,30): error TS2339: Property 'createdAt' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(49,30): error TS2339: Property 'isStudentSession' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(50,30): error TS2339: Property 'parentId' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/auth.ts(51,30): error TS2339: Property 'activeStudentId' does not exist on type '{ name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; }'.
+lib/utils/push.ts(2,21): error TS2307: Cannot find module 'web-push' or its corresponding type declarations.
+lib/validations/index.ts(78,63): error TS2551: Property 'other' does not exist on type '{ readonly PROCRASTINATION: "PROCRASTINATION"; readonly DISTRACTION: "DISTRACTION"; readonly DOOMSCROLL: "DOOMSCROLL"; readonly BROWSING: "BROWSING"; readonly ADDICTION: "ADDICTION"; readonly OTHER: "OTHER"; }'. Did you mean 'OTHER'?

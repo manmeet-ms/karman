@@ -17,7 +17,7 @@ export const ViolationService = {
 
     const violation = await prisma.violation.create({
         data: {
-            uid: userId,
+            userId: userId,
             type: type,
             tauntStatement: taunt,
             blockData: blockData as any, // Json
@@ -32,8 +32,7 @@ export const ViolationService = {
 
   async getViolations(userId: string) {
       return await prisma.violation.findMany({
-          // where: { uid: userId }, // Legacy controller `find().sort()` implied global?
-          // Using userId filter for safety in multi-user app.
+          where: { userId: userId }, // Scoped to user
           orderBy: { timestamp: 'desc' },
       });
   },
@@ -42,7 +41,7 @@ export const ViolationService = {
       // Legacy: findByIdAndDelete OR findByIdAndUpdate(resolved: true) logic was commented out.
       // `violation.controller.js` used `findByIdAndDelete`.
       // I will implement delete.
-      const exists = await prisma.violation.findFirst({ where: { id, uid: userId } }); // Check ownership
+      const exists = await prisma.violation.findFirst({ where: { id, userId: userId } }); // Check ownership
       if (!exists) throw new Error("Violation not found");
 
       return await prisma.violation.delete({
@@ -52,7 +51,7 @@ export const ViolationService = {
 
   async flushViolations(userId: string) {
       return await prisma.violation.deleteMany({
-          where: { uid: userId } // Scoped to user
+          where: { userId: userId } // Scoped to user
       });
   },
 
