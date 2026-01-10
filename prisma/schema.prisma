@@ -1,0 +1,291 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id                       String    @id @default(cuid())
+  username                 String?   @unique // Optional unique field
+  fullname                 String?
+  email                    String?   @unique // Optional unique field
+  points                   Int       @default(0)
+  avatar                   String?
+  isVerified               Boolean   @default(false)
+  verificationToken        String?
+  passwordResetToken       String?
+  passwordResetTokenExpiry DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  accounts  Account[]
+  sessions  Session[]
+}
+
+ 
+model TimeBlock {
+  id          String   @id @default(cuid())
+  uid         String // Store ObjectId as String
+  task        String
+  description String?
+  startTime   String // Format: 'HH:mm'
+  endTime     String // Format: 'HH:mm'
+  date        String // Format: 'YYYY-MM-DD'
+  strict      Boolean  @default(true)
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Define unique index (requires Prisma Client query to enforce)
+  @@unique([date, task]) // Enforces uniqueness constraint
+}
+
+model Ritual {
+  id                    String   @id @default(cuid())
+  uid                   String // Store ObjectId as String
+  date                  String // Format: 'YYYY-MM-DD'
+  vow                   String // Required string
+  completedDailyCheckIn Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Timer {
+  id                   String   @id @default(cuid())
+  uid                  String // Store ObjectId as String
+  codename             String // Required string
+  failures             Int // Required integer
+  timerStarted         String // Format: 'DD/MM/YYYY'
+  title                String // Required string
+  description          String? // Optional string
+  perks                Json // Storing array as JSON
+  punishments          Json // Storing array as JSON
+  alternates           Json // Storing array as JSON
+  quoteFlashingAllowed Boolean?
+  pulseTheme           String?
+}
+
+model HourlyCheckin {
+  id        String   @id @default(cuid()) // Using cuid() for consistent IDs, or use @default(uuid()) if preferred
+  uid       String // Store ObjectId as String, link to User later if needed
+  note      String   @default("def: No Activity Shared") @db.Text // Changed to Text for longer strings
+  tag       String   @default("def: No activity")
+  entryDate String? // Optional string for date
+  context   String? // Optional string
+  mood      Mood? // Embedded object represented as a relation (see Mood model)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Violation {
+  id             String            @id @default(cuid())
+  uid            String // Store ObjectId as String
+  type           ViolationTypeEnum
+  timestamp      DateTime          @default(now())
+  resolved       Boolean           @default(false)
+  tauntStatement String?           @default("is_null_default") // Note: Mongoose default was 'false' (string), Prisma makes it boolean false. Adjust if needed.
+  blockData      Json? // Note: Mongoose default was 'false' (string), Prisma makes it null. Adjust if needed.
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+}
+
+enum ViolationTypeEnum {
+  missed_block
+  missed_ritual
+  failed_timer
+}
+
+model PointsTxn {
+  id           String   @id @default(cuid())
+  uid          String // Store ObjectId as String
+  user         String? // Optional string
+  type         TxnType
+  points       Int // Positive or negative integer
+  balanceAfter Int // Integer snapshot
+  metadata     Json? // Optional JSON for flexible metadata
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum TxnType {
+  TIMEBLOCK_COMPLETE_CREDIT
+  ALL_DAILY_COMPLETE_CREDIT
+  VIOLATION_RESOLVED_CREDIT
+  NEW_STREAK_CREDIT
+  EXTEND_STREAK_CREDIT
+  DIARY_WRITING_CREDIT
+  RITUAL_COMPLETE_CREDIT
+  URGE_LOGGED_CREDIT
+  URGE_RESISTED_CREDIT
+  MOOD_LOGGED_CREDIT
+  MOOD_IMPROVEMENT_CREDIT
+  RITUAL_MISS_PENALTY
+  URGE_FAILURE_PENALTY
+  BLOCK_MISS_PENALTY
+  STREAK_BREAK_PENALTY
+  VIOLATION_PENALTY
+  TIMER_RESET_PENALTY
+  PUNISHMENT_TRIGGER_PENALTY
+  DEFAULT
+}
+
+// Model representing the mood embedded object
+model Mood {
+  id              String        @id @default(cuid())
+  hourlyCheckin   HourlyCheckin @relation(fields: [hourlyCheckinId], references: [id])
+  hourlyCheckinId String        @unique // Unique foreign key to link back to HourlyCheckin
+
+  moodType      MoodType
+  intensity     Int      @default(1) // Default value
+  notes         String?  @db.Text // Optional, Text for longer notes
+  tags          String[] // Prisma scalar list for array of strings
+  trigger       String?
+  location      String?
+  physicalState String?
+}
+
+enum MoodType {
+  Happy
+  Anxious
+  Angry
+  Stressed
+  Sad
+  Neutral
+  Excited
+}
+
+model LoggedQuote {
+  id          String   @id @default(cuid())
+  quoteId     String // Assuming this is a unique identifier
+  philosopher String
+  quote       String   @db.Text // Text for longer quotes
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MoodTracker {
+  id            String       @id @default(cuid())
+  uid           String // Store ObjectId as String
+  moodType      MoodTypeEnum // Using a separate enum
+  intensity     Int          @default(6) // TODO: add in route or zod validation to not enter @min(1) @max(10) // Prisma validation
+  notes         String?      @db.Text
+  tags          String[] // Prisma scalar list
+  trigger       String?
+  location      String?
+  physicalState String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+enum MoodTypeEnum {
+  happy
+  anxious
+  angry
+  sad
+  neutral
+  excited
+}
+
+model PushSubscription {
+  id       String @id @default(cuid())
+  endpoint String @unique // Ensuring endpoint is unique
+  keys     Json? // Storing keys object as JSON
+}
+
+model Urge {
+  id            String            @id @default(cuid())
+  uid           String // Store ObjectId as String
+  urgeTimeStamp DateTime          @default(now()) // Use DateTime instead of String
+  urgeIntensity Int               @default(6) // TODO: add in route or zod validation to not enter@min(1) @max(10) // Prisma validation
+  urgeType      UrgeTypeEnum      @default(other) // Default enum value
+  urgeTrigger   UrgeTriggerEnum? // Optional enum
+  urgeLocation  UrgeLocationEnum? // Optional enum
+  urgeResolved  Boolean           @default(false)
+  urgeNotes     String?           @db.Text // Optional Text
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum UrgeTypeEnum {
+  procrastination
+  distraction
+  doomscroll
+  browsing
+  addiction
+  other
+}
+
+enum UrgeTriggerEnum {
+  boredom
+  stress
+  anxiety
+  habitual_time
+  social_media_notification
+  being_alone
+  seeing_others_online
+  avoiding_hard_task
+  tiredness
+  mindless_routine
+  dopamine_craving
+  overwhelmed
+  no_clear_goal
+  peer_influence
+  seeking_comfort
+}
+
+enum UrgeLocationEnum {
+  bedroom
+  workspace
+  library
+  college
+  commute
+  living_room
+  alone
+  in_public
+}
+
+model PhilosopherQuote {
+  id          String   @id @default(cuid())
+  philosopher Json // Storing complex object as JSON (philosopher details)
+  quotes      Json // Storing array as JSON (quote details)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Define relations if needed later (e.g., User has many HourlyCheckins)
+// model User {
+//   // ... other fields
+//   hourlyCheckins HourlyCheckin[]
+//   moods          MoodTracker[]
+//   // etc.
+// }
