@@ -5,7 +5,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import { usePageMeta } from "@/contexts/PageMetaContext";
+
 export default function LeaderboardPage() {
+  const { setPageMeta } = usePageMeta();
+  React.useEffect(() => {
+      setPageMeta({ title: "Leaderboard", subtitle: "Hall of Fame" });
+  }, []);
   const [violations, setViolations] = useState<any[]>([]);
   return (
     <section className="grid grid-cols-1 items-start gap-2 md:gap-4 md:grid-cols-3 px-4 py-6">

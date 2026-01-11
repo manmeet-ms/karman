@@ -43,8 +43,16 @@ function NoteCard({ note, colorClass }: { note: any, colorClass: string }) {
     );
 }
 
+import { usePageMeta } from "@/contexts/PageMetaContext";
+import { useEffect } from "react";
+
 export default function DiscordPage() {
   const [activeTab, setActiveTab] = useState("positives");
+  const { setPageMeta } = usePageMeta();
+ 
+  useEffect(() => {
+    setPageMeta({ title: "Diary", subtitle: "Personal Records of Thoughts and Reflections" });
+  }, []);
 
   return (
     <div className="pb-24">

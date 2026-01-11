@@ -11,7 +11,13 @@ function Masonry({ children }: { children: React.ReactNode }) {
     return <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{children}</div>;
 }
 
+import { usePageMeta } from "@/contexts/PageMetaContext";
+
 export default function AgreementPage() {
+    const { setPageMeta } = usePageMeta();
+    React.useEffect(() => {
+        setPageMeta({ title: "Agreement", subtitle: "Terms and Conditions" });
+    }, []);
     return (
         <section className="bg-background flex h-full flex-wrap overflow-hidden rounded-lg px-4 py-8">
              <Masonry>

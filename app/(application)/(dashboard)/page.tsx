@@ -26,25 +26,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { usePageMeta } from "@/contexts/PageMetaContext";
+import { IconPercentage10 } from "@tabler/icons-react";
+import dayjs from "dayjs";
+
 export default function Dashboard() {
+  const { setPageMeta } = usePageMeta();
   // Placeholder state for data
-  const [blocks, setBlocks] = useState<any[]>([]);
+  // const [blocks, setBlocks] = useState<any[]>([]);
   const [ritual, setRitual] = useState<any[]>([]);
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<any>({ points: 120, rank: "Acolyte" });
   const [violations, setViolations] = useState<any[]>([]);
 
   useEffect(() => {
-    setStats({ points: 120, rank: "Acolyte" });
-    setViolations([]);
-    setRitual([]);
-    setBlocks([]);
-  }, []);
+    setPageMeta({
+        title:'Dashboard',
+        subtitle:' Your mirror, centralized Monitoring'
+    });
+  }, [setPageMeta]);
   const session = useSession()
   console.log(session)
   return (
     <div className="flex flex-1 flex-col ">
       <div className="@container/main flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4">
+           
           <StatsGrid statsDataProp={stats} />
 
           <div className="grid grid-cols-1 items-start gap-4  md:grid-cols-2  ">
@@ -70,14 +76,6 @@ export default function Dashboard() {
 } */}
             <TimeBlockCard />
             <div className="">
-              {blocks.some((b) => !b.completed && b.strict) && (
-                <Card className="mb-4 bg-red-800/20">
-                  <CardContent className="">
-                    <h2 className="mb-2 text-xl font-bold">Strict Mode Active</h2>
-                    <p>Uncompleted strict tasks will trigger punishments.</p>
-                  </CardContent>
-                </Card>
-              )}
               <RecentViolations violations={violations.slice(0, 5)} totalCount={violations.length} setViolations={setViolations} />
 
               {/* {ritual.length<0?    <section className="bg-card my-4 rounded-lg border p-4">

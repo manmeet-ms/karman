@@ -9,7 +9,13 @@ const rankDistribution = [
     { hours: 0, name: "Detention" }
 ];
 
+import { usePageMeta } from "@/contexts/PageMetaContext";
+
 export default function ChronosPage() {
+    const { setPageMeta } = usePageMeta();
+    React.useEffect(() => {
+        setPageMeta({ title: "Chronos", subtitle: "Time Management" });
+    }, []);
     const [timers, setTimers] = useState<any[]>([]);
     return (
         <main className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-4 space-y-4 px-4 py-6">

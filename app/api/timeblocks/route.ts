@@ -1,68 +1,98 @@
 
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
+import dayjs from "dayjs";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
-import { TimeblockService } from "@/lib/services/timeblock.service";
-import { CreateTimeblockSchema } from "@/lib/validations";
 
-export async function GET(req: Request) {
+export async function GET() {
   const session = await getServerSession(authOptions);
-  
-  if (!session || !session.user?.id) {
-    return new NextResponse("Unauthorized", { status: 401 });
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  const today = dayjs().format("YYYY-MM-DD");
 
   try {
-    const blocks = await TimeblockService.getTodayBlocks(session.user.id);
+    const blocks = await prisma.timeBlock.findMany({
+      where: {
+        userId: user.id,
+        date: today,
+      },
+      orderBy: {
+        startTime: "asc",
+      },
+    });
     return NextResponse.json(blocks);
-  } catch (error) {
-    console.error("[TIMEBLOCKS_GET]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+  } catch {
+    return NextResponse.json({ error: "Failed to fetch blocks" }, { status: 500 });
   }
 }
 
-export async function POST(req: Request) {
-    const session = await getServerSession(authOptions);
-    
-    if (!session || !session.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-  
-    try {
-      const body = await req.json();
-      
-      // Check if it's an init request (action: 'init' is not in schema, handling separately)
-      if (body.action === 'init') {
-        const result = await TimeblockService.initTimeblocks(session.user.id);
-        return NextResponse.json(result, { status: 201 });
-      }
+export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-      // Else create block
-      const validatedData = CreateTimeblockSchema.parse(body);
-      const result = await TimeblockService.createTimeBlock(session.user.id, validatedData);
-      return NextResponse.json(result, { status: 201 });
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    } catch (error: any) {
-      console.error("[TIMEBLOCKS_POST]", error);
-      if (error.name === 'ZodError') {
-         return new NextResponse(JSON.stringify(error.errors), { status: 400 });
-      }
-      return new NextResponse("Internal Error", { status: 500 });
-    }
-}
+  try {
+    const body = await req.json();
+    const { bulkText } = body; 
 
-export async function DELETE(req: Request) {
-    const session = await getServerSession(authOptions);
-    
-    if (!session || !session.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if (!bulkText || typeof bulkText !== 'string') {
+        return NextResponse.json({ error: "Invalid input format" }, { status: 400 });
     }
 
-    try {
-        await TimeblockService.flushBlocks(session.user.id);
-        return NextResponse.json({ message: "Timeblocks flushed" });
-    } catch (error) {
-        console.error("[TIMEBLOCKS_DELETE]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+    const today = dayjs().format("YYYY-MM-DD");
+    const lines = bulkText.split('\n');
+    const blocksToCreate = [];
+
+    // format: // task, description, isStrict, startTime(HH:mm), endTime(HH:mm)
+    for (const line of lines) {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) continue;
+        
+        // Remove leading '//' if present.
+        const cleanLine = trimmedLine.replace(/^\/\/\s*/, '');
+        
+        const parts = cleanLine.split(',').map(p => p.trim());
+        
+        if (parts.length >= 5) {
+            const [task, description, isStrictStr, startTime, endTime] = parts;
+
+            if (!task || !startTime || !endTime) continue;
+            
+            blocksToCreate.push({
+                userId: user.id,
+                task,
+                description: description || "",
+                strict: isStrictStr.toLowerCase() === 'true',
+                startTime,
+                endTime,
+                date: today,
+                completed: false
+            });
+        }
     }
+
+    if (blocksToCreate.length === 0) {
+        return NextResponse.json({ message: "No valid blocks found to create" }, { status: 400 });
+    }
+
+    const result = await prisma.timeBlock.createMany({
+        data: blocksToCreate
+    });
+
+    return NextResponse.json({ message: "Timeblocks created", count: result.count });
+
+  } catch (error) {
+    console.error("Error creating timeblocks:", error);
+    return NextResponse.json({ error: "Failed to create blocks" }, { status: 500 });
+  }
 }

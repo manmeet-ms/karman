@@ -23,8 +23,15 @@ const data = {
   ],
 };
 
+import { usePageMeta } from "@/contexts/PageMetaContext";
+
 export default function AnalyticsPage() {
+  const { setPageMeta } = usePageMeta();
   const [tab, setTab] = useState("streaks");
+
+  React.useEffect(() => {
+    setPageMeta({ title: "Analytics", subtitle: "Track Your Performance" });
+  }, []);
 
   return (
     <div className="p-4 space-y-4">

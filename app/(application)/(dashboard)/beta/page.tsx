@@ -1,3 +1,10 @@
+"use client"
+import React, { useEffect } from 'react';
+import { usePageMeta } from "@/contexts/PageMetaContext";
 
-import React from 'react';
-export default function BetaPage() { return <div className="p-4"><h1 className="text-2xl font-bold">Beta Features</h1></div>; }
+export default function BetaPage() { 
+  const { setPageMeta } = usePageMeta();
+  useEffect(() => {
+      setPageMeta({ title: "Beta", subtitle: "Experimental Features" });
+  }, []);
+  return <div className="p-4"><h1 className="text-2xl font-bold">Beta Features</h1></div>; }

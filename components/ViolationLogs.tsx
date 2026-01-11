@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function RecentViolations({ violations, totalCount }: { violations: any[], totalCount: number, setViolations: any }) {
   return (
-    <Card className="border border-accent">
+<Card>
         <CardHeader>
             <CardTitle>Recent Violations ({totalCount})</CardTitle>
         </CardHeader>
