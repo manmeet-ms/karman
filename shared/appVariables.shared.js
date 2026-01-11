@@ -1,5 +1,4 @@
-import { IconBrandTabler, IconFileSpark, IconGraph, IconHourglassEmpty, IconLayoutDashboard } from "@tabler/icons-react";
-import { CctvIcon, ChartLineIcon, GitCommitHorizontalIcon, MessageSquareIcon } from "lucide-react";
+import { IconBrandTabler, IconFileSpark, IconGraph, IconHourglassEmpty, IconLayoutDashboard, IconChartLine, IconGitCommit, IconMessage, IconEye } from "@tabler/icons-react";
 
 export const APP_VERSION = "6.0.0";
 export const APP_NAME = "Karman";
@@ -48,22 +47,22 @@ export const SIDENAV_DASH = [
   {
     title: "Leaderboard",
     url: "/leaderboard",
-    icon: ChartLineIcon,
+    icon: IconChartLine,
   },
   {
     title: "Urges",
     url: "/urges",
-    icon: CctvIcon,
+    icon: IconEye,
   },
   {
     title: "Messages",
     url: "/discord",
-    icon: MessageSquareIcon,
+    icon: IconMessage,
   },
   {
     title: "Timeline",
     url: "/timeline",
-    icon: GitCommitHorizontalIcon,
+    icon: IconGitCommit,
   },
   {
     title: "Beta",

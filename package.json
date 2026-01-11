@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "exp-dev": "next dev --port 5173 --experimental-https",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
