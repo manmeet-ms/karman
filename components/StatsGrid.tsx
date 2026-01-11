@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function StatsGrid({ statsDataProp }: { statsDataProp: any }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4  ">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Points</CardTitle>

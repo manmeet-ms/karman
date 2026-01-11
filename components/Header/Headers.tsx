@@ -34,11 +34,11 @@ export function AppHeader() {
   const pointsLedgerFe:string[]=[]
   return (
  <>
-     <header className="p-4 sticky top-0 z-10 bg-background">
+     <header className="p-4 sticky top-0 z-10 bg-muted/30 backdrop-brightness-20 backdrop-blur-2xl ">
       <nav className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {" "}
-          <Image src="/logo.svg" width={24} height={24} className="w-8 h-8  rounded       " alt="logo" />
+          <Image src="/logo.svg" width={24} height={24} className="grayscale w-8 h-8  rounded       " alt="logo" />
           <div className="flex flex-col">
             {" "}
             <span className="text-lg font-semibold tracking-tighter">Karman</span>
@@ -47,14 +47,14 @@ export function AppHeader() {
           <div className="block md:hidden  ">
             {" "}
             <div className="  fixed  bottom-20  bg-background/40  backdrop-blur-2xl flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 dark:ring-white/10 hover:bg-gray-950/2 hover:ring-gray-950/10 dark:hover:bg-white/5 dark:hover:ring-white/20 @max-[23rem]:hidden">
-              <IconPercentage10 className="text-green-500 size-4 " />
+              <IconPercentage10 className="text-primary size-4 " />
               <span className="font-medium">
                 SSC Preparation - <b>Day {dayjs("2025-09-23").diff(dayjs().now, "days") * -1}</b>{" "}
               </span>
             </div>
           </div>
           <div className="ml-4 hidden md:flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 dark:ring-white/10 hover:bg-gray-950/2 hover:ring-gray-950/10 dark:hover:bg-white/5 dark:hover:ring-white/20 @max-[23rem]:hidden">
-            <IconPercentage10 className="text-green-500 size-4 " />
+            <IconPercentage10 className="text-primary size-4 " />
             <span className="font-medium">
               SSC Preparation - <b>Day {dayjs("2025-09-23").diff(dayjs().now, "days") * -1}</b>{" "}
             </span>

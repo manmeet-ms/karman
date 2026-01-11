@@ -20,6 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
+import Image from "next/image";
 
 const currentRank = { name: "Novice", minPoints: 0, emoji: "🌱" };
 const nextRank = { name: "Acolyte", minPoints: 500 };
@@ -45,7 +46,7 @@ export function Sidebar() {
                 key={url}
                 href={url}
                 className={cn(
-                  "my-0.5 rounded-lg py-2 px-3.5 text-sm font-medium transition-colors flex items-center",
+                  "my-0.5 rounded-full py-2 px-4 text-sm font-medium transition-colors flex items-center",
                   isActive
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:bg-muted/40"
@@ -58,7 +59,7 @@ export function Sidebar() {
           })}
       </div>
 
-      <div className="mt-auto flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
           {/* Rank Card */}
           <div className="bg-card flex gap-4 border rounded-lg p-2 items-center">
              <IconMilitaryAward className="bg-accent/60 p-2 size-10 rounded-full text-primary" />
@@ -83,10 +84,8 @@ export function Sidebar() {
           </div>
 
           {/* NPC Card */}
-          <div className="relative flex flex-col justify-end overflow-hidden rounded-2xl px-6 pb-6 pt-20 border">
-               <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 z-0"></div>
-               {/* Image placeholder */}
-               <div className="absolute inset-0 bg-gray-800 -z-10"></div> 
+          <div className="relative flex flex-col justify-end overflow-hidden rounded-2xl px-6 pb-6   border">
+               <Image width={12} height={12} src="https://placehold.co/1084x1284" alt=""/>
                <h3 className="z-10 mt-3 text-xl font-medium text-white">Don&apos;t be an NPC</h3>
                <div className="z-10 text-xs text-gray-300">It&apos;s fatal, take back control</div>
           </div>

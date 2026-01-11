@@ -1,7 +1,17 @@
 
+
 "use client";
+import { Badge } from "@/components/ui/badge"
+import {
+
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { StatsGrid } from "@/components/StatsGrid";
 import TimeBlockCard from "@/components/TimeBlockCard";
 import { RecentViolations } from "@/components/ViolationLogs";
@@ -32,13 +42,12 @@ export default function Dashboard() {
   const session = useSession()
   console.log(session)
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col ">
       <div className="@container/main flex flex-1 flex-col gap-2">
-        <div className="flex flex-col gap-4 md:py-6">
+        <div className="flex flex-col gap-4">
           <StatsGrid statsDataProp={stats} />
-          <div className="px-4">
-          </div>
-          <div className="grid grid-cols-1 items-start gap-4  md:grid-cols-2 lg:changed-px px-4">
+
+          <div className="grid grid-cols-1 items-start gap-4  md:grid-cols-2  ">
             {/* <ChartAreaInteractive /> */}
             {/* <Button
                 onClick={async () => {
@@ -98,33 +107,43 @@ export default function Dashboard() {
                     </TableBody>
                   </Table>
                 </section>:null} */}
-              <section className="bg-card my-4 rounded-lg border p-4">
-                <div className="flex items-center justify-between">
-                  {" "}
-                  <h2 className="text-xl font-bold">
-                    Today’s Ritual
-                    <span className="bg-primary/20 text-primary ml-2 rounded-full px-2 py-1.25 text-xs font-bold">{ritual.length}</span>
-                  </h2>
-                  <RitualInputForm />
-                </div>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
+ 
+              <Card className="my-4" >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    {" "}
+                    <CardTitle>Today’s Ritual
 
-                      <TableHead>Vows</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {ritual.map((r, idx) => (
-                      <TableRow key={r._id}>
-                        <TableCell className="w-1/4">{r.date}</TableCell>
-                        <TableCell className="">{r.vow}</TableCell>
+                      <Badge className="mx-2 rounded-full py-3 relative bottom-0.5" variant={"secondary"}>{ritual.length}</Badge>
+
+                    </CardTitle>
+
+                    <RitualInputForm />
+                  </div>
+
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Date</TableHead>
+
+                        <TableHead>Vows</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </section>
+                    </TableHeader>
+                    <TableBody>
+                      {ritual.map((r, idx) => (
+                        <TableRow key={r._id}>
+                          <TableCell className="w-1/4">{r.date}</TableCell>
+                          <TableCell className="">{r.vow}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+
+              </Card>
+
 
               {/* <PhilosophyQuoteCard /> */}
 
