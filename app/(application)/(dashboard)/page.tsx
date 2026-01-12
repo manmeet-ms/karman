@@ -1,7 +1,10 @@
 
 
 "use client";
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
 
   Card,
@@ -27,8 +30,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { usePageMeta } from "@/contexts/PageMetaContext";
-import { IconPercentage10 } from "@tabler/icons-react";
+import { IconPercentage10, IconUser, IconUserQuestion } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { ChartRadarDots } from "@/components/chart-radar-dots";
 
 export default function Dashboard() {
   const { setPageMeta } = usePageMeta();
@@ -40,8 +44,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     setPageMeta({
-        title:'Dashboard',
-        subtitle:' Your mirror, centralized Monitoring'
+      title: 'Dashboard',
+      subtitle: ' Your mirror, centralized Monitoring'
     });
   }, [setPageMeta]);
   const session = useSession()
@@ -50,34 +54,34 @@ export default function Dashboard() {
     <div className="flex flex-1 flex-col ">
       <div className="@container/main flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4">
-           
-          <StatsGrid statsDataProp={stats} />
+
+
+          {/* <StatsGrid statsDataProp={stats} /> */}
 
           <div className="grid grid-cols-1 items-start gap-4  md:grid-cols-2  ">
-            {/* <ChartAreaInteractive /> */}
-            {/* <Button
-                onClick={async () => {
-                  const newPoints = await applyPointsSrv("TIMEBLOCK_COMPLETE_CREDIT");
-                  console.log(newPoints);
 
-                  dispatch(setPt(newPoints.data.points));
-                }}>
-                Add +20 points
-              </Button>
-              <Button
-                onClick={async () => {
-                  const newPoints = await applyPointsSrv("TIMER_RESET_PENALTY");
-                  dispatch(setPt(newPoints.data.points));
-                }}>
-                Deduct -60 points
-              </Button> */}
-            {/* { !user?.id&& 
-<Link target='_blank' to="http://localhost:3000/api/auth/discord/login"><Button>Login with Discord</Button></Link>
-} */}
             <TimeBlockCard />
             <div className="">
               <RecentViolations violations={violations.slice(0, 5)} totalCount={violations.length} setViolations={setViolations} />
+              <div className="grid my-4 grid-cols-2 gap-4">              <ChartRadarDots />
 
+
+                <Card >
+                  <CardHeader>
+                    <CardTitle>People vs You <IconUserQuestion size={16} className="inline-flex items-center justify-center mb-0.75 " />  </CardTitle>
+                  </CardHeader>
+                  <ScrollArea className="max-h-[150px] container  ">
+                    <CardContent className="flex flex-wrap gap-1">
+                      {Array.from({ length: 40 }).map((_, idx) => (
+                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">{idx}</div>  
+                      ))}
+
+                    </CardContent>
+                  </ScrollArea>
+
+                </Card>
+
+              </div>
               {/* {ritual.length<0?    <section className="bg-card my-4 rounded-lg border p-4">
                   <div className="flex items-center justify-between">
                     {" "}
@@ -105,7 +109,7 @@ export default function Dashboard() {
                     </TableBody>
                   </Table>
                 </section>:null} */}
- 
+
               <Card className="my-4" >
                 <CardHeader>
                   <div className="flex items-center justify-between">

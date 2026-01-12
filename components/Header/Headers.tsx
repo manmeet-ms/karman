@@ -50,11 +50,7 @@ export function AppHeader() {
   const points: number = 1
   const pointsLedgerFe: string[] = []
   const longTermGoals = [
-    {
-      icon: <IconPlus />,
-      name: "Crack SSC Exam",
-      daysTill: "2025-09-23"
-    },
+     
     {
       icon: <IconPlus />,
       name: "Learn Advanced Python",
@@ -74,11 +70,10 @@ export function AppHeader() {
       icon: <IconPlus />,
       name: "Master Data Visualization",
       daysTill: "2025-11-30"
-    },
-    {
+    } ,  {
       icon: <IconPlus />,
-      name: "Travel to Europe",
-      daysTill: "2026-05-20"
+      name: "Run Half Marathon",
+      daysTill: "2026-01-10"
     }
   ];
 
