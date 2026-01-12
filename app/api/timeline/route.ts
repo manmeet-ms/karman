@@ -12,12 +12,13 @@ export async function GET(req: NextRequest) {
   const user = await prisma.user.findUnique({ where: { email: session.user.email } });
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-  const urges = await prisma.urge.findMany({
+  const timeline = await prisma.hourlyCheckin.findMany({
     where: { userId: user.id },
-    orderBy: { urgeTimeStamp: 'desc' }
+    include: { mood: true },
+    orderBy: { createdAt: 'desc' }
   });
 
-  return NextResponse.json(urges);
+  return NextResponse.json(timeline);
 }
 
 export async function POST(req: NextRequest) {
@@ -31,24 +32,33 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { urgeIntensity, urgeType, urgeTrigger, urgeLocation, urgeNotes, urgeResolved } = body;
+    const { note, tag, entryDate, context, mood } = body;
 
-    const urge = await prisma.urge.create({
+    const checkin = await prisma.hourlyCheckin.create({
       data: {
         userId: user.id,
-        urgeIntensity,
-        urgeType,
-        urgeTrigger,
-        urgeLocation,
-        urgeNotes,
-        urgeResolved: urgeResolved || false,
-        urgeTimeStamp: new Date()
-      }
+        note,
+        tag,
+        entryDate,
+        context,
+        mood: mood ? {
+            create: {
+                moodType: mood.moodType,
+                intensity: mood.intensity,
+                notes: mood.notes,
+                tags: mood.tags || [],
+                trigger: mood.trigger,
+                location: mood.location,
+                physicalState: mood.physicalState
+            }
+        } : undefined
+      },
+      include: { mood: true }
     });
 
-    return NextResponse.json(urge);
+    return NextResponse.json(checkin);
   } catch (error) {
-    console.error("Error creating urge:", error);
-    return NextResponse.json({ error: "Failed to create urge" }, { status: 500 });
+    console.error("Error creating timeline entry:", error);
+    return NextResponse.json({ error: "Failed to create entry" }, { status: 500 });
   }
 }

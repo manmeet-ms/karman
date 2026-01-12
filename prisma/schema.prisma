@@ -145,6 +145,8 @@ model User {
   pointsTxns         PointsTxn[]
   moodTrackers       MoodTracker[]
   urges              Urge[]
+  diaryEntries       Diary[]
+  agreementItems     AgreementItem[]
   
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -336,4 +338,39 @@ model LoggedQuote {
    quote       String   @db.Text
    createdAt   DateTime @default(now())
    updatedAt   DateTime @updatedAt
+}
+
+enum AgreementCategory {
+  AGREEMENT
+  WARNINGS
+  UNDERSTANDING
+  MANAGING
+}
+
+model AgreementItem {
+  id        String            @id @default(cuid())
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  AgreementCategory
+  content   String            @db.Text
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@index([userId, category])
+}
+
+model Diary {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title     String?
+  content   String   @db.Text
+  tags      String[]
+  date      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

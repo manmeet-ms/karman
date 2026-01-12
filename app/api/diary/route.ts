@@ -12,12 +12,14 @@ export async function GET(req: NextRequest) {
   const user = await prisma.user.findUnique({ where: { email: session.user.email } });
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-  const urges = await prisma.urge.findMany({
-    where: { userId: user.id },
-    orderBy: { urgeTimeStamp: 'desc' }
+  const userId = user.id;
+
+  const entries = await prisma.diary.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' }
   });
 
-  return NextResponse.json(urges);
+  return NextResponse.json(entries);
 }
 
 export async function POST(req: NextRequest) {
@@ -31,24 +33,21 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { urgeIntensity, urgeType, urgeTrigger, urgeLocation, urgeNotes, urgeResolved } = body;
+    const { title, content, tags, date } = body;
 
-    const urge = await prisma.urge.create({
+    const entry = await prisma.diary.create({
       data: {
         userId: user.id,
-        urgeIntensity,
-        urgeType,
-        urgeTrigger,
-        urgeLocation,
-        urgeNotes,
-        urgeResolved: urgeResolved || false,
-        urgeTimeStamp: new Date()
+        title,
+        content,
+        tags: tags || [],
+        date: date || new Date().toISOString()
       }
     });
 
-    return NextResponse.json(urge);
+    return NextResponse.json(entry);
   } catch (error) {
-    console.error("Error creating urge:", error);
-    return NextResponse.json({ error: "Failed to create urge" }, { status: 500 });
+    console.error("Error creating diary entry:", error);
+    return NextResponse.json({ error: "Failed to create entry" }, { status: 500 });
   }
 }

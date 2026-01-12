@@ -14,7 +14,7 @@ async function main() {
   console.log('Start seeding ...');
 
   // Create 10 dummy users
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1; i++) {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
     const email = faker.internet.email({ firstName, lastName });
@@ -25,7 +25,7 @@ async function main() {
         username: username,
         name: `${firstName} ${lastName}`,
         email: email,
-        points: faker.number.int({ min: 0, max: 1000 }),
+        points: faker.number.int({ min:5000, max: 10000 }),
         role: 'user',
       },
     });

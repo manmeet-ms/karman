@@ -1,6 +1,15 @@
 
 "use client";
-
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -126,16 +135,18 @@ export default function TimeBlockCard() {
   }
 
   return (
-    <div className="bg-card rounded-lg border p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold flex items-center">
+   <>
+   <Card>
+     <CardHeader>
+       <CardTitle className="flex items-center justify-between ">
+          <h2 className=" flex items-center">
           Timeblocks
           <span className="bg-primary/20 text-primary ml-2 rounded-full px-2 py-1 text-xs font-bold">
             {blocks.length}
           </span>
+          
         </h2>
-
-        <Dialog open={open} onOpenChange={setOpen}>
+ <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={
             <Button variant="outline" size="sm" className="gap-1">
               <IconPlus size={16} /> Bulk Add
@@ -180,16 +191,22 @@ export default function TimeBlockCard() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </div>
+       </CardTitle>
+     </CardHeader>
+     <CardContent>
+         {blocks.some((b) => !b.completed && b.strict) && (
+     <Alert className="mb-4 bg-destructive/10"  variant="destructive">
+            <AlertTitle>Strict Mode Active</AlertTitle>
+            <AlertDescription>
+              Uncompleted strict tasks will trigger punishments.
+            </AlertDescription>
+          </Alert>
 
-      {blocks.some((b) => !b.completed && b.strict) && (
-        <div className="mb-4 bg-red-800/20 p-4 rounded-lg border border-red-900/50">
-          <h2 className="mb-1 text-lg font-bold text-red-500">Strict Mode Active</h2>
-          <p className="text-sm text-red-400/80">Uncompleted strict tasks will trigger punishments.</p>
-        </div>
       )}
 
-      <Table>
+   <ScrollArea className="    ">
+     
+        <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Status</TableHead>
@@ -205,7 +222,8 @@ export default function TimeBlockCard() {
               </TableCell>
             </TableRow>
           )}
-          {blocks.map((block) => {
+      
+        {blocks.map((block) => {
             const isActive = block.id === activeBlockId;
             return (
               <TableRow key={block.id} className={cn(isActive ? "bg-muted/50" : "")}>
@@ -253,8 +271,14 @@ export default function TimeBlockCard() {
               </TableRow>
             );
           })}
+          
         </TableBody>
       </Table>
-    </div>
+         </ScrollArea>
+     </CardContent>
+     
+   </Card>
+    
+   </>
   );
 }

@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
         // Remove leading '//' if present.
         const cleanLine = trimmedLine.replace(/^\/\/\s*/, '');
         
-        const parts = cleanLine.split(',').map(p => p.trim());
+        const parts = cleanLine.split(';').map(p => p.trim());
         
         if (parts.length >= 5) {
             const [task, description, isStrictStr, startTime, endTime] = parts;
@@ -84,10 +84,11 @@ export async function POST(req: NextRequest) {
     if (blocksToCreate.length === 0) {
         return NextResponse.json({ message: "No valid blocks found to create" }, { status: 400 });
     }
-
+const timeblockClearingResult=await prisma.timeBlock.deleteMany({where:{userId:equa}})
+    if (timeblockClearingResult){
     const result = await prisma.timeBlock.createMany({
         data: blocksToCreate
-    });
+    });}
 
     return NextResponse.json({ message: "Timeblocks created", count: result.count });
 

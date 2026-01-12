@@ -1,8 +1,9 @@
 
 
 "use client";
+import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -30,7 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { usePageMeta } from "@/contexts/PageMetaContext";
-import { IconPercentage10, IconUser, IconUserQuestion } from "@tabler/icons-react";
+import { IconPercentage10, IconPlus, IconUser, IconUserQuestion } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { ChartRadarDots } from "@/components/chart-radar-dots";
 
@@ -68,7 +69,15 @@ export default function Dashboard() {
 
                 <Card >
                   <CardHeader>
-                    <CardTitle>People vs You <IconUserQuestion size={16} className="inline-flex items-center justify-center mb-0.75 " />  </CardTitle>
+                    <CardTitle className="flex justify-between items-center">
+                      
+                   <div className="">   People vs You <IconUserQuestion size={16} className="inline-flex items-center justify-center mb-0.75 " /></div>
+
+                   <Button variant="outline" size="sm" className="gap-1">
+              <IconPlus size={16} /> Add People
+            </Button>
+                        </CardTitle>
+                        {/* <Separator /> */}
                   </CardHeader>
                   <ScrollArea className="max-h-[150px] container  ">
                     <CardContent className="flex flex-wrap gap-1">

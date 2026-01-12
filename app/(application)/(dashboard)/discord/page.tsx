@@ -73,13 +73,8 @@ export default function DiscordPage() {
 
         <TabsContent value="positives" className="pl-4 pr-4">
             <div className="mx-auto w-full max-w-6xl">
-                 <div className="mb-4 flex flex-wrap justify-center gap-1">
-                    {DUMMY_WORDS.map((word, index) => (
-                        <span key={index} className="rounded-lg text-sm bg-green-400/30 text-green-900 dark:bg-green-900/40 dark:text-green-200 px-4 py-2 font-semibold capitalize">
-                            {word}
-                        </span>
-                    ))}
-                 </div>
+                  
+         
                  <MasonryGrid>
                     {DUMMY_NOTES.map((note, idx) => (
                         <NoteCard key={idx} note={note} colorClass="bg-green-400" />
