@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { applyPoints } from "@/lib/points";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
         context,
         mood: mood ? {
             create: {
-                moodType: mood.moodType,
+                moodType: mood.moodType.toUpperCase(),
                 intensity: mood.intensity,
                 notes: mood.notes,
                 tags: mood.tags || [],
@@ -55,6 +56,16 @@ export async function POST(req: NextRequest) {
       },
       include: { mood: true }
     });
+
+    // Award Points
+    try {
+        await applyPoints(user.id, "DIARY_WRITING_CREDIT", { checkinId: checkin.id });
+        if (mood) {
+             await applyPoints(user.id, "MOOD_LOGGED_CREDIT", { checkinId: checkin.id });
+        }
+    } catch (e) {
+        console.error("Failed to award points", e);
+    }
 
     return NextResponse.json(checkin);
   } catch (error) {

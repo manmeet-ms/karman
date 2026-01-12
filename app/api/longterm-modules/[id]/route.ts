@@ -9,36 +9,38 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const { id } = await params;
+
   const user = await prisma.user.findUnique({ where: { email: session.user.email } });
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   try {
     const body = await req.json();
-    const { title, content, tags, date } = body;
+    const { title, description, content, startDate } = body;
 
-    const { id } = await params;
-    // First check ownershipd } = await params;
-
-    // First check ownership
-    const existing = await prisma.diary.findFirst({
+    // Check ownership
+    const existing = await prisma.longtermModule.findFirst({
         where: { id, userId: user.id }
     });
-    if (!existing) return NextResponse.json({ error: "Entry not found" }, { status: 404 });
 
-    const updated = await prisma.diary.update({
+    if (!existing) {
+        return NextResponse.json({ error: "Module not found or unauthorized" }, { status: 404 });
+    }
+
+    const updated = await prisma.longtermModule.update({
       where: { id },
       data: {
         title,
+        description,
         content,
-        tags,
-        date
+        startDate
       }
     });
 
     return NextResponse.json(updated);
   } catch (error) {
-    console.error("Error updating diary entry:", error);
-    return NextResponse.json({ error: "Failed to update entry" }, { status: 500 });
+    console.error("Error updating module:", error);
+    return NextResponse.json({ error: "Failed to update module" }, { status: 500 });
   }
 }
 
@@ -48,23 +50,27 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
   
+    const { id } = await params;
+  
     const user = await prisma.user.findUnique({ where: { email: session.user.email } });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
   
     try {
-      const { id } = await params;
-      const existing = await prisma.diary.findFirst({
+      const existing = await prisma.longtermModule.findFirst({
           where: { id, userId: user.id }
       });
-      if (!existing) return NextResponse.json({ error: "Entry not found" }, { status: 404 });
   
-      await prisma.diary.delete({
+      if (!existing) {
+          return NextResponse.json({ error: "Module not found or unauthorized" }, { status: 404 });
+      }
+  
+      await prisma.longtermModule.delete({
         where: { id }
       });
   
       return NextResponse.json({ message: "Deleted successfully" });
     } catch (error) {
-      console.error("Error deleting diary entry:", error);
-      return NextResponse.json({ error: "Failed to delete entry" }, { status: 500 });
+      console.error("Error deleting module:", error);
+      return NextResponse.json({ error: "Failed to delete module" }, { status: 500 });
     }
-}
+  }

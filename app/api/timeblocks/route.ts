@@ -45,23 +45,31 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { bulkText } = body; 
 
+    // format: task, description, isStrict, startTime, endTime
+    // Entries separated by semicolon (;). Fields separated by comma (,)
+    // Also handle newlines as weak separators or just explicitly split by ;
+    
+    // First, verify we have a string
     if (!bulkText || typeof bulkText !== 'string') {
-        return NextResponse.json({ error: "Invalid input format" }, { status: 400 });
+         return NextResponse.json({ error: "Invalid input format" }, { status: 400 });
     }
 
     const today = dayjs().format("YYYY-MM-DD");
-    const lines = bulkText.split('\n');
+    
+    // Split by semicolon to get individual entries. 
+    // We also replace newlines with spaces or just let trim handle it if user pasted with newlines.
+    const entries = bulkText.split(';');
     const blocksToCreate = [];
 
-    // format: // task, description, isStrict, startTime(HH:mm), endTime(HH:mm)
-    for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (!trimmedLine) continue;
+    for (const entry of entries) {
+        const trimmedEntry = entry.trim();
+        if (!trimmedEntry) continue;
         
-        // Remove leading '//' if present.
-        const cleanLine = trimmedLine.replace(/^\/\/\s*/, '');
+        // Remove leading '//' if users paste comments, though less likely with this format
+        const cleanEntry = trimmedEntry.replace(/^\/\/\s*/, '');
         
-        const parts = cleanLine.split(';').map(p => p.trim());
+        // Split by COMMA for fields
+        const parts = cleanEntry.split(',').map(p => p.trim());
         
         if (parts.length >= 5) {
             const [task, description, isStrictStr, startTime, endTime] = parts;
@@ -84,11 +92,10 @@ export async function POST(req: NextRequest) {
     if (blocksToCreate.length === 0) {
         return NextResponse.json({ message: "No valid blocks found to create" }, { status: 400 });
     }
-const timeblockClearingResult=await prisma.timeBlock.deleteMany({where:{userId:equa}})
-    if (timeblockClearingResult){
+
     const result = await prisma.timeBlock.createMany({
         data: blocksToCreate
-    });}
+    });
 
     return NextResponse.json({ message: "Timeblocks created", count: result.count });
 

@@ -85,7 +85,7 @@ export function Sidebar() {
 
           {/* NPC Card */}
           <div className="relative flex flex-col justify-end overflow-hidden rounded-2xl px-6 pb-6   border">
-               <Image width={12} height={12} src="https://placehold.co/1084x1284" alt=""/>
+               {/* <Image width={12} height={12} src="https://placehold.co/1084x1284" alt=""/> */}
                <h3 className="z-10 mt-3 text-xl font-medium text-white">Don&apos;t be an NPC</h3>
                <div className="z-10 text-xs text-gray-300">It&apos;s fatal, take back control</div>
           </div>

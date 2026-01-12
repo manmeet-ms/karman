@@ -1,60 +1,60 @@
-
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
-import { ViolationService } from "@/lib/services/violation.service";
-import { LogViolationSchema } from "@/lib/validations";
+import { applyPoints } from "@/lib/points";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+    const violations = await prisma.violation.findMany({
+        where: { userId: user.id },
+        orderBy: { createdAt: 'desc' },
+        take: 10
+    });
+
+    return NextResponse.json(violations);
+}
+
+export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  
-  if (!session || !session.user?.id) {
-    return new NextResponse("Unauthorized", { status: 401 });
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   try {
-    const violations = await ViolationService.getViolations(session.user.id);
-    return NextResponse.json(violations);
-  } catch (error) {
-    console.error("[VIOLATIONS_GET]", error);
-    return new NextResponse("Internal Error", { status: 500 });
-  }
-}
+    const body = await req.json();
+    const { type, tauntStatement, blockData } = body; // type should be one of ViolationTypeEnum
 
-export async function POST(req: Request) {
-    const session = await getServerSession(authOptions);
-    
-    if (!session || !session.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-  
-    try {
-      const body = await req.json();
-      const { type, timeBlockId } = LogViolationSchema.parse(body);
-      
-      const violation = await ViolationService.logViolation(session.user.id, type, timeBlockId);
-      return NextResponse.json(violation, { status: 201 });
-    } catch (error: any) {
-      console.error("[VIOLATIONS_POST]", error);
-      if (error.name === 'ZodError') {
-          return new NextResponse(JSON.stringify(error.errors), { status: 400 });
+    const violation = await prisma.violation.create({
+      data: {
+        userId: user.id,
+        type: type || "MISSED_BLOCK", // Default or validation
+        tauntStatement,
+        blockData: blockData || {},
+        dateString: new Date().toISOString().split('T')[0]
       }
-      return new NextResponse(error.message || "Internal Error", { status: 500 });
-    }
-}
+    });
 
-export async function DELETE(req: Request) {
-    const session = await getServerSession(authOptions);
-      
-    if (!session || !session.user?.id) {
-        return new NextResponse("Unauthorized", { status: 401 });
-    }
-
+    // Apply Penalty
     try {
-        await ViolationService.flushViolations(session.user.id);
-        return NextResponse.json({ message: true });
-    } catch (error) {
-        console.error("[VIOLATIONS_FLUSH]", error);
-         return new NextResponse("Internal Error", { status: 500 });
+        await applyPoints(user.id, "VIOLATION_PENALTY", { violationId: violation.id });
+    } catch {
+        // ignore
     }
+
+    return NextResponse.json(violation);
+  } catch (error) {
+    console.error("Error creating violation:", error);
+    return NextResponse.json({ error: "Failed to create violation" }, { status: 500 });
+  }
 }

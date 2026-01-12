@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { applyPoints } from "@/lib/points";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -44,6 +45,12 @@ export async function POST(req: NextRequest) {
         date: date || new Date().toISOString()
       }
     });
+
+    try {
+        await applyPoints(user.id, "DIARY_WRITING_CREDIT", { diaryId: entry.id });
+    } catch {
+        // ignore
+    }
 
     return NextResponse.json(entry);
   } catch (error) {

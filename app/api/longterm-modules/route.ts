@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { applyPoints } from "@/lib/points";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -13,12 +12,12 @@ export async function GET(req: NextRequest) {
   const user = await prisma.user.findUnique({ where: { email: session.user.email } });
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-  const urges = await prisma.urge.findMany({
+  const modules = await prisma.longtermModule.findMany({
     where: { userId: user.id },
-    orderBy: { urgeTimeStamp: 'desc' }
+    orderBy: { createdAt: 'desc' }
   });
 
-  return NextResponse.json(urges);
+  return NextResponse.json(modules);
 }
 
 export async function POST(req: NextRequest) {
@@ -32,30 +31,21 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { urgeIntensity, urgeType, urgeTrigger, urgeLocation, urgeNotes, urgeResolved } = body;
+    const { title, description, content, startDate } = body;
 
-    const urge = await prisma.urge.create({
+    const module = await prisma.longtermModule.create({
       data: {
         userId: user.id,
-        urgeIntensity,
-        urgeType,
-        urgeTrigger,
-        urgeLocation,
-        urgeNotes,
-        urgeResolved: urgeResolved || false,
-        urgeTimeStamp: new Date()
+        title,
+        description,
+        content,
+        startDate
       }
     });
 
-    try {
-        await applyPoints(user.id, "URGE_LOGGED_CREDIT", { urgeId: urge.id });
-    } catch {
-        // ignore
-    }
-
-    return NextResponse.json(urge);
+    return NextResponse.json(module);
   } catch (error) {
-    console.error("Error creating urge:", error);
-    return NextResponse.json({ error: "Failed to create urge" }, { status: 500 });
+    console.error("Error creating module:", error);
+    return NextResponse.json({ error: "Failed to create module" }, { status: 500 });
   }
 }

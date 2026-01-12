@@ -147,6 +147,8 @@ model User {
   urges              Urge[]
   diaryEntries       Diary[]
   agreementItems     AgreementItem[]
+  longtermModules    LongtermModule[]
+  people             Person[]
   
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -368,6 +370,37 @@ model Diary {
   content   String   @db.Text
   tags      String[]
   date      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model LongtermModule {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String?
+  content     String?  @db.Text
+  startDate   String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Person {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name      String
+  relation  String?
+  notes     String?  @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

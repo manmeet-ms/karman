@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -17,13 +17,16 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     const { note, tag, entryDate, context, mood } = body;
 
     // First check ownership
-    const existing = await prisma.hourlyCheckin.findUnique({
-        where: { id: params.id, userId: user.id }
+    const { id } = await params;
+
+    // First check ownership
+    const existing = await prisma.hourlyCheckin.findFirst({
+        where: { id, userId: user.id }
     });
     if (!existing) return NextResponse.json({ error: "Entry not found" }, { status: 404 });
 
     const updated = await prisma.hourlyCheckin.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         note,
         tag,
@@ -32,7 +35,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         mood: mood ? {
             upsert: {
                 create: {
-                    moodType: mood.moodType,
+                    moodType: mood.moodType.toUpperCase(),
                     intensity: mood.intensity,
                     notes: mood.notes,
                     tags: mood.tags || [],
@@ -41,7 +44,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
                     physicalState: mood.physicalState
                 },
                 update: {
-                    moodType: mood.moodType,
+                    moodType: mood.moodType.toUpperCase(),
                     intensity: mood.intensity,
                     notes: mood.notes,
                     tags: mood.tags || [],

@@ -156,10 +156,10 @@ export default function DiaryPage() {
                 <div className="mx-auto w-full max-w-6xl mt-4">
                     <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4 space-y-4">
                         {filteredEntries.map((entry) => {
-                             let cardColor = "border-l-4 border-l-primary";
-                             if (entry.tags.includes('Positive')) cardColor = "border-l-4 border-l-green-500";
-                             if (entry.tags.includes('Negative')) cardColor = "border-l-4 border-l-red-500";
-                             if (entry.tags.includes('Thought')) cardColor = "border-l-4 border-l-orange-500";
+                             let cardColor = "border-2 border-primary";
+                             if (entry.tags.includes('Positive')) cardColor = "border-2 border-green-500";
+                             if (entry.tags.includes('Negative')) cardColor = "border-2 border-red-500";
+                             if (entry.tags.includes('Thought')) cardColor = "border-2 border-orange-500";
 
                              return (
                                 <Card key={entry.id} className={`break-inside-avoid mb-4 group relative ${cardColor}`}>

@@ -4,13 +4,17 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
+import { applyPoints } from "@/lib/points";
+
+// ...
+
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const id = params.id;
+    const { id } = await params;
 
     const user = await prisma.user.findUnique({ where: { email: session.user.email } });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -34,7 +38,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     if (!session?.user?.email) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const id = params.id;
+    const { id } = await params;
     const user = await prisma.user.findUnique({ where: { email: session.user.email } });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
@@ -52,6 +56,13 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
                     }
                 }
              });
+
+             try {
+                await applyPoints(user.id, "TIMER_RESET_PENALTY", { timerId: id });
+             } catch {
+                // ignore
+             }
+
              return NextResponse.json(updated);
         } else {
              // Normal update

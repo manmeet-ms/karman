@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePageMeta } from "@/contexts/PageMetaContext";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
     AlertDialog,
@@ -43,6 +43,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useSound } from "@/hooks/use-sound";
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -152,6 +153,7 @@ export default function ChronosPage() {
     const { setPageMeta } = usePageMeta();
     const [timers, setTimers] = useState<Timer[]>([]);
     const [loading, setLoading] = useState(true);
+    const { play } = useSound("/sounds/window_open.mp3");
 
     const fetchTimers = async () => {
         try {
@@ -165,11 +167,6 @@ export default function ChronosPage() {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        setPageMeta({ title: "Chronos", subtitle: "Time Management" });
-        fetchTimers();
-    }, [setPageMeta]);
 
     useEffect(() => {
         setPageMeta({ title: "Chronos", subtitle: "Time Management" });
@@ -190,6 +187,7 @@ export default function ChronosPage() {
         try {
             await axios.put(`/api/chronos/${id}`, { action: "RESET" });
             toast.success("Timer reset! Points deducted.");
+            play();
             fetchTimers();
         } catch {
             toast.error("Failed to reset timer");
@@ -329,11 +327,9 @@ export default function ChronosPage() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <AlertDialog>
-                                                    <AlertDialogTrigger render={
-                                                        <Button variant="ghost" size="sm" className="h-8 text-destructive hover:text-destructive hover:bg-destructive/10">
-                                                            <IconRefresh size={14} className="mr-1" /> Reset
-                                                        </Button>
-                                                    } />
+                                                    <AlertDialogTrigger className={buttonVariants({ variant: "ghost", size: "sm", className: "h-8 text-destructive hover:text-destructive hover:bg-destructive/10" })}>
+                                                        <IconRefresh size={14} className="mr-1" /> Reset
+                                                    </AlertDialogTrigger>
                                                     <AlertDialogContent>
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>Reset Timer?</AlertDialogTitle>
@@ -349,11 +345,9 @@ export default function ChronosPage() {
                                                 </AlertDialog>
 
                                                 <AlertDialog>
-                                                    <AlertDialogTrigger render={
-                                                        <Button variant="ghost" size="icon-sm" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                                                            <IconTrash size={14} />
-                                                        </Button>
-                                                    } />
+                                                    <AlertDialogTrigger className={buttonVariants({ variant: "ghost", size: "icon-sm", className: "h-8 w-8 text-muted-foreground hover:text-foreground" })}>
+                                                        <IconTrash size={14} />
+                                                    </AlertDialogTrigger>
                                                     <AlertDialogContent>
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>Delete Timer?</AlertDialogTitle>

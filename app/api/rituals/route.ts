@@ -1,9 +1,9 @@
-
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { RitualService } from "@/lib/services/ritual.service";
 import { CreateRitualSchema } from "@/lib/validations";
+import { applyPoints } from "@/lib/points";
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const rituals = await RitualService.getTodayRitual(session.user.id);
+    const rituals = await RitualService.getRecentRituals(session.user.id);
     return NextResponse.json(rituals);
   } catch (error) {
     console.error("[RITUALS_GET]", error);
@@ -40,6 +40,34 @@ export async function POST(req: Request) {
           return new NextResponse(JSON.stringify(error.errors), { status: 400 });
       }
       return new NextResponse("Internal Error", { status: 500 });
+    }
+}
+
+export async function PUT(req: Request) {
+    const session = await getServerSession(authOptions);
+    
+    if (!session || !session.user?.id) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    try {
+        const body = await req.json();
+        const { id, action } = body;
+
+        if (action === "complete" && id) {
+            const ritual = await RitualService.completeRitual(id, session.user.id);
+            try {
+                await applyPoints(session.user.id, "RITUAL_COMPLETE_CREDIT", { ritualId: ritual.id });
+            } catch (e) {
+                console.error("Failed to award points for ritual", e);
+            }
+            return NextResponse.json(ritual);
+        }
+
+        return new NextResponse("Invalid action", { status: 400 });
+    } catch (error) {
+        console.error("[RITUALS_PUT]", error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }
 

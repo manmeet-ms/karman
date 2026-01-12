@@ -134,31 +134,39 @@ export default function UrgesPage() {
 
              <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4 space-y-4">
                 {urges.map((u, index) => {
+                     const typeLower = u.urgeType.toLowerCase();
                      let pillBg = "bg-zinc-300/60 text-zinc-800 dark:bg-zinc-800/40 dark:text-zinc-300";
-                     const type = u.urgeType.toLowerCase();
-                     if (type === 'procrastination') pillBg = "bg-yellow-300/60 text-yellow-800 dark:bg-yellow-800/40 dark:text-yellow-300";
-                     if (type === 'distraction') pillBg = "bg-blue-300/60 text-blue-800 dark:bg-blue-800/40 dark:text-blue-300";
-                     if (type === 'doomscroll') pillBg = "bg-rose-300/60 text-rose-800 dark:bg-rose-800/40 dark:text-rose-300";
-                     if (type === 'addiction') pillBg = "bg-red-300/60 text-red-800 dark:bg-red-800/40 dark:text-red-300";
+                     if (typeLower === 'procrastination') pillBg = "bg-yellow-300/60 text-yellow-800 dark:bg-yellow-800/40 dark:text-yellow-300";
+                     if (typeLower === 'distraction') pillBg = "bg-blue-300/60 text-blue-800 dark:bg-blue-800/40 dark:text-blue-300";
+                     if (typeLower === 'doomscroll') pillBg = "bg-rose-300/60 text-rose-800 dark:bg-rose-800/40 dark:text-rose-300";
+                     if (typeLower === 'browsing') pillBg = "bg-indigo-300/60 text-indigo-800 dark:bg-indigo-800/40 dark:text-indigo-300";
+                     if (typeLower === 'addiction') pillBg = "bg-red-300/60 text-red-800 dark:bg-red-800/40 dark:text-red-300";
 
                      return (
                         <Card key={u.id} className="break-inside-avoid mb-4">
                             <CardHeader>
-                                <CardTitle className="text-sm">
-                                    {dayjs(u.urgeTimeStamp).format("DD/MM/YYYY HH:mm")}
+                                <CardTitle className="text-base">
+                                    {dayjs(u.urgeTimeStamp).format("DD/MM/YYYY HH:mm:ss")}
                                 </CardTitle>
-                                <CardDescription className="text-xs capitalize flex items-center gap-1">
-                                    {u.urgeTrigger?.toLowerCase().replace(/_/g, " ")}
-                                    <span className="text-muted-foreground ml-auto">{dayjs(u.urgeTimeStamp).fromNow()}</span>
+                                <CardDescription className="text-xs flex items-center gap-1 opacity-70">
+                                     {u.urgeTrigger && (
+                                         <span className="capitalize">{u.urgeTrigger.toLowerCase().replace(/_/g, " ")}</span>
+                                     )}
+                                    <span className="mx-1">•</span>
+                                    <span>{dayjs(u.urgeTimeStamp).fromNow()}</span>
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent className="text-sm">
-                                {u.urgeNotes && <p className="mb-2 line-clamp-3">{u.urgeNotes}</p>}
-                                <div className="flex items-center justify-between text-xs mt-2">
-                                     <span className={`${pillBg} px-2 py-0.5 rounded capitalize`}>{type}</span>
-                                     <span className="font-bold">Intensity: {u.urgeIntensity}</span>
-                                </div>
-                            </CardContent>
+                            {u.urgeNotes && (
+                                <CardContent className="text-sm line-clamp-2 text-pretty mb-2">
+                                    {u.urgeNotes}
+                                </CardContent>
+                            )}
+                            <CardFooter className="flex items-center justify-between text-xs pt-0">
+                                 <span className={`${pillBg} inline-flex rounded px-1.5 py-0.5 tracking-wide capitalize`}>
+                                     {typeLower}
+                                 </span>
+                                 <span className="flex font-medium">Intensity: {u.urgeIntensity}</span>
+                            </CardFooter>
                         </Card>
                      )
                 })}
