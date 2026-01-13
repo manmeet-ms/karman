@@ -97,11 +97,11 @@ export function Sidebar() {
 export function MobileSidebar() {
     return (
         <Sheet>
-            <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden">
+            <SheetTrigger render={ <Button variant="ghost" size="icon" className="lg:hidden">
                     <IconLayoutSidebarLeftCollapse className="h-5 w-5" />
                     <span className="sr-only">Toggle Menu</span>
-                </Button>
+                </Button>}>
+               
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-xs">
                 <SheetHeader>

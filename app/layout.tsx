@@ -36,7 +36,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en" className={publicSans.variable}>
+    <html className={publicSans.variable}>
       <body
         className={`${publicSans.variable} ${jetBrainsMono.variable} antialiased`}>
 

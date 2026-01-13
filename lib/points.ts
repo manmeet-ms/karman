@@ -1,13 +1,12 @@
-
 import prisma from "@/lib/prisma";
-import { TxnType } from "@prisma/client";
+import { TxnType } from "@/generated/prisma/enums";
 
 export const EVENT_POINTS = {
   TIMEBLOCK_COMPLETE_CREDIT: 20,
   ALL_DAILY_COMPLETE_CREDIT: 100,
   VIOLATION_RESOLVED_CREDIT: 5,
   DIARY_WRITING_CREDIT: 5,
-  RITUAL_CREATED_CREDIT: 5,
+  RITUAL_CREATED_CREDIT: 5, // Not in TxnType enum?
   RITUAL_COMPLETE_CREDIT: 10,
   URGE_LOGGED_CREDIT: 10,
   URGE_RESISTED_CREDIT: 50,
@@ -26,8 +25,10 @@ export const EVENT_POINTS = {
   DEFAULT: 0,
 };
 
+export type EventPointKey = keyof typeof EVENT_POINTS;
+
 export async function applyPoints(userId: string, type: TxnType, metadata?: any) {
-    const points = EVENT_POINTS[type] || 0;
+    const points = EVENT_POINTS[type as keyof typeof EVENT_POINTS] || 0;
     
     // Start transaction
     const result = await prisma.$transaction(async (tx) => {

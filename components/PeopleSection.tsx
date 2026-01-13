@@ -158,10 +158,10 @@ export function PeopleSection() {
                     </div>
 
                     <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                        <DialogTrigger asChild>
-                            <Button variant="outline"   className=" ">
+                        <DialogTrigger render={<Button variant="outline"   className=" ">
                                 <IconPlus size={12} /> Add
-                            </Button>
+                            </Button>}>
+                            
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[425px]">
                             <DialogHeader>

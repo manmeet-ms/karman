@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconPlus } from "@tabler/icons-react";
 
 interface Props {
   onComplete?: () => void;
@@ -56,7 +56,7 @@ export default function RitualInputForm({ onComplete, currentRitual }: Props) {
 
   if (currentRitual?.completedDailyCheckIn) {
       // Allow editing even if completed, or just show normal form?
-      // User said "only in this place set daily vow button should appear".
+      // User said "only in this place set vow button should appear".
       // We will remove the "Ritual Completed" return.
   }
 
@@ -65,15 +65,15 @@ export default function RitualInputForm({ onComplete, currentRitual }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant={"outline"} className="gap-2">
-            <IconCheck size={16} className={isUpdate ? "text-primary" : "text-muted-foreground"} /> 
-            {isUpdate ? "Edit Daily Vow" : "Set Daily Vow"}
-        </Button>
+      <DialogTrigger render={<Button variant={"outline"} className="gap-2">
+            <IconPlus size={16} className={isUpdate ? "text-primary" : "text-muted-foreground"} /> 
+            {isUpdate ? "Edit Vow" : "Set Vow"}
+        </Button>}>
+        
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{isUpdate ? "Edit Daily Vow" : "Set Daily Intention"}</DialogTitle>
+          <DialogTitle>{isUpdate ? "Edit Vow" : "Set Intention"}</DialogTitle>
           <DialogDescription>
             {isUpdate ? "Update your vow for today." : "What is your vow or intention for today?"}
           </DialogDescription>

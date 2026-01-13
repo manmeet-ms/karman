@@ -132,6 +132,7 @@ model User {
   verificationToken  String?
   passwordResetToken String?
   passwordResetTokenExpiry DateTime?
+  streak             Int             @default(0)
 
   accounts           Account[]
   sessions           Session[]
@@ -149,6 +150,8 @@ model User {
   agreementItems     AgreementItem[]
   longtermModules    LongtermModule[]
   people             Person[]
+  reminders          Reminder[]
+  advice             Advice[]
   
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -404,6 +407,44 @@ model Person {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Reminder {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title     String
+  type      String
+  interval  Int
+  enabled   Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum AdviceTag {
+  CORPORATE
+  PERSONAL
+  PSYCHOLOGICAL
+  MANIPULATIVE
+  OTHER
+}
+
+model Advice {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  content   String      @db.Text
+  tags      AdviceTag[]
+  
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   @@index([userId])
 }

@@ -78,7 +78,7 @@ export default function DiaryPage() {
     };
 
     useEffect(() => {
-        setPageMeta({ title: "Diary", subtitle: "Personal Records of Thoughts and Reflections" });
+        setPageMeta({ title: "Diary", subtitle: "Personal Records of Thoughts and Reflections" ,headerActions:null});
         fetchEntries();
     }, [setPageMeta]);
 
@@ -181,10 +181,10 @@ export default function DiaryPage() {
                                                  <IconPencil size={14} />
                                              </Button>
                                              <AlertDialog>
-                                                 <AlertDialogTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:text-destructive">
+                                                 <AlertDialogTrigger render={<Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:text-destructive">
                                                         <IconTrash size={14} />
-                                                    </Button>
+                                                    </Button>}>
+                                                    
                                                  </AlertDialogTrigger>
                                                  <AlertDialogContent>
                                                      <AlertDialogHeader>
@@ -207,10 +207,10 @@ export default function DiaryPage() {
             </Tabs>
 
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogTrigger asChild>
-                    <Button className="fixed bottom-12 right-12 z-50 shadow-lg rounded-full px-6" size="lg">
+                <DialogTrigger render={<Button className="fixed bottom-12 right-12 z-50 shadow-lg rounded-full px-6" size="lg">
                         <IconMessageCirclePlus size={20} className="mr-2" /> Add {currentTab === 'diary' ? 'Entry' : currentTab.charAt(0).toUpperCase() + currentTab.slice(1)}
-                    </Button>
+                    </Button>}>
+                    
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>

@@ -1,3 +1,6 @@
+gloabl advice page various folters , corporae advice, personal , psycologiacal , manipulativee tags, ebery user can create their piece of advices and crud their own advices asosicated with logged in user,  rest of them are fro jst public byt the public the curecntlyl ogged in user can udate or delete its own advices, in an dedicated page for own advices with filters 
+
+
 ritual never should be completed right awya, create a ritual for the day if not completed today trigger violation and keep trigger ing vilations until the ritual is markedcomplete byuser and themn optiornto mocmplete them and points witll be awarded , and 
 
 vilationdeduct points as usual memto inpoints enums 
@@ -56,3 +59,32 @@ sendWeeklyLeaderboardDiscord later but intodue a env var name ehre  and will add
 
 
 next is notifications done for the pwa
+
+
+
+discord notifcation annoucem when user activy
+## chronos timer resent by user failures nmotification here as well , in my discord server a dedicated channel and and hall of shame and histry, urges, notificaiton public discord server 
+- message body
+heading: chronos timer resent
+body: 
+by user name
+total duration survided
+resent on: this date
+taunt 
+opoints duducted, final points in balacne
+footer: nothing
+
+
+##  violations triggere dby user 
+- message body
+heading: violations
+body: 
+by user name
+total duration survided
+resent on: this date 
+taunt 
+opoints duducted, final points in balacne
+footer: nothing
+
+
+on frontend ask for agreemnt when resetting a chroos timer, in a dialog boc add agreemnt compoent as was in source justno resposnice on dialogue box nede as ofnow

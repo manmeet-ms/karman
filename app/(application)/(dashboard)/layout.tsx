@@ -22,6 +22,21 @@ function PageHead() {
   );
 }
 
+// Separate component to consume the context
+function HeaderActionsWrapper() {
+  const { meta } = usePageMeta();
+  return (
+    <div className="flex gap-2">
+      {meta.headerActions !== undefined ? meta.headerActions : (
+        <>
+          <RitualInputForm />
+          <UrgeInputForm/>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <PageMetaProvider>
@@ -45,10 +60,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <main className="grid flex-1  items-start      lg:grid-cols-1">
                 <div className="flex border-b pb-4 px-4  items-center justify-between">
                   <PageHead />
-                  <div className="flex gap-2">
-                    <RitualInputForm />
-                    <UrgeInputForm />
-                  </div>
+                  {/* i wanna add props here */}
+                  {/* Header Actions Area */}
+                  <HeaderActionsWrapper />
                 </div>
 
                 <section className="h-[calc(100vh-120px)]  p-4  rounded-md     ">

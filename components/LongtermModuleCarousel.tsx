@@ -118,10 +118,10 @@ export function LongtermModuleCarousel() {
                     Longterm Modules <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[10px]">{modules.length}</span>
                 </h3>
                 <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                    <DialogTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-6 text-xs gap-1">
+                    <DialogTrigger render={ <Button variant="ghost" size="sm" className="h-6 text-xs gap-1">
                             <IconPlus size={12} /> Add Module
-                        </Button>
+                        </Button>}>
+                       
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -175,9 +175,9 @@ export function LongtermModuleCarousel() {
                                             <Button variant="ghost" size="icon-sm" className="h-6 w-6" onClick={() => openEdit(mod)}><IconEdit size={12} /></Button>
                                             
                                             <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button variant="ghost" size="icon-sm" className="h-6 w-6 text-destructive hover:text-destructive"><IconTrash size={12} /></Button>
-                                                </AlertDialogTrigger>
+                                                <AlertDialogTrigger render={ <Button variant="ghost" size="icon-sm" className="h-6 w-6 text-destructive hover:text-destructive"><IconTrash size={12} /></Button>
+                                              }>
+                                                     </AlertDialogTrigger>
                                                 <AlertDialogContent>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>Delete Module?</AlertDialogTitle>

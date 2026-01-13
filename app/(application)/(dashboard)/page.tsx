@@ -79,7 +79,8 @@ export default function Dashboard() {
   useEffect(() => {
     setPageMeta({
       title: 'Dashboard',
-      subtitle: ' Your mirror, centralized Monitoring'
+      subtitle: ' Your mirror, centralized Monitoring',
+      headerActions: undefined
     });
     // fetchUserData();
     fetchViolations();

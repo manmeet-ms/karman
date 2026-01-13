@@ -1,7 +1,7 @@
 
 import prisma from "@/lib/prisma";
 import { EVENT_POINTS, EventPointKey } from "@/lib/points";
-import { TxnType } from "@/generated/prisma/client";
+import { TxnType } from "@/generated/prisma/enums";
 
 export const PointsService = {
   async applyPoints(userId: string, eventKey: EventPointKey) {

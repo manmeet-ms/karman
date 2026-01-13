@@ -1,6 +1,7 @@
 
 "use client";
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,6 +10,7 @@ import { usePageMeta } from "@/contexts/PageMetaContext";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 import { IconAccessPoint, IconBolt, IconBoltFilled } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
@@ -18,7 +20,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
-      setPageMeta({ title: "Leaderboard", subtitle: "Hall of Fame" });
+      setPageMeta({ title: "Leaderboard", subtitle: "Hall of Fame" ,headerActions:null});
       
       const fetchData = async () => {
           try {
@@ -124,26 +126,43 @@ export default function LeaderboardPage() {
         </Table>
         </ScrollArea>
       </div>
-      <div className="rounded-lg col-span-2 md:col-span-1 border p-4">
-
-        <div className="mb-2 flex flex-col gap-0 pb-2">
-          <h2 className="flex items-center gap-2 text-xl font-semibold">
-            Points activity
-            <Badge variant="secondary">
-              <IconAccessPoint size={14} className="mr-1" />
-              Live
-            </Badge>
-          </h2>
-          <span className="text-secondary-foreground/60 text-xs"> Coming Soon</span>
+      <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
+        <div className="rounded-lg border p-4 bg-primary/5 border-primary/20">
+             <div className="mb-2 flex flex-col gap-0 pb-2">
+                <h2 className="flex items-center gap-2 text-xl font-semibold">
+                Community
+                </h2>
+                <span className="text-secondary-foreground/60 text-xs"> Join the movement</span>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+                Where we track account and announcement public pressure for performing, join the community, weekly leaderboard, rewards in the form of points.
+            </p>
+            <Button className="w-full" onClick={() => window.open("https://discord.gg/placeholder", "_blank")}>
+                Join Discord
+            </Button>
         </div>
 
-        <ScrollArea className="h-screen border rounded-md ">
-         <div className="p-4">
-             <div className="text-sm text-muted-foreground text-center py-8">
-                 Global activity feed coming soon.
-             </div>
-         </div>
-        </ScrollArea>
+        <div className="rounded-lg border p-4">
+
+            <div className="mb-2 flex flex-col gap-0 pb-2">
+            <h2 className="flex items-center gap-2 text-xl font-semibold">
+                Points activity
+                <Badge variant="secondary">
+                <IconAccessPoint size={14} className="mr-1" />
+                Live
+                </Badge>
+            </h2>
+            <span className="text-secondary-foreground/60 text-xs"> Coming Soon</span>
+            </div>
+
+            <ScrollArea className="h-[400px] border rounded-md ">
+            <div className="p-4">
+                <div className="text-sm text-muted-foreground text-center py-8">
+                    Global activity feed coming soon.
+                </div>
+            </div>
+            </ScrollArea>
+        </div>
       </div>
     </section>
   );

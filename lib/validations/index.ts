@@ -1,6 +1,6 @@
 
 import { z } from "zod";
-import { ViolationTypeEnum, UrgeTypeEnum, UrgeTriggerEnum, UrgeLocationEnum } from "@/generated/prisma/client";
+import { ViolationTypeEnum, UrgeTypeEnum, UrgeTriggerEnum, UrgeLocationEnum } from "@/generated/prisma/enums";
 
 // Points
 export const ApplyPointsSchema = z.object({

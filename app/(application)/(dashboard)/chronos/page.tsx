@@ -149,6 +149,17 @@ const rankDistribution: Rank[] = [
     },
 ];
 
+// Header Actions Component
+function ChronosHeaderActions() {
+    return (
+        <Link href="/chronos/create">
+            <Button>
+                <IconPlus size={20} className="mr-2" /> New Timer
+            </Button>
+        </Link>
+    );
+}
+
 export default function ChronosPage() {
     const { setPageMeta } = usePageMeta();
     const [timers, setTimers] = useState<Timer[]>([]);
@@ -169,7 +180,11 @@ export default function ChronosPage() {
     };
 
     useEffect(() => {
-        setPageMeta({ title: "Chronos", subtitle: "Time Management" });
+        setPageMeta({ 
+            title: "Chronos", 
+            subtitle: "Time Management", 
+            headerActions: <ChronosHeaderActions />
+        });
         fetchTimers();
     }, [setPageMeta]);
 
@@ -233,11 +248,7 @@ export default function ChronosPage() {
     return (
         <main className="grid grid-cols-1 md:grid-cols-3 gap-4  items-start">
             <section className="col-span-2 flex flex-col gap-4">
-                     <Link href="/chronos/create">
-                        <Button   >
-                            <IconPlus size={20} className="mr-2" /> New Timer
-                        </Button>
-                     </Link>
+                    
 
                 {loading ? <div className="text-muted-foreground p-8 text-center border rounded-lg">Loading timers...</div> :
                     timers.length === 0 ? (

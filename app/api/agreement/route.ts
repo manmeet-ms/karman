@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { AgreementCategory } from "@/generated/prisma/client";
+import { AgreementCategory } from "@/generated/prisma/enums";
 
 export async function GET() {
   const session = await getServerSession(authOptions);

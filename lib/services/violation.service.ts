@@ -1,7 +1,7 @@
 
 import prisma from "@/lib/prisma";
 import { getRandomTaunt } from "@/lib/taunts";
-import { ViolationTypeEnum } from "@/generated/prisma/client";
+import { ViolationTypeEnum } from "@/generated/prisma/enums";
 import axios from "axios";
 
 export const ViolationService = {

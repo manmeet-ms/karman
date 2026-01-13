@@ -2,12 +2,11 @@
 
 
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
+import { useState, useEffect } from "react";
 
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -17,18 +16,8 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
-import { IconTrendingUp } from "@tabler/icons-react"
 
 export const description = "A radar chart with dots"
-
-const chartData = [
-  // { month: "T. Blocks", desktop: 186 },
-  { month: "C. Blocks", desktop: 90 },
-  { month: "Discipline", desktop: 70 },
-  { month: "Blocks Missed", desktop: 20 },
-  { month: "Streak", desktop: 30 },
-  { month: "C. Ritual", desktop: 10 },
-]
 
 const chartConfig = {
   desktop: {
@@ -37,18 +26,43 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+interface RadarData {
+  month: string;
+  desktop: number;
+  raw?: number;
+}
+
 export function ChartRadarDots() {
+  const [data, setData] = useState<RadarData[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("/api/analytics");
+        if (res.ok) {
+          const json = await res.json();
+          setData(json);
+        }
+      } catch (e) {
+        console.error("Failed to fetch analytics", e);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (data.length === 0) return null;
+
   return (
     <Card>
-      <CardHeader className="items-center">
-        
+      <CardHeader className="items-center pb-4">
+        <CardTitle>Performance Radar</CardTitle>
       </CardHeader>
       <CardContent className="pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto  max-h-[250px]"
+          className="mx-auto max-h-[250px]"
         >
-          <RadarChart data={chartData}>
+          <RadarChart data={data}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarAngleAxis dataKey="month" />
             <PolarGrid />
@@ -64,7 +78,6 @@ export function ChartRadarDots() {
           </RadarChart>
         </ChartContainer>
       </CardContent>
-      
     </Card>
   )
 }

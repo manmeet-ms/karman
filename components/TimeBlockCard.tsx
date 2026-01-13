@@ -25,8 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useSound } from "@/hooks/use-sound";
-
+import { useSound } from "react-sounds";
 interface TimeBlock {
   id: string;
   task: string;
@@ -43,7 +42,8 @@ export default function TimeBlockCard() {
   const [bulkText, setBulkText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { play } = useSound("/sounds/success_bell.mp3");
+
+const {play}=useSound('ui/window_open')
 
   const fetchBlocks = async () => {
     try {
@@ -148,10 +148,10 @@ export default function TimeBlockCard() {
           
         </h2>
  <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-1">
+          <DialogTrigger render={ <Button variant="outline" size="sm" className="gap-1">
               <IconPlus size={16} /> Bulk Add
-            </Button>
+            </Button>}>
+           
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

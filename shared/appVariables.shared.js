@@ -1,4 +1,4 @@
-import { IconBrandTabler, IconFileSpark, IconGraph, IconHourglassEmpty, IconLayoutDashboard, IconChartLine, IconGitCommit, IconMessage, IconEye } from '@tabler/icons-react';
+import { IconBrandTabler, IconFileSpark, IconGraph, IconHourglassEmpty, IconLayoutDashboard, IconChartLine, IconGitCommit, IconMessage, IconEye, IconBell, IconBulb } from '@tabler/icons-react';
 
 export const APP_VERSION = '6.0.0';
 export const APP_NAME = 'Karman';
@@ -64,14 +64,22 @@ export const SIDENAV_DASH = [
         icon: IconGitCommit,
     },
     {
+        title: 'Reminders',
+        url: '/reminders',
+        icon: IconBell,
+        // icon: IconTestPipe,
+    },
+    {
+      title: "Global advice",
+      url: "/advice",
+    icon: IconBulb,
+    },
+
+
+    {
         title: 'Beta',
         url: '/beta',
         icon: IconBrandTabler,
         // icon: IconTestPipe,
     },
-    // {
-    //   title: "Book Notes",
-    //   url: "/book-notes",
-    // icon: IconBook,
-    // },
 ];

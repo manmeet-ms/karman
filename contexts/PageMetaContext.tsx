@@ -8,6 +8,7 @@ import { APP_NAME } from "@/shared/appVariables.shared";
 interface PageMeta {
   title: string;
   subtitle: string;
+  headerActions?: ReactNode;
 }
 
 interface PageMetaContextType {
@@ -21,24 +22,27 @@ export function PageMetaProvider({ children }: { children: ReactNode }) {
   const [meta, setMeta] = useState<PageMeta>({
     title: "Karman - Home",
     subtitle: `${dayjs().format('DD MMM, YYYY HH:mm a')}`,
+    headerActions: undefined,
   });
 
-  const setPageMeta = React.useCallback(({ title, subtitle }: Partial<PageMeta>) => {
+  const setPageMeta = React.useCallback((updates: Partial<PageMeta>) => {
     setMeta((prev) => {
       // If values haven't changed, return previous state to avoid re-render
       if (
-        (title === undefined || title === prev.title) &&
-        (subtitle === undefined || subtitle === prev.subtitle)
+        (updates.title === undefined || updates.title === prev.title) &&
+        (updates.subtitle === undefined || updates.subtitle === prev.subtitle) &&
+        (!('headerActions' in updates) || updates.headerActions === prev.headerActions)
       ) {
         return prev;
       }
 
       const newMeta = { ...prev };
-      if (title) {
-        newMeta.title = title;
-        document.title = `${APP_NAME} - ${title}`;
+      if (updates.title) {
+        newMeta.title = updates.title;
+        document.title = `${APP_NAME} - ${updates.title}`;
       }
-      if (subtitle) newMeta.subtitle = subtitle;
+      if (updates.subtitle) newMeta.subtitle = updates.subtitle;
+      if ('headerActions' in updates) newMeta.headerActions = updates.headerActions;
       
       return newMeta;
     });

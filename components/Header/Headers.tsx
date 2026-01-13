@@ -188,9 +188,7 @@ export function AppHeader() {
             ))}
             
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogTrigger asChild>
-                    <Button className="sticky right-0 rounded-full w-8 h-8 p-0" variant="ghost"><IconPlus size={16}/></Button>
-                </DialogTrigger>
+                <DialogTrigger render={<Button className="sticky right-0 rounded-full w-8 h-8 p-0" variant="ghost"><IconPlus size={16}/></Button>}/>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Add New Longterm Module</DialogTitle>
@@ -267,6 +265,7 @@ export function AppHeader() {
 
           <section className="flex gap-2 justify-end items-center">
             <ModeToggle />
+            <ServiceWorkerRegister />
             {session?.status === 'authenticated' ? (
               <div className="flex gap-2 items-center">
                 <ServiceWorkerRegister />

@@ -38,6 +38,19 @@ import { toast } from "sonner";
 
 dayjs.extend(relativeTime);
 
+// Header Actions Component
+interface TimelineHeaderActionsProps {
+    setIsCreateOpen: (open: boolean) => void;
+}
+
+function TimelineHeaderActions({ setIsCreateOpen }: TimelineHeaderActionsProps) {
+    return (
+        <Button onClick={() => setIsCreateOpen(true)}>
+            <IconPlus size={20} className="mr-2" /> Check-In
+        </Button>
+    );
+}
+
 export default function TimelinePage() {
     const { setPageMeta } = usePageMeta();
     const [checkins, setCheckins] = useState<any[]>([]);
@@ -76,7 +89,11 @@ export default function TimelinePage() {
     };
 
     useEffect(() => {
-        setPageMeta({ title: "Timeline", subtitle: "Chronological timeline tracking for the day." });
+        setPageMeta({ 
+            title: "Timeline", 
+            subtitle: "Chronological timeline tracking for the day.",
+            headerActions: <TimelineHeaderActions setIsCreateOpen={setIsCreateOpen} />
+        });
         fetchCheckins();
     }, [setPageMeta]);
 
@@ -241,13 +258,11 @@ export default function TimelinePage() {
                 )}
             </div>
 
-            {/* Create Dialog */}
-            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogTrigger asChild>
-                    <Button className="fixed bottom-12 right-12 z-50 shadow-lg rounded-full px-6" size="lg">
-                        <IconPlus size={20} className="mr-2" /> Check-In
-                    </Button>
-                </DialogTrigger>
+            
+           
+
+             {/* Create Dialog */}
+             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Hourly Check-in</DialogTitle>
