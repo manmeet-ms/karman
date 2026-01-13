@@ -6,7 +6,8 @@
   "scripts": {
     "exp-dev": "next dev --port 5173 --experimental-https",
     "dev": "next dev",
-    "build": "next build",
+    "build:dev": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint"
   },
