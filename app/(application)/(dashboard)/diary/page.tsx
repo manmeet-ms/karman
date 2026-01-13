@@ -1,37 +1,5 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
-import { usePageMeta } from "@/contexts/PageMetaContext";
-import { Button } from "@/components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -43,14 +11,45 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { usePageMeta } from "@/contexts/PageMetaContext";
 import { IconMessageCirclePlus, IconPencil, IconTrash } from "@tabler/icons-react";
-import { toast } from "sonner";
+import axios from "axios";
 import dayjs from "dayjs";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 export default function DiaryPage() {
     const { setPageMeta } = usePageMeta();
-    const [entries, setEntries] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [entries, setEntries] = useState<any[] >([]);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [editingEntry, setEditingEntry] = useState<any>(null);
@@ -58,8 +57,8 @@ export default function DiaryPage() {
 
     // Form State
     const [formData, setFormData] = useState({
-        title: "",
-        content: "",
+        title: "" as string,
+        content: "" as string,
         tags: [] as string[]
     });
 
@@ -72,13 +71,11 @@ export default function DiaryPage() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to fetch diary entries");
-        } finally {
-            setLoading(false);
         }
     };
 
     useEffect(() => {
-        setPageMeta({ title: "Diary", subtitle: "Personal Records of Thoughts and Reflections" ,headerActions:null});
+        setPageMeta({ title: "Diary", subtitle: "Personal Records of Thoughts and Reflections", headerActions: null });
         fetchEntries();
     }, [setPageMeta]);
 
@@ -134,8 +131,8 @@ export default function DiaryPage() {
     const filteredEntries = useMemo(() => {
         if (currentTab === 'all') return entries;
         // Simple case-insensitive check if tag includes the tab name
-        return entries.filter(e => 
-            e.tags?.some((t: string) => t.toLowerCase() === currentTab.toLowerCase()) || 
+        return entries.filter(e =>
+            e.tags?.some((t: string) => t.toLowerCase() === currentTab.toLowerCase()) ||
             (currentTab === 'diary' && (!e.tags || e.tags.length === 0 || e.tags.includes('Diary'))) // Default to Diary if no tags?
         );
     }, [entries, currentTab]);
@@ -156,12 +153,12 @@ export default function DiaryPage() {
                 <div className="mx-auto w-full max-w-6xl mt-4">
                     <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4 space-y-4">
                         {filteredEntries.map((entry) => {
-                             let cardColor = "border-2 border-primary";
-                             if (entry.tags.includes('Positive')) cardColor = "border-2 border-green-500";
-                             if (entry.tags.includes('Negative')) cardColor = "border-2 border-red-500";
-                             if (entry.tags.includes('Thought')) cardColor = "border-2 border-orange-500";
+                            let cardColor = "border-2 border-primary";
+                            if (entry.tags.includes('Positive')) cardColor = "border-2 border-green-500";
+                            if (entry.tags.includes('Negative')) cardColor = "border-2 border-red-500";
+                            if (entry.tags.includes('Thought')) cardColor = "border-2 border-orange-500";
 
-                             return (
+                            return (
                                 <Card key={entry.id} className={`break-inside-avoid mb-4 group relative ${cardColor}`}>
                                     <CardHeader className="pb-2">
                                         <CardTitle className="text-lg capitalize">{entry.title || "Untitled"}</CardTitle>
@@ -171,36 +168,36 @@ export default function DiaryPage() {
                                         <p className="whitespace-pre-wrap">{entry.content}</p>
                                     </CardContent>
                                     <CardFooter className="flex justify-between items-center text-xs text-muted-foreground pt-2">
-                                         <div className="flex gap-1 flex-wrap">
+                                        <div className="flex gap-1 flex-wrap">
                                             {entry.tags.map((t: string) => (
                                                 <span key={t} className="bg-secondary px-1.5 py-0.5 rounded text-[10px]">{t}</span>
                                             ))}
-                                         </div>
-                                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => openEdit(entry)}>
-                                                 <IconPencil size={14} />
-                                             </Button>
-                                             <AlertDialog>
-                                                 <AlertDialogTrigger render={<Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:text-destructive">
-                                                        <IconTrash size={14} />
-                                                    </Button>}>
-                                                    
-                                                 </AlertDialogTrigger>
-                                                 <AlertDialogContent>
-                                                     <AlertDialogHeader>
-                                                         <AlertDialogTitle>Delete Entry?</AlertDialogTitle>
-                                                         <AlertDialogDescription>This cannot be undone.</AlertDialogDescription>
-                                                     </AlertDialogHeader>
-                                                     <AlertDialogFooter>
-                                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                         <AlertDialogAction onClick={() => handleDelete(entry.id)}>Delete</AlertDialogAction>
-                                                     </AlertDialogFooter>
-                                                 </AlertDialogContent>
-                                             </AlertDialog>
-                                         </div>
+                                        </div>
+                                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => openEdit(entry)}>
+                                                <IconPencil size={14} />
+                                            </Button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger render={<Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:text-destructive">
+                                                    <IconTrash size={14} />
+                                                </Button>}>
+
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Delete Entry?</AlertDialogTitle>
+                                                        <AlertDialogDescription>This cannot be undone.</AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDelete(entry.id)}>Delete</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
                                     </CardFooter>
                                 </Card>
-                             );
+                            );
                         })}
                     </div>
                 </div>
@@ -208,9 +205,9 @@ export default function DiaryPage() {
 
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
                 <DialogTrigger render={<Button className="fixed bottom-12 right-12 z-50 shadow-lg rounded-full px-6" size="lg">
-                        <IconMessageCirclePlus size={20} className="mr-2" /> Add {currentTab === 'diary' ? 'Entry' : currentTab.charAt(0).toUpperCase() + currentTab.slice(1)}
-                    </Button>}>
-                    
+                    <IconMessageCirclePlus size={20} className="mr-2" /> Add {currentTab === 'diary' ? 'Entry' : currentTab.charAt(0).toUpperCase() + currentTab.slice(1)}
+                </Button>}>
+
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
@@ -237,12 +234,14 @@ export default function DiaryPage() {
                         </div>
                         <div className="grid gap-2">
                             <Label>Category</Label>
-                             <Select
+                            <Select
                                 value={formData.tags[0] || currentTab.charAt(0).toUpperCase() + currentTab.slice(1)} // Default to current tab
-                                onValueChange={(val) => setFormData({ ...formData, tags: [val] })}
+                                onValueChange={(val) => {
+                                    if (val) setFormData({ ...formData, tags: [val] })
+                                }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select category" />
+                                    <SelectValue  />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {categoryTags.map(t => (
@@ -281,13 +280,15 @@ export default function DiaryPage() {
                             />
                         </div>
                         <div className="grid gap-2">
-                             <Label>Category</Label>
-                             <Select
+                            <Label>Category</Label>
+                            <Select
                                 value={formData.tags[0] || "Diary"}
-                                onValueChange={(val) => setFormData({ ...formData, tags: [val] })}
+                                onValueChange={(val) => {
+                                    if (val) setFormData({ ...formData, tags: [val] })
+                                }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select category" />
+                                    <SelectValue   />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {categoryTags.map(t => (
@@ -298,7 +299,7 @@ export default function DiaryPage() {
                         </div>
                     </div>
                     <DialogFooter>
-                         <Button variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
+                        <Button variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
                         <Button onClick={handleUpdate}>Update Entry</Button>
                     </DialogFooter>
                 </DialogContent>

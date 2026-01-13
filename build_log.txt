@@ -1,0 +1,22 @@
+$ next build
+Γû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.4s
+  Running TypeScript ...
+Failed to compile.
+
+./components/ui/resizable.tsx:4:17
+Type error: '"react-resizable-panels"' has no exported member named 'PanelGroup'. Did you mean 'PanelProps'?
+
+  2 |
+  3 | import * as React from "react"
+> 4 | import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
+    |                 ^
+  5 |
+  6 | import { cn } from "@/lib/utils"
+  7 |
+Next.js build worker exited with code: 1 and signal: null
+error: script "build:dev" exited with code 1
+  

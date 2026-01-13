@@ -464,7 +464,7 @@ function FormExample() {
                 <Combobox items={frameworks}>
                   <ComboboxInput
                     id="small-form-framework"
-                    placeholder="Select a framework"
+                    // placeholder="Select a framework"
                     required
                   />
                   <ComboboxContent>

@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import dayjs from "dayjs";
-import { APP_NAME } from "@/shared/appVariables.shared";
+import { APP_NAME } from "@/shared/appVariables";
 
 interface PageMeta {
   title: string;
@@ -43,7 +43,7 @@ export function PageMetaProvider({ children }: { children: ReactNode }) {
       }
       if (updates.subtitle) newMeta.subtitle = updates.subtitle;
       if ('headerActions' in updates) newMeta.headerActions = updates.headerActions;
-      
+
       return newMeta;
     });
   }, []);

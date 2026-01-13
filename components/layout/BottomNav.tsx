@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SIDENAV_DASH } from "@/shared/appVariables.shared";
+import { SIDENAV_DASH } from "@/shared/appVariables";
 
 export const BottomNav = () => {
   const pathname = usePathname();

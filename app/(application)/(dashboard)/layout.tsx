@@ -25,12 +25,15 @@ function PageHead() {
 // Separate component to consume the context
 function HeaderActionsWrapper() {
   const { meta } = usePageMeta();
+  const [isUrgeOpen, setIsUrgeOpen] = React.useState(false);
+
   return (
     <div className="flex gap-2">
       {meta.headerActions !== undefined ? meta.headerActions : (
-        <>
+        <>  
           <RitualInputForm />
-          <UrgeInputForm/>
+          <Button variant="outline" onClick={() => setIsUrgeOpen(true)}>Log Urge</Button>
+          <UrgeInputForm open={isUrgeOpen} onOpenChange={setIsUrgeOpen} onSuccess={() => {}} />
         </>
       )}
     </div>

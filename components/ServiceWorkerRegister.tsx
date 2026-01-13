@@ -5,6 +5,18 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { IconBell, IconBellOff } from "@tabler/icons-react";
 
+interface NotificationAction {
+    action: string;
+    title: string;
+    icon?: string;
+    type?: string;
+    placeholder?: string;
+}
+
+interface ExtendedNotificationOptions extends NotificationOptions {
+    actions?: NotificationAction[];
+}
+
 export function ServiceWorkerRegister() {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
@@ -37,7 +49,7 @@ export function ServiceWorkerRegister() {
             registration.showNotification("Karman Active", {
                 body: "This is a test notification. Reply to test input!",
                 icon: '/icons/icon-192x192.png',
-                 actions: [
+                 actions : [
                     {
                         action: 'checkin-reply',
                         type: 'text',
@@ -45,7 +57,7 @@ export function ServiceWorkerRegister() {
                         placeholder: 'What are you doing?'
                     }
                 ]
-            });
+            } as ExtendedNotificationOptions);
         } else {
             toast.error("Permission denied");
         }

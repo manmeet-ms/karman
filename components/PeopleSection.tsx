@@ -218,7 +218,7 @@ export function PeopleSection() {
                     ) : (
                         people.map((person, idx) => (
                             <TooltipProvider  key={person.id}>
-                                <Tooltip openDelay={600} >
+                                <Tooltip>
                                     <TooltipTrigger><div
                                         key={person.id}
                                         className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-semibold cursor-pointer transition-all ${getColorClass(idx)}`}

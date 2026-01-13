@@ -18,8 +18,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     const body = await req.json();
     const { name, relation, notes } = body;
 
-    const { id } = await params;
-
     const existing = await prisma.person.findFirst({
         where: { id, userId: user.id }
     });
@@ -56,7 +54,6 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
   
     try {
-      const { id } = await params;
       const existing = await prisma.person.findFirst({
           where: { id, userId: user.id }
       });

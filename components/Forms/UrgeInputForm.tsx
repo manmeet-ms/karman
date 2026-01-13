@@ -77,7 +77,7 @@ export default function UrgeInputForm({ open, onOpenChange, onSuccess }: UrgeInp
                         <Label>Intensity (1-10)</Label>
                         <RadioGroup
                             value={formData.urgeIntensity.toString()}
-                            onValueChange={(val) => setFormData({ ...formData, urgeIntensity: parseInt(val) })}
+                            onValueChange={(val) => setFormData({ ...formData, urgeIntensity: parseInt(val as string) })}
                             className="flex flex-wrap gap-2"
                         >
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
@@ -94,10 +94,14 @@ export default function UrgeInputForm({ open, onOpenChange, onSuccess }: UrgeInp
                             <Label>Type</Label>
                             <Select
                                 value={formData.urgeType}
-                                onValueChange={(val) => setFormData({ ...formData, urgeType: val })}
+                                onValueChange={(val) => {
+                                    if(val) setFormData({ ...formData, urgeType: val })
+                                }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Type" />
+                                    <SelectValue 
+                                    // placeholder="Type" 
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {urgeTypes.map(t => (
@@ -126,10 +130,14 @@ export default function UrgeInputForm({ open, onOpenChange, onSuccess }: UrgeInp
                             <Label>Trigger</Label>
                             <Select
                                 value={formData.urgeTrigger}
-                                onValueChange={(val) => setFormData({ ...formData, urgeTrigger: val })}
+                                onValueChange={(val) => {
+                                    if(val) setFormData({ ...formData, urgeTrigger: val })
+                                }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Trigger" />
+                                    <SelectValue 
+                                    // placeholder="Trigger" 
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {urgeTriggers.map(t => (
@@ -142,10 +150,14 @@ export default function UrgeInputForm({ open, onOpenChange, onSuccess }: UrgeInp
                             <Label>Location</Label>
                             <Select
                                 value={formData.urgeLocation}
-                                onValueChange={(val) => setFormData({ ...formData, urgeLocation: val })}
+                                onValueChange={(val) => {
+                                    if(val) setFormData({ ...formData, urgeLocation: val })
+                                }}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Location" />
+                                    <SelectValue 
+                                    // placeholder="Location" 
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {urgeLocations.map(t => (
@@ -161,7 +173,8 @@ export default function UrgeInputForm({ open, onOpenChange, onSuccess }: UrgeInp
                         <Textarea
                             value={formData.urgeNotes}
                             onChange={(e) => setFormData({ ...formData, urgeNotes: e.target.value })}
-                            placeholder="Describe the urge..."
+                            
+                            // placeholder="Describe the urge..."
                         />
                     </div>
                 </div>

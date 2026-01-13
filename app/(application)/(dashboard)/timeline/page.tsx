@@ -43,6 +43,39 @@ interface TimelineHeaderActionsProps {
     setIsCreateOpen: (open: boolean) => void;
 }
 
+interface MoodData {
+    moodType: string;
+    intensity: number;
+    trigger: string;
+    location: string;
+    physicalState: string;
+    notes: string;
+}
+
+interface CheckinEntry {
+    id: string;
+    note: string;
+    tag: string;
+    createdAt: string;
+    entryDate: string;
+    mood?: MoodData;
+}
+
+interface CheckinFormData {
+    note: string;
+    tag: string;
+    mood: MoodData;
+}
+
+interface CheckinFormProps {
+    formData: CheckinFormData;
+    setFormData: (data: CheckinFormData) => void;
+    tags: string[];
+    moods: string[];
+    onSubmit: () => void;
+    submitLabel: string;
+}
+
 function TimelineHeaderActions({ setIsCreateOpen }: TimelineHeaderActionsProps) {
     return (
         <Button onClick={() => setIsCreateOpen(true)}>
@@ -53,14 +86,14 @@ function TimelineHeaderActions({ setIsCreateOpen }: TimelineHeaderActionsProps) 
 
 export default function TimelinePage() {
     const { setPageMeta } = usePageMeta();
-    const [checkins, setCheckins] = useState<any[]>([]);
+    const [checkins, setCheckins] = useState<CheckinEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [editingCheckin, setEditingCheckin] = useState<any>(null);
+    const [editingCheckin, setEditingCheckin] = useState<CheckinEntry | null>(null);
 
     // Form State
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<CheckinFormData>({
         note: "",
         tag: "",
         mood: {
@@ -154,7 +187,7 @@ export default function TimelinePage() {
         }
     };
 
-    const openEdit = (checkin: any) => {
+    const openEdit = (checkin: CheckinEntry) => {
         setEditingCheckin(checkin);
         setFormData({
             note: checkin.note,
@@ -287,7 +320,7 @@ export default function TimelinePage() {
 }
 
 // Helper Component for the Form to avoid duplication
-function CheckinForm({ formData, setFormData, tags, moods, onSubmit, submitLabel }: any) {
+function CheckinForm({ formData, setFormData, tags, moods, onSubmit, submitLabel }: CheckinFormProps) {
     return (
         <div className="flex flex-col gap-4 py-2">
             <div className="grid gap-2">
@@ -303,10 +336,14 @@ function CheckinForm({ formData, setFormData, tags, moods, onSubmit, submitLabel
                 <Label>Category</Label>
                 <Select
                     value={formData.tag}
-                    onValueChange={(val) => setFormData({ ...formData, tag: val })}
+                    onValueChange={(val) => {
+                        if (val) setFormData({ ...formData, tag: val })
+                    }}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
+                        <SelectValue 
+                        // placeholder="Select category" 
+                        />
                     </SelectTrigger>
                     <SelectContent>
                         {tags.map((tag: string) => (
@@ -324,10 +361,14 @@ function CheckinForm({ formData, setFormData, tags, moods, onSubmit, submitLabel
                 <Label>Mood</Label>
                 <Select
                     value={formData.mood.moodType}
-                    onValueChange={(val) => setFormData({ ...formData, mood: { ...formData.mood, moodType: val } })}
+                    onValueChange={(val) => {
+                        if (val) setFormData({ ...formData, mood: { ...formData.mood, moodType: val } })
+                    }}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select mood" />
+                        <SelectValue 
+                        // placeholder="Select mood" 
+                        />
                     </SelectTrigger>
                     <SelectContent>
                         {moods.map((m: string) => (
@@ -343,7 +384,7 @@ function CheckinForm({ formData, setFormData, tags, moods, onSubmit, submitLabel
                         <Label>Intensity (1-10)</Label>
                         <RadioGroup
                             value={formData.mood.intensity.toString()}
-                            onValueChange={(val) => setFormData({ ...formData, mood: { ...formData.mood, intensity: parseInt(val) } })}
+                            onValueChange={(val) => setFormData({ ...formData, mood: { ...formData.mood, intensity: parseInt(val as string) } })}
                             className="flex flex-wrap gap-2"
                         >
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
