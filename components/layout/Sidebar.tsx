@@ -98,7 +98,7 @@ export function MobileSidebar() {
   return (
     <Sheet>
       <SheetTrigger render={<Button variant="ghost" size="icon" className="lg:hidden">
-        <IconLayoutSidebarLeftCollapse className="h-5 w-5" />
+        <IconLayoutSidebarLeftCollapse className="h-6 w-6" />
         <span className="sr-only">Toggle Menu</span>
       </Button>}>
 

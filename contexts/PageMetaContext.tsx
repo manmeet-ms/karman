@@ -50,7 +50,7 @@ export function PageMetaProvider({ children }: { children: ReactNode }) {
 
   return (
     <PageMetaContext.Provider value={{ meta, setPageMeta }}>
-      {children}
+       {children}
     </PageMetaContext.Provider>
   );
 }

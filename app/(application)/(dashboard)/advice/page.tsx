@@ -57,9 +57,9 @@ function AdviceHeaderActions({
     setIsCreateOpen,
 }: AdviceHeaderActionsProps) {
     return (
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="flex md:flex-row justify-between items-start md:items-center gap-2">
             <div className="flex items-center gap-2 w-full md:w-auto">
-                <Select
+                {/* <Select
                     value={activeTab === "MINE" ? "" : activeTab}
                     onValueChange={(val) => setActiveTab(val || "ALL")}
                 >
@@ -75,7 +75,7 @@ function AdviceHeaderActions({
                         <SelectItem value="PSYCHOLOGICAL">Psychological</SelectItem>
                         <SelectItem value="MANIPULATIVE">Manipulative</SelectItem>
                     </SelectContent>
-                </Select>
+                </Select> */}
 
                 <Button
                     variant={activeTab === "MINE" ? "default" : "outline"}
@@ -223,7 +223,7 @@ export default function AdvicePage() {
                                     className="min-h-[150px]"
                                 />
                             </div>
-                            <div className="grid gap-2">
+                            {/* <div className="grid gap-2">
                                 <Label>Tags</Label>
                                 <div className="flex flex-wrap gap-2">
                                     {Object.values(AdviceTag).map(tag => (
@@ -233,7 +233,7 @@ export default function AdvicePage() {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <DialogFooter>
                             <Button onClick={handleCreate} disabled={isSubmitting}>

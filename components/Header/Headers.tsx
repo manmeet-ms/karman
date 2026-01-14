@@ -49,13 +49,13 @@ import { ModeToggle } from "../mode-toogle";
 import { Badge } from "@/components/ui/badge";
 import { ServiceWorkerRegister } from "../ServiceWorkerRegister";
 
-  interface Module {
-    id: string;
-    title: string;
-    description: string;
-    content: string;
-    startDate?: string;
-    createdAt: string;
+interface Module {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  startDate?: string;
+  createdAt: string;
 }
 
 type PropType = {
@@ -91,12 +91,12 @@ export function AppHeader() {
 
   const fetchModules = async () => {
     try {
-        const res = await axios.get("/api/longterm-modules");
-        setModules(res.data);
+      const res = await axios.get("/api/longterm-modules");
+      setModules(res.data);
     } catch (error) {
-        console.error("Failed to fetch modules", error);
+      console.error("Failed to fetch modules", error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -108,15 +108,15 @@ export function AppHeader() {
   const handleCreate = async () => {
     setIsSubmitting(true);
     try {
-        await axios.post("/api/longterm-modules", formData);
-        toast.success("Module created");
-        setIsCreateOpen(false);
-        setFormData({ title: "", description: "", content: "", startDate: "" });
-        fetchModules();
+      await axios.post("/api/longterm-modules", formData);
+      toast.success("Module created");
+      setIsCreateOpen(false);
+      setFormData({ title: "", description: "", content: "", startDate: "" });
+      fetchModules();
     } catch {
-        toast.error("Failed to create module");
+      toast.error("Failed to create module");
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -124,39 +124,39 @@ export function AppHeader() {
     if (!viewModule) return;
     setIsSubmitting(true);
     try {
-        await axios.put(`/api/longterm-modules/${viewModule.id}`, formData);
-        toast.success("Module updated");
-        setIsEditMode(false);
-        setViewModule(null); // Close dialog or maybe keep open with updated data? Let's close for simplicity
-        setFormData({ title: "", description: "", content: "", startDate: "" });
-        fetchModules();
+      await axios.put(`/api/longterm-modules/${viewModule.id}`, formData);
+      toast.success("Module updated");
+      setIsEditMode(false);
+      setViewModule(null); // Close dialog or maybe keep open with updated data? Let's close for simplicity
+      setFormData({ title: "", description: "", content: "", startDate: "" });
+      fetchModules();
     } catch {
-        toast.error("Failed to update module");
+      toast.error("Failed to update module");
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-        await axios.delete(`/api/longterm-modules/${id}`);
-        toast.success("Module deleted");
-        setViewModule(null);
-        fetchModules();
+      await axios.delete(`/api/longterm-modules/${id}`);
+      toast.success("Module deleted");
+      setViewModule(null);
+      fetchModules();
     } catch {
-        toast.error("Failed to delete module");
+      toast.error("Failed to delete module");
     }
   };
 
   const openView = (m: Module) => {
-      setViewModule(m);
-      setIsEditMode(false); // Default to view mode
-      setFormData({ title: m.title, description: m.description || "", content: m.content || "", startDate: m.startDate || "" });
+    setViewModule(m);
+    setIsEditMode(false); // Default to view mode
+    setFormData({ title: m.title, description: m.description || "", content: m.content || "", startDate: m.startDate || "" });
   };
 
   const calculateDay = (startDate?: string) => {
-      if (!startDate) return 0;
-      return dayjs().diff(dayjs(startDate), "days");
+    if (!startDate) return 0;
+    return dayjs().diff(dayjs(startDate), "days");
   };
 
   const pointsLedgerFe: any[] = []
@@ -164,8 +164,8 @@ export function AppHeader() {
   return (
     <>
       <header className="p-4 sticky top-0 z-10 bg-muted/30 border-b backdrop-brightness-20 backdrop-blur-2xl ">
-        <nav className="flex items-center  justify-between">
-          <Link href="/" className="flex   items-center gap-2">
+        <nav className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
             {" "}
             <Image src="/logo.svg" width={24} height={24} className="grayscale w-8 h-8 rounded" alt="logo" />
             <div className="flex flex-col">
@@ -177,89 +177,89 @@ export function AppHeader() {
             </div>
           </Link>
 
-          <div className="  flex container max-w-[65%]    overflow-x-scroll no-scrollbar p-1 border  gap-2    rounded-full ">
+          <div className="hidden md:flex container max-w-[65%] overflow-x-scroll no-scrollbar p-1 border gap-2 rounded-full ">
             {modules.map((item, idx) => (
-                <div key={item.id} onClick={() => openView(item)} className="bg-primary/10 text-primary cursor-pointer backdrop-blur-2xl flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 dark:ring-white/10 hover:bg-gray-950/2 hover:ring-gray-950/10 dark:hover:bg-white/5 dark:hover:ring-white/20">
-                    <IconPercentage10 className="text-primary size-4 " />
-                    <span className="font-medium">
-                    {item.title} - <b>Day {calculateDay(item.startDate)}</b>{" "}
-                    </span>
-                </div>
+              <div key={item.id} onClick={() => openView(item)} className="bg-primary/10 text-primary cursor-pointer backdrop-blur-2xl flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 dark:ring-white/10 hover:bg-gray-950/2 hover:ring-gray-950/10 dark:hover:bg-white/5 dark:hover:ring-white/20">
+                <IconPercentage10 className="text-primary size-4 " />
+                <span className="font-medium">
+                  {item.title} - <b>Day {calculateDay(item.startDate)}</b>{" "}
+                </span>
+              </div>
             ))}
-            
+
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogTrigger render={<Button className="sticky right-0 rounded-full w-8 h-8 p-0" variant="ghost"><IconPlus size={16}/></Button>}/>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Add New Longterm Module</DialogTitle>
-                        <DialogDescription>Track a new long-term goal.</DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid gap-2">
-                            <Label>Title</Label>
-                            <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Master Python" />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label>Date Started</Label>
-                            <Input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} />
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button onClick={handleCreate} disabled={isSubmitting}>Create</Button>
-                    </DialogFooter>
-                </DialogContent>
+              <DialogTrigger render={<Button className="sticky right-0 rounded-full w-8 h-8 p-0" variant="ghost"><IconPlus size={16} /></Button>} />
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Longterm Module</DialogTitle>
+                  <DialogDescription>Track a new long-term goal.</DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid gap-2">
+                    <Label>Title</Label>
+                    <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Master Python" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Date Started</Label>
+                    <Input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button onClick={handleCreate} disabled={isSubmitting}>Create</Button>
+                </DialogFooter>
+              </DialogContent>
             </Dialog>
 
-             {/* View/Edit Dialog - Shared */}
-             <Dialog open={!!viewModule} onOpenChange={(open) => !open && setViewModule(null)}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>{isEditMode ? "Edit Module" : viewModule?.title}</DialogTitle>
-                        {!isEditMode && <DialogDescription>{viewModule?.description}</DialogDescription>}
-                    </DialogHeader>
+            {/* View/Edit Dialog - Shared */}
+            <Dialog open={!!viewModule} onOpenChange={(open) => !open && setViewModule(null)}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{isEditMode ? "Edit Module" : viewModule?.title}</DialogTitle>
+                  {!isEditMode && <DialogDescription>{viewModule?.description}</DialogDescription>}
+                </DialogHeader>
 
-                     {isEditMode ? (
-                        <div className="grid gap-4 py-4">
-                            <div className="grid gap-2">
-                                <Label>Title</Label>
-                                <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label>Date Started</Label>
-                                <Input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} />
-                            </div>
-                             <div className="grid gap-2">
-                                <Label>Description</Label>
-                                <Input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                            </div>
-                             <div className="grid gap-2">
-                                <Label>Content</Label>
-                                <Input value={formData.content} onChange={e => setFormData({ ...formData, content: e.target.value })} />
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            <div className="text-sm text-foreground/80">
-                                <p className="mb-2"><strong>Started:</strong> {viewModule?.startDate ? dayjs(viewModule.startDate).format("MMM DD, YYYY") : "N/A"} (Day {calculateDay(viewModule?.startDate)})</p>
-                                {viewModule?.content && <p className="whitespace-pre-wrap bg-muted p-2 rounded text-xs">{viewModule.content}</p>}
-                            </div>
-                        </div>
-                    )}
+                {isEditMode ? (
+                  <div className="grid gap-4 py-4">
+                    <div className="grid gap-2">
+                      <Label>Title</Label>
+                      <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label>Date Started</Label>
+                      <Input type="date" value={formData.startDate} onChange={e => setFormData({ ...formData, startDate: e.target.value })} />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label>Description</Label>
+                      <Input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label>Content</Label>
+                      <Input value={formData.content} onChange={e => setFormData({ ...formData, content: e.target.value })} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="text-sm text-foreground/80">
+                      <p className="mb-2"><strong>Started:</strong> {viewModule?.startDate ? dayjs(viewModule.startDate).format("MMM DD, YYYY") : "N/A"} (Day {calculateDay(viewModule?.startDate)})</p>
+                      {viewModule?.content && <p className="whitespace-pre-wrap bg-muted p-2 rounded text-xs">{viewModule.content}</p>}
+                    </div>
+                  </div>
+                )}
 
-                    <DialogFooter className="gap-2 sm:gap-0">
-                        {isEditMode ? (
-                            <>
-                                <Button variant="ghost" onClick={() => setIsEditMode(false)}>Cancel</Button>
-                                <Button onClick={handleUpdate} disabled={isSubmitting}>Save</Button>
-                            </>
-                        ) : (
-                            <div className="flex w-full justify-between items-center">
-                                <Button variant="destructive" size="sm" onClick={() => viewModule && handleDelete(viewModule.id)}><IconTrash size={16} className="mr-1"/> Delete</Button>
-                                <Button variant="outline" size="sm" onClick={() => setIsEditMode(true)}><IconEdit size={16} className="mr-1"/> Edit</Button>
-                            </div>
-                        )}
-                    </DialogFooter>
-                </DialogContent>
+                <DialogFooter className="gap-2 sm:gap-0">
+                  {isEditMode ? (
+                    <>
+                      <Button variant="ghost" onClick={() => setIsEditMode(false)}>Cancel</Button>
+                      <Button onClick={handleUpdate} disabled={isSubmitting}>Save</Button>
+                    </>
+                  ) : (
+                    <div className="flex w-full justify-between items-center">
+                      <Button variant="destructive" size="sm" onClick={() => viewModule && handleDelete(viewModule.id)}><IconTrash size={16} className="mr-1" /> Delete</Button>
+                      <Button variant="outline" size="sm" onClick={() => setIsEditMode(true)}><IconEdit size={16} className="mr-1" /> Edit</Button>
+                    </div>
+                  )}
+                </DialogFooter>
+              </DialogContent>
             </Dialog>
           </div>
 
@@ -273,7 +273,7 @@ export function AppHeader() {
                 <Sheet>
                   <SheetTrigger>
                     {" "}
-                    <span className={cn("text-sm flex justify-center items-center px-3  gap-1.5  py-2   rounded-full bg-accent/50       ", (stats.points || 0) < 0 ? "text-red-600" : "")}>
+                    <span className={cn("text-sm flex justify-center items-center px-3 gap-1.5 py-2 rounded-full bg-accent/50  ", (stats.points || 0) < 0 ? "text-red-600" : "")}>
                       <IconBoltFilled size={16} />
                       {Number.parseFloat(stats.points ?? 0).toFixed(0)}
                     </span>
@@ -289,12 +289,12 @@ export function AppHeader() {
                       </SheetTitle>
                       <SheetDescription>
                         <ScrollArea className="h-screen ">
-                          <ol className="  ">
+                          <ol className=" ">
                             {pointsLedgerFe
                               ? pointsLedgerFe.reverse().map((entry, idx) => (
-                                <li key={idx} className="border-b py-2  flex items-center justify-between  ">
+                                <li key={idx} className="border-b py-2 flex items-center justify-between ">
                                   <div>
-                                    <div className="flex gap-4 items-center  justify-start">
+                                    <div className="flex gap-4 items-center justify-start">
                                       <span className="opacity-30">#{idx + 1}</span>
                                       <div>
                                         <Badge variant="outline" className="border-0 px-0 ">
@@ -327,32 +327,32 @@ export function AppHeader() {
                     </SheetHeader>
                   </SheetContent>
                 </Sheet>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <Avatar>
-                        <AvatarImage src={session?.data?.user?.image || undefined} />
-                        <AvatarFallback>{session?.data?.user?.name?.[0]}</AvatarFallback>
-                      </Avatar>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuGroup>
-                        <DropdownMenuLabel className="  ">
-                          Logged in as  {session?.data?.user?.name} <br />
-                          <span className="relative top-1 text-muted-foreground/40 mt-1 ">{session?.data?.user?.email}
-                          </span>
-                        </DropdownMenuLabel>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Link href={"/settings"}>Settings</Link>
-                      </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarImage src={session?.data?.user?.image || undefined} />
+                      <AvatarFallback>{session?.data?.user?.name?.[0]}</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel className=" ">
+                        Logged in as {session?.data?.user?.name} <br />
+                        <span className="relative top-1 text-muted-foreground/40 mt-1 ">{session?.data?.user?.email}
+                        </span>
+                      </DropdownMenuLabel>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Link href={"/settings"}>Settings</Link>
+                    </DropdownMenuItem>
 
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-2  ">
-                        Logout <IconLogout size={16} />
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-2 ">
+                      Logout <IconLogout size={16} />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
               </div>) : (
               <Button onClick={() => signIn('google')} >Login</Button>

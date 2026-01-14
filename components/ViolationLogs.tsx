@@ -6,7 +6,7 @@ export function RecentViolations({ violations, totalCount }: { violations: any[]
   return (
 <Card>
         <CardHeader>
-            <CardTitle>Recent Violations 
+            <CardTitle>Recent Violations
                 <span className="bg-primary/20 text-primary ml-2 rounded-full px-2 py-1 text-xs font-bold">
             {totalCount}
           </span> </CardTitle>

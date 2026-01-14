@@ -55,7 +55,7 @@ export const SIDENAV_DASH = [
         icon: IconBell,
     },
     {
-        title: 'Global advice',
+        title: 'Advice',
         url: '/advice',
         icon: IconBulb,
     },

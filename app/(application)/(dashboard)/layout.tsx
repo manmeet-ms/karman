@@ -28,7 +28,8 @@ function HeaderActionsWrapper() {
   const [isUrgeOpen, setIsUrgeOpen] = React.useState(false);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center justify-center   lg:mt-0 ">
+      <MobileSidebar className="lg:hidden"/>
       {meta.headerActions !== undefined ? meta.headerActions : (
         <>  
           <RitualInputForm />
@@ -53,15 +54,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
 
             <div className="flex flex-col sm:gap-4 sm:py-4  lg:pl-0 w-full pb-16 lg:pb-0">
-              <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b   px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 lg:hidden">
+              {/* <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b   px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 lg:hidden">
                 <MobileSidebar />
                 <div className="w-full flex-1">
                   <span className="font-semibold">Karman</span>
                 </div>
-              </header>
+              </header> */}
 
               <main className="grid flex-1  items-start      lg:grid-cols-1">
-                <div className="flex border-b pb-4 px-4  items-center justify-between">
+                <div className="flex border-b py-2 px-4  items-center justify-between">
                   <PageHead />
                   {/* i wanna add props here */}
                   {/* Header Actions Area */}
