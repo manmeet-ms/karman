@@ -1,46 +1,71 @@
-"use client";
 
-export const requestNotificationPermission = async () => {
-  if (!("Notification" in window)) {
-    console.log("This browser does not support desktop notification");
-    return false;
-  }
+import webPush, { PushSubscription } from 'web-push';
+import prisma from './prisma';
 
-  if (Notification.permission === "granted") {
-    return true;
-  }
-
-  if (Notification.permission !== "denied") {
-    const permission = await Notification.requestPermission();
-    return permission === "granted";
-  }
-
-  return false;
-};
-
-export const sendNotification = (title: string, options?: NotificationOptions) => {
-  if (Notification.permission === "granted") {
-    new Notification(title, options);
-  }
-};
-
-// Example usage payload
-export interface NotificationPayload {
-  title: string;
-  body?: string;
-  icon?: string;
-  image?: string;
-  data?: any;
+// Configure web-push
+if (!process.env.VITE_WEBPUSH_PUBLIC_KEY || !process.env.VITE_WEBPUSH_PRIVATE_KEY) {
+    console.error("VAPID keys are missing from environment variables.");
+} else {
+    webPush.setVapidDetails(
+        `mailto:${process.env.VITE_WEBPUSH_EMAIL || 'admin@example.com'}`,
+        process.env.VITE_WEBPUSH_PUBLIC_KEY,
+        process.env.VITE_WEBPUSH_PRIVATE_KEY
+    );
 }
 
-export const showNotification = async (payload: NotificationPayload) => {
-  const hasPermission = await requestNotificationPermission();
-  if (hasPermission) {
-    sendNotification(payload.title, {
-      body: payload.body,
-      icon: payload.icon || "/icons/icon-192x192.png",
-      image: payload.image,
-      data: payload.data,
-    } as any);
-  }
-};
+interface NotificationPayload {
+    title: string;
+    body: string;
+    url?: string;
+    actions?: any[]; 
+}
+
+/**
+ * Sends a push notification to a specific user.
+ * It fetches all active subscriptions for the user and sends the payload to each.
+ */
+export async function sendNotificationToUser(userId: string, payload: NotificationPayload) {
+    const subscriptions = await prisma.pushSubscription.findMany({
+        where: { userId },
+    });
+
+    if (subscriptions.length === 0) {
+        return { success: false, message: "No subscriptions found for user" };
+    }
+
+    const payloadString = JSON.stringify(payload);
+    let successCount = 0;
+    let failCount = 0;
+
+    const promises = subscriptions.map(async (sub) => {
+        try {
+            const pushConfig = {
+                endpoint: sub.endpoint,
+                keys: sub.keys as any, // Type cast JSON to keys object
+            };
+
+            await webPush.sendNotification(pushConfig, payloadString);
+            successCount++;
+        } catch (error: any) {
+            console.error(`Error sending push to ${sub.id}:`, error);
+            failCount++;
+
+            if (error.statusCode === 410 || error.statusCode === 404) {
+                // Subscription is invalid or expired, remove it
+                await prisma.pushSubscription.delete({
+                    where: { id: sub.id },
+                });
+                console.log(`Deleted expired subscription ${sub.id}`);
+            }
+        }
+    });
+
+    await Promise.all(promises);
+
+    return {
+        success: true,
+        sent: successCount,
+        failed: failCount,
+        total: subscriptions.length
+    };
+}

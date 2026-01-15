@@ -2,10 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChartBarInteractive } from "@/components/chart-bar-interactive";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const data = {
   streaks: [
@@ -23,8 +19,8 @@ const data = {
   ],
 };
 
-import { usePageMeta } from "@/contexts/PageMetaContext";
 import { ComingSoon } from "@/components/ComingSoon";
+import { usePageMeta } from "@/contexts/PageMetaContext";
 
 export default function AnalyticsPage() {
   const { setPageMeta } = usePageMeta();

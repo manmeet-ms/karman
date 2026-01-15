@@ -1,40 +1,56 @@
 
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { SIDENAV_DASH } from "@/shared/appVariables";
-import {
-  IconInfoCircle,
-  IconMilitaryAward,
-  IconLayoutSidebarLeftCollapse,
-} from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
-
-const currentRank = { name: "Novice", minPoints: 0, emoji: "🌱" };
-const nextRank = { name: "Acolyte", minPoints: 500 };
+import { cn } from "@/lib/utils";
+import { SIDENAV_DASH, USER_POINTS_RANK_TABLE } from "@/shared/appVariables";
+import {
+  IconInfoCircle,
+  IconLayoutSidebarLeftCollapse,
+} from "@tabler/icons-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 export function Sidebar() {
   const pathname = usePathname();
   const points = 120; // Placeholder
 
-  const progressValue = React.useMemo(() => {
-    if (points && nextRank?.minPoints) {
-      return Math.floor((points / nextRank.minPoints) * 100);
+  const { currentRank, nextRank, progressValue } = React.useMemo(() => {
+    const sorted = [...USER_POINTS_RANK_TABLE].sort((a, b) => a.minPoints - b.minPoints);
+    let current = sorted[0];
+    let next = sorted[1];
+
+    for (let i = 0; i < sorted.length; i++) {
+        if (points >= sorted[i].minPoints) {
+            current = sorted[i];
+            next = sorted[i + 1] || null;
+        } else {
+            break;
+        }
     }
-    return 0;
+
+    let prog = 0;
+    if (next) {
+        const total = next.minPoints - current.minPoints;
+        const gained = points - current.minPoints;
+        prog = Math.min(100, Math.max(0, Math.floor((gained / total) * 100)));
+    } else {
+        prog = 100;
+    }
+
+    return { currentRank: current, nextRank: next, progressValue: prog };
   }, [points]);
+
+  const RankIcon = currentRank.icon;
 
   return (
     <nav className="flex flex-col min-w-48 max-h-screen space-y-4 p-4 border-r hidden lg:flex h-screen">
@@ -62,7 +78,9 @@ export function Sidebar() {
       <div className="flex flex-col gap-4">
         {/* Rank Card */}
         <div className="bg-card flex gap-4 border rounded-lg p-2 items-center">
-          <IconMilitaryAward className="bg-accent/60 p-2 size-10 rounded-full text-primary" />
+          <div className={cn("p-2 rounded-full", currentRank.color.split(' ').filter(c => c.startsWith('bg-')).join(' '))}>
+             <RankIcon className={cn("size-6", currentRank.color.split(' ').filter(c => c.startsWith('text-')).join(' '))} />
+          </div>
           <div className="flex flex-col w-full">
             <TooltipProvider>
               <Tooltip>
@@ -71,7 +89,9 @@ export function Sidebar() {
                 </TooltipTrigger>
                 <TooltipContent>
                   <span className="text-xs">
-                    {Math.abs(nextRank.minPoints - points)} points to {nextRank.name}
+                    {nextRank 
+                        ? `${nextRank.minPoints - points} points to ${nextRank.name}` 
+                        : "Max Rank Achieved"}
                   </span>
                 </TooltipContent>
               </Tooltip>

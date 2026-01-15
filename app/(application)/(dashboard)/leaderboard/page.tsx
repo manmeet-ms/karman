@@ -46,7 +46,7 @@ export default function LeaderboardPage() {
             <h2 className="flex items-center gap-2 text-xl font-semibold">
               Hall of Fame
               <Badge>
-                <IconBoltFilled size={14} className="mr-1" />
+                <IconBolt size={14} className="mr-1" />
                 Top {leaderboard.length}{" "}
               </Badge>
             </h2>

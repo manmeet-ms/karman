@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { toast } from "sonner";
-import { IconTrash, IconEdit } from "@tabler/icons-react";
+import { IconTrash, IconEdit, IconBolt } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -274,7 +274,7 @@ export function AppHeader() {
                   <SheetTrigger>
                     {" "}
                     <span className={cn("text-sm flex justify-center items-center px-3 gap-1.5 py-2 rounded-full bg-accent/50  ", (stats.points || 0) < 0 ? "text-red-600" : "")}>
-                      <IconBoltFilled size={16} />
+                      <IconBolt size={16} />
                       {Number.parseFloat(stats.points ?? 0).toFixed(0)}
                     </span>
                   </SheetTrigger>

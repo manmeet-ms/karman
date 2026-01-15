@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/empty"
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
  
 interface ComingSoonProps {
@@ -21,7 +22,7 @@ interface ComingSoonProps {
 const ComingSoon = ({ className }: ComingSoonProps) => {
   return (
     <>
-    <Empty className="opacity-20 container w-full mx-auto" >
+    <Empty className="opacity-40 container w-full mx-auto" >
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <IconBarrierBlock />
@@ -34,7 +35,9 @@ const ComingSoon = ({ className }: ComingSoonProps) => {
       <EmptyContent>
         <div className="flex gap-2 group">
           <Button>Contact</Button>
+          <Link href="https://buymeacoffee.com/manmeets">
           <Button variant="outline">Support <IconHeartFilled className="group:hove text-muted inline-flex items-center  " /></Button>
+          </Link>
         </div>
       </EmptyContent>
       <Button

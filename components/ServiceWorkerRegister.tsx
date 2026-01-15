@@ -17,6 +17,22 @@ interface ExtendedNotificationOptions extends NotificationOptions {
     actions?: NotificationAction[];
 }
 
+// Function to convert VAPID key to Uint8Array
+const urlBase64ToUint8Array = (base64String: string) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+};
+
 export function ServiceWorkerRegister() {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
@@ -27,10 +43,14 @@ export function ServiceWorkerRegister() {
                 .then(reg => {
                     console.log('Service Worker registered', reg);
                     setRegistration(reg);
-                    // Check if already subscribed or permission granted
-                    if (Notification.permission === 'granted') {
-                        setIsSubscribed(true);
-                    }
+                    
+                    // Check existing subscription
+                    reg.pushManager.getSubscription().then(sub => {
+                        if (sub) {
+                             setIsSubscribed(true);
+                             // Optional: Re-sync subscription with backend here if needed
+                        }
+                    });
                 })
                 .catch(err => console.error('Service Worker registration failed', err));
         }
@@ -38,28 +58,46 @@ export function ServiceWorkerRegister() {
 
     const subscribe = async () => {
         if (!registration) return;
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            setIsSubscribed(true);
-            toast.success("Notifications Enabled!");
-            
-            // Trigger a test notification immediately to confirm logic
-            // In a real app, this would be triggered by the server via Push API
-            // Here we use the SW registration to show a local notification for demo/testing
-            registration.showNotification("Karman Active", {
-                body: "This is a test notification. Reply to test input!",
-                icon: '/icons/icon-192x192.png',
-                 actions : [
-                    {
-                        action: 'checkin-reply',
-                        type: 'text',
-                        title: 'Quick Check-in',
-                        placeholder: 'What are you doing?'
-                    }
-                ]
-            } as ExtendedNotificationOptions);
-        } else {
-            toast.error("Permission denied");
+
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "BNXdOLXOR4kGTndVs6K1rS4TC5Z0n2AT6kdu42EDAXFFx9iqh7jiIWjDXQvUxrtawgguSp4SE4KQEKW4G2VvmkI"; // Fallback to key found in .env
+                const convertedKey = urlBase64ToUint8Array(vapidKey);
+
+                const subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: convertedKey
+                });
+
+                // Send subscription to backend
+                const response = await fetch('/api/notifications/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(subscription),
+                });
+
+                if (response.ok) {
+                    setIsSubscribed(true);
+                    toast.success("Notifications Enabled!");
+                    
+                    // Trigger welcome notification locally
+                    registration.showNotification("Karman Active", {
+                        body: "You will now receive compliance updates.",
+                        icon: '/icons/icon-192x192.png',
+                    });
+                } else {
+                    toast.error("Failed to register subscription on server");
+                    console.error("Server subscription failed", await response.json());
+                }
+            } else {
+                toast.error("Permission denied");
+            }
+        } catch (error) {
+            console.error("Subscription error:", error);
+            toast.error("Failed to subscribe");
         }
     };
 
@@ -71,10 +109,5 @@ export function ServiceWorkerRegister() {
          )
     }
 
-    return null; // Or show settings
-    // return (
-    //     <Button variant="ghost" size="sm" onClick={() => subscribe()} className="text-xs text-primary gap-1">
-    //          <IconBell size={14} /> Test
-    //      </Button>
-    // )
+    return null; 
 }

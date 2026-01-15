@@ -3,14 +3,18 @@ import prisma from "@/lib/prisma";
 import { sendNotification } from "@/lib/utils/push";
 
 export const NotificationService = {
-  async saveSubscription(endpoint: string, keys: any) {
+  async saveSubscription(userId: string, endpoint: string, keys: any) {
     const existing = await prisma.pushSubscription.findUnique({
         where: { endpoint }
     });
 
     if (!existing) {
         await prisma.pushSubscription.create({
-            data: { endpoint, keys }
+            data: { 
+                endpoint, 
+                keys,
+                user: { connect: { id: userId } }
+            }
         });
     }
     return { message: 'Subscription saved' };

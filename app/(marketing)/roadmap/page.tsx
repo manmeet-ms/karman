@@ -76,11 +76,11 @@ const Roadmap = ({
               {description}
             </p>
             <div className="mt-8 flex flex-col gap-4 lg:flex-row">
-              <Button className="gap-2" size="lg" asChild>
-                <a href={buttons.primary.url}>{buttons.primary.text}</a>
+              <Button className="gap-2" size="lg" render={<a href={buttons.primary.url}>{buttons.primary.text}</a>}>
+                
               </Button>
-              <Button variant="outline" size="lg" className="gap-2" asChild>
-                <a href={buttons.secondary.url}>{buttons.secondary.text}</a>
+              <Button variant="outline" size="lg" className="gap-2" render={<a href={buttons.secondary.url}>{buttons.secondary.text}</a>}>
+                
               </Button>
             </div>
           </div>

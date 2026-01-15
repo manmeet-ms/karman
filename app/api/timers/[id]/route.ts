@@ -21,6 +21,15 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
      if (action === 'reset') {
          const result = await TimerService.resetTimer(session.user.id, id);
          return NextResponse.json({ message: "RESET Timer OK", result });
+     } else if (action === 'stop') {
+         // Assuming body contains duration for now, or we rely on client sending it
+         // Schema validation might need updating if 'duration' isn't in UpdateTimerSchema
+         // For now, grabbing from body directly if schema allows or loosely
+         const { duration } = body; 
+         if (typeof duration === 'number') {
+             await TimerService.stopTimer(id, session.user.id, duration);
+             return NextResponse.json({ message: "Timer Stopped & Logged" });
+         }
      }
 
      return new NextResponse("Not Implemented general update", { status: 501 });
