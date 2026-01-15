@@ -163,11 +163,11 @@ export function AppHeader() {
 
   return (
     <>
-      <header className="p-4 sticky top-0 z-10 bg-muted/30 border-b backdrop-brightness-20 backdrop-blur-2xl ">
+      <header className="p-4 sticky top-0 z-10  border-b  backdrop-blur-2xl ">
         <nav className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             {" "}
-            <Image src="/logo.svg" width={24} height={24} className="grayscale w-8 h-8 rounded" alt="logo" />
+            <Image src="/logo.svg" width={24} height={24} className="w-8 h-8 rounded" alt="logo" />
             <div className="flex flex-col">
               {" "}
               <span className="text-lg font-semibold tracking-tighter">Karman</span>

@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { Geist, Geist_Mono, JetBrains_Mono, Public_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./provider";
+import LoginPage from "./login/page";
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' });
 const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-sans' });
@@ -41,9 +42,9 @@ export default async function RootLayout({
         className={`${publicSans.variable} ${jetBrainsMono.variable} antialiased`}>
 
         <Providers session={session}>
-          
           {children}
-
+          {/* {session.user==='authenticated' ? children : <LoginPage/>} */}
+ 
         </Providers>
 
       </body>

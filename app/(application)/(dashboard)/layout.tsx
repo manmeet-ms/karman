@@ -1,14 +1,12 @@
 "use client"
-import React from "react";
-import { Button } from "@/components/ui/button"
-import { Sidebar, MobileSidebar } from "@/components/layout/Sidebar";
-import { BottomNav } from "@/components/layout/BottomNav";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import RitualInputForm from "@/components/Forms/RitualInputForm";
 import UrgeInputForm from "@/components/Forms/UrgeInputForm";
-import { IconBrandGoogle, IconBrandGoogleFilled } from "@tabler/icons-react";
-import { signIn } from "next-auth/react";
 import { AppHeader } from "@/components/Headers";
+import { BottomNav } from "@/components/layout/BottomNav";
+import { MobileSidebar, Sidebar } from "@/components/layout/Sidebar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import React from "react";
 
 import { PageMetaProvider, usePageMeta } from "@/contexts/PageMetaContext";
 

@@ -213,7 +213,7 @@ export default function TimelinePage() {
 
     return (
         <section className="p-4 max-w-4xl mx-auto">
-            <div className="mb-4 border-b flex flex-col gap-0 pb-4">
+            {/* <div className="mb-4 border-b flex flex-col gap-0 pb-4">
                 <h2 className="flex items-center gap-2 text-xl font-semibold">
                     Timeline
                     <Badge variant="outline" className="gap-1">
@@ -222,7 +222,7 @@ export default function TimelinePage() {
                     </Badge>
                 </h2>
                 <span className="text-muted-foreground text-xs">Chronological timeline tracking for the day.</span>
-            </div>
+            </div> */}
 
             <div className="space-y-0">
                 {checkins.map((checkin) => (

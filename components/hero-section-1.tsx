@@ -6,6 +6,7 @@ import { AnimatedGroup } from '@/components/ui/animated-group'
 import { cn } from '@/lib/utils'
 import GradientBlinds from '@/components/GradientBlinds';
 import Silk from '@/components/Silk';
+import Image from 'next/image'
 
 const transitionVariants = {
     item: {

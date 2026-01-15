@@ -102,7 +102,7 @@ const About = ({ className, ...props }: AboutProps) => {
             </div>
           </div>
         )}
-        <div className="relative overflow-hidden rounded-xl bg-muted p-7 md:p-16">
+        <div className="relative my-8 overflow-hidden rounded-xl bg-muted p-7 md:p-16">
           <div className="flex flex-col gap-4 text-center md:text-left">
             <h2 className="text-3xl font-semibold md:text-4xl">
               {achievementsTitle}
