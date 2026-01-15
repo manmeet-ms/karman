@@ -18,7 +18,7 @@ export type ChangelogEntry = {
   };
 };
 
-export interface Changelog1Props {
+export interface ChangelogProps {
   className?: string;
   title?: string;
   description?: string;
@@ -86,12 +86,12 @@ export const defaultEntries: ChangelogEntry[] = [
   },
 ];
 
-const Changelog1 = ({
+const Changelog = ({
   title = "Changelog",
   description = "Get the latest updates and improvements to our platform.",
   entries = defaultEntries,
   className,
-}: Changelog1Props) => {
+}: ChangelogProps) => {
   return (
     <section className={cn("py-32", className)}>
       <div className="container">
@@ -156,4 +156,4 @@ const Changelog1 = ({
   );
 };
 
-export { Changelog1 };
+export default Changelog

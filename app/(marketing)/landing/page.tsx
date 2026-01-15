@@ -147,7 +147,7 @@ const Gallery6 = ({
                             disabled={!canScrollNext}
                             className="disabled:pointer-events-auto"
                         >
-                            <IconBrandGithub className="size-5 inline-flex items-center justify-center "   />
+                            <IconBrandGithub className="size-5 inline-flex items-center justify-center " />
                         </Button>
                     </div>
                 </div>
@@ -211,7 +211,7 @@ interface Community1Props {
 
 const Community1 = ({ className }: Community1Props) => {
     return (
-        <section className={cn("py-16 rounded-lg", className)}>
+        <section className={cn("py-16", className)}>
             <div className="container w-full mx-auto">
                 <div className="flex flex-col items-center gap-5">
                     <img src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg" alt="logo" className="size-10" />
@@ -219,12 +219,12 @@ const Community1 = ({ className }: Community1Props) => {
                         Join our community
                         <br />
                         <span className="text-muted-foreground/80">
-                           make join the gang in discord
+                            make join the gang in discord
                         </span>
                     </h2>
                     <div className="flex items-center gap-4">
 
-                         
+
                         <Button size="icon-lg" variant="outline" asChild>
 
                             <IconBrandGithub className="inline-flex items-center justify-center " />
@@ -857,21 +857,21 @@ export default function LandingPage() {
                 {/* - feature bento gallery + stats */}
                 <Feature166 />               {/* <Gallery6 /> */}
 
-             
-                <Testimonial8 />       
+
+                <Testimonial8 />
 
 
 
-                <section className="flex  justify-around" >
-                    <div className="bg-card  rounded-2xl flex flex-col">
-                        <Cta10 />
-                        <Separator className={'max-w-1/2 mx-auto '}/>
+                <section className="flex items-center justify-around" >
+                    <div className="bg-secondary/20  rounded-2xl flex flex-col">
                         <Community1 />
+                        <Separator className={'max-w-1/2 mx-auto '} />
+                        <Cta10 />
                     </div>
                     <FAQsTwo />
                 </section>
-             
-                   
+
+
             </section>
 
         </>

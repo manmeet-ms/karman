@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 
-interface About3Props {
+interface AboutProps {
   className?: string;
   title: string;
   description?: string;
@@ -35,7 +35,7 @@ interface About3Props {
   }>;
 }
 
-const About3 = ({ className, ...props }: About3Props) => {
+const About = ({ className, ...props }: AboutProps) => {
   const {
     title,
     description,
@@ -129,7 +129,7 @@ const About3 = ({ className, ...props }: About3Props) => {
   );
 };
 
-export { About3 };
+export { About };
 
 const defaultCompanies = [
   {
@@ -193,3 +193,6 @@ const defaultProps = {
     "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
   achievements: defaultAchievements,
 };
+
+
+export default  About
