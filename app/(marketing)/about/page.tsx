@@ -72,10 +72,8 @@ const About = ({ className, ...props }: AboutProps) => {
                 <p className="mb-2 text-lg font-semibold">{breakout.title}</p>
                 <p className="text-muted-foreground">{breakout.description}</p>
               </div>
-              <Button variant="outline" className="mr-auto" asChild>
-                <a href={breakout.buttonUrl} target="_blank">
+              <Button variant="outline" className="mr-auto" render={<a href={breakout.buttonUrl} target="_blank" />}>
                   {breakout.buttonText}
-                </a>
               </Button>
             </div>
             <img
@@ -131,67 +129,40 @@ const About = ({ className, ...props }: AboutProps) => {
 
 export { About };
 
-const defaultCompanies = [
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-    alt: "Arc",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-    alt: "Descript",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-    alt: "Mercury",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-    alt: "Ramp",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-    alt: "Retool",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-    alt: "Watershed",
-  },
-];
 
-const defaultAchievements = [
-  { label: "Companies ", value: "300+" },
-  { label: "Projects Finalized", value: "800+" },
-  { label: "Happy Customers", value: "99%" },
-  { label: "Recognized Awards", value: "10+" },
-];
 
 const defaultProps = {
-  title: "About Us",
+  title: "About Karman",
   description:
-    "Shadcnblocks is a passionate team dedicated to creating innovative solutions that empower businesses to thrive in the digital age.",
+    "We are not here to motivate you. We are here to govern you.",
   mainImage: {
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
-    alt: "placeholder",
+    alt: "Structure and Order",
   },
   secondaryImage: {
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
-    alt: "placeholder",
+    alt: "Systematic Enforcement",
   },
   breakout: {
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
-    alt: "logo",
-    title: "Hundreds of blocks at Shadcnblocks.com",
+    alt: "Governance Icon",
+    title: "Governance over Motivation",
     description:
-      "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
-    buttonText: "Discover more",
-    buttonUrl: "https://shadcnblocks.com",
+      "This app was built because motivation is fleeting and unreliable. Structure is permanent. We believe that change requires an external authority to enforce the rules you set for yourself.",
+    buttonText: "Read the Philosophy",
+    buttonUrl: "/philosophy",
   },
-  companiesTitle: "Valued by clients worldwide",
-  companies: defaultCompanies,
-  achievementsTitle: "Our Achievements in Numbers",
+  companiesTitle: "This system is NOT for:",
+  companies: null,
+  achievementsTitle: "System Outcomes",
   achievementsDescription:
-    "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
-  achievements: defaultAchievements,
+    "The only metrics that matter are compliance and consistency. Everything else is noise.",
+  achievements: [
+    { label: "Excuses Tolerated", value: "0" },
+    { label: "Compliance Rate", value: "100%" },
+    { label: "Negotiations", value: "0" },
+    { label: "Mercy", value: "None" },
+  ],
 };
 
 

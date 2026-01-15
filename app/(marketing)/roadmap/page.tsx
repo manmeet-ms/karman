@@ -41,26 +41,26 @@ const Roadmap = ({
   },
   features = [
     {
+      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
+      title: "Bio-metric Verification",
+      description: "Heart rate monitoring to detect stress and hesitation during check-ins.",
+    },
+    {
+      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
+      title: "Public Shame Protocol",
+      description:
+        "Optional publishing of failure logs to a read-only public URL for social accountability.",
+    },
+    {
+      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
+      title: "Financial Stakes",
+      description: "Automatic penalty payments for missed commitments.",
+    },
+    {
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
-      title: "Dedicated Support",
+      title: "Hardware Lockout Integration",
       description:
-        "Expanded operations to 5 new countries, reaching millions of new users.",
-    },
-    {
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
-      title: "Series B Funding",
-      description:
-        "Secured $50M in Series B funding to accelerate product development.",
-    },
-    {
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
-      title: "Product Launch",
-      description: "Successfully launched our flagship product to market.",
-    },
-    {
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-5.svg",
-      title: "Company Founded",
-      description: "Started with a vision to revolutionize the industry.",
+        "Direct API hooks into OS level blocking to prevent usage during focus blocks.",
     },
   ],
 }: RoadmapProps) => {

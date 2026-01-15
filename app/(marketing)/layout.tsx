@@ -30,10 +30,10 @@ const transitionVariants = {
 }
 
 const menuItems = [
-    { name: 'Features', href: '#link' },
-    { name: 'Solution', href: '#link' },
-    { name: 'Pricing', href: '#link' },
-    { name: 'About', href: '#link' },
+    { name: 'Philosophy', href: '/philosophy' },
+    { name: 'Roadmap', href: '/roadmap' },
+    { name: 'Changelog', href: '/changelog' },
+    { name: 'About', href: '/about' },
 ]
 
 const HeroHeader = () => {

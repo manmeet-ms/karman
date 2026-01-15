@@ -216,16 +216,16 @@ const Community1 = ({ className }: Community1Props) => {
                 <div className="flex flex-col items-center gap-5">
                     <img src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg" alt="logo" className="size-10" />
                     <h2 className="text-center text-3xl font-medium">
-                        Join our community
+                        Join the Hierarchy
                         <br />
                         <span className="text-muted-foreground/80">
-                            make join the gang in discord
+                            Externalize your discipline. Join the Discord.
                         </span>
                     </h2>
                     <div className="flex items-center gap-4">
 
 
-                        <Button size="icon-lg" variant="outline" asChild>
+                        <Button size="icon-lg" variant="outline" render={<a href="#" />}>
 
                             <IconBrandGithub className="inline-flex items-center justify-center " />
 
@@ -240,8 +240,8 @@ const Community1 = ({ className }: Community1Props) => {
 
 
 interface Cta10Props {
-    heading: string;
-    description: string;
+    heading?: string;
+    description?: string;
     buttons?: {
         primary?: {
             text: string;
@@ -256,12 +256,12 @@ interface Cta10Props {
 }
 
 const Cta10 = ({
-    heading = "Send Queries",
-    description = "Build faster with our collection of pre-built blocks. Speed up your development and ship features in record time.",
+    heading = "Submit to the System",
+    description = "Stop negotiating with your weakness. Start executing your will.",
     buttons = {
         primary: {
-            text: "Buy Now",
-            url: "https://www.shadcnblocks.com",
+            text: "Get Started",
+            url: "/login",
         },
     },
     className,
@@ -280,13 +280,13 @@ const Cta10 = ({
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                         {buttons.secondary && (
-                            <Button variant="outline" asChild>
-                                <a href={buttons.secondary.url}>{buttons.secondary.text}</a>
+                            <Button variant="outline" render={<a href={buttons.secondary.url} />}>
+                                {buttons.secondary.text}
                             </Button>
                         )}
                         {buttons.primary && (
-                            <Button asChild variant="default" size="lg">
-                                <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                            <Button variant="default" size="lg" render={<a href={buttons.primary.url} />}>
+                                {buttons.primary.text}
                             </Button>
                         )}
                     </div>
@@ -312,28 +312,28 @@ function FAQsTwo() {
     const faqItems = [
         {
             id: 'item-1',
-            question: 'How long does shipping take?',
-            answer: 'Standard shipping takes 3-5 business days, depending on your location. Express shipping options are available at checkout for 1-2 business day delivery.',
+            question: 'Can I edit my plan after locking it?',
+            answer: 'No. Once locked, time blocks are immutable law. Modification is failure.',
         },
         {
             id: 'item-2',
-            question: 'What payment methods do you accept?',
-            answer: 'We accept all major credit cards (Visa, Mastercard, American Express), PayPal, Apple Pay, and Google Pay. For enterprise customers, we also offer invoicing options.',
+            question: 'What if I have an emergency?',
+            answer: 'The system records the failure. You can explain it to yourself later. The log remains.',
         },
         {
             id: 'item-3',
-            question: 'Can I change or cancel my order?',
-            answer: 'You can modify or cancel your order within 1 hour of placing it. After this window, please contact our customer support team who will assist you with any changes.',
+            question: 'Why so harsh?',
+            answer: 'Because your "gentle" approach is why you are still making the same mistakes.',
         },
         {
             id: 'item-4',
-            question: 'Do you ship internationally?',
-            answer: "Yes, we ship to over 50 countries worldwide. International shipping typically takes 7-14 business days. Additional customs fees may apply depending on your country's import regulations.",
+            question: 'Who is this for?',
+            answer: "People who are tired of their own excuses and want externalized authority.",
         },
         {
             id: 'item-5',
-            question: 'What is your return policy?',
-            answer: 'We offer a 30-day return policy for most items. Products must be in original condition with tags attached. Some specialty items may have different return terms, which will be noted on the product page.',
+            question: 'Is there a free tier?',
+            answer: 'Discipline costs comfort. The app has a cost to ensure commitment.',
         },
     ]
 
@@ -342,13 +342,11 @@ function FAQsTwo() {
             <div className="mx-auto max-w-5xl px-4 md:px-6">
                 <div className="mx-auto max-w-xl text-center">
                     <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
-                    <p className="text-muted-foreground/60 mt-4 text-balance">Discover quick and comprehensive answers to common questions about our platform, services, and features.</p>
+                    <p className="text-muted-foreground/60 mt-4 text-balance">Answers for those who hesitate.</p>
                 </div>
 
                 <div className="mx-auto mt-12 max-w-xl">
                     <Accordion
-                        type="single"
-                        collapsible
                         className="bg-card ring-muted w-full rounded-2xl border px-8 py-3 shadow-sm ring-4 dark:ring-0">
                         {faqItems.map((item) => (
                             <AccordionItem
@@ -368,7 +366,7 @@ function FAQsTwo() {
                         <Link
                             href="#"
                             className="text-primary font-medium hover:underline">
-                            customer support team
+                            support team
                         </Link>
                     </p>
                 </div>
@@ -386,44 +384,36 @@ interface Feature42Props {
 
 const Feature42 = ({ className }: Feature42Props) => {
     return (
-        <section className={cn("py-16 bg-background", className)}>
+        <section className={cn("py-16 bg-background hidden", className)}>
             <div className="container w-full mx-auto">
                 <div className="grid gap-8 lg:grid-cols-2">
                     <div className="col-span-2">
                         <h2 className="row-span-2 text-3xl font-medium lg:text-5xl">
-                            Our Values and Principles
+                            Philosophy
                         </h2>
                         <div className="grid grid-cols-2 gap-8 mt-12 ">
                             <div>
-                                <h3 className="mb-2 text-xl font-medium">Team Spirit</h3>
+                                <h3 className="mb-2 text-xl font-medium">Structure</h3>
                                 <p className="text-muted-foreground/60">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                                    architecto atque consequuntur perferendis ratione dolorem vitae,
-                                    doloribus facere.
+                                   Discipline is submission to rules you set when rational.
                                 </p>
                             </div>
                             <div>
-                                <h3 className="mb-2 text-xl font-medium">Innovation</h3>
+                                <h3 className="mb-2 text-xl font-medium">Enforcement</h3>
                                 <p className="text-muted-foreground/60">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                                    architecto atque consequuntur perferendis ratione dolorem vitae,
-                                    doloribus facere.
+                                    Without consequence, intention is just theatre.
                                 </p>
                             </div>
                             <div>
-                                <h3 className="mb-2 text-xl font-medium">Quality</h3>
+                                <h3 className="mb-2 text-xl font-medium">Truth</h3>
                                 <p className="text-muted-foreground/60">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                                    architecto atque consequuntur perferendis ratione dolorem vitae,
-                                    doloribus facere.
+                                    The system records what you try to hide.
                                 </p>
                             </div>
                             <div>
-                                <h3 className="mb-2 text-xl font-medium">Integrity</h3>
+                                <h3 className="mb-2 text-xl font-medium">Identity</h3>
                                 <p className="text-muted-foreground/60">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                                    architecto atque consequuntur perferendis ratione dolorem vitae,
-                                    doloribus facere.
+                                    Change is a pattern shift, not a feeling.
                                 </p>
                             </div>
                         </div>
@@ -450,7 +440,7 @@ const Stats6 = ({ className }: Stats6Props) => {
             <div className="container flex flex-col items-start text-left">
                 <div className="mb-12 w-full md:mb-16">
                     <h2 className="w-full max-w-[24rem] text-3xl font-bold text-pretty leading-normal sm:text-4xl md:max-w-[30rem] lg:max-w-[37rem] lg:text-5xl">
-                        Platform Performance Insights
+                        Enforcement Stats
                     </h2>
                     {/* <div className="flex flex-col justify-start gap-2 sm:flex-row">
             <Button className="w-full sm:w-auto">Get Started</Button>
@@ -462,41 +452,40 @@ const Stats6 = ({ className }: Stats6Props) => {
                 <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-12 sm:w-fit  items-center lg:gap-16">
                     <div className="w-full">
                         <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
-                            90%
+                            100%
                         </div>
                         <div className="text-base leading-6 text-muted-foreground lg:text-lg">
-                            Metric 1
+                            Compliance
                         </div>
                     </div>
                     <div className="w-full">
                         <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
-                            200+
+                            0
                         </div>
                         <div className="text-base leading-6 text-muted-foreground lg:text-lg">
-                            Metric 2
+                            Negotiations
                         </div>
                     </div>
                     <div className="w-full">
                         <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
-                            99%
+                            24/7
                         </div>
                         <div className="text-base leading-6 text-muted-foreground lg:text-lg">
-                            Metric 3
+                            Monitoring
                         </div>
                     </div>
                     <div className="w-full">
                         <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
-                            150+
+                            1
                         </div>
                         <div className="text-base leading-6 text-muted-foreground lg:text-lg">
-                            Metric 4
+                            Authority
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         //      <CardSpotlight >
-
         // </CardSpotlight>
 
     );
@@ -510,40 +499,40 @@ interface Feature {
 }
 
 interface Feature166Props {
-    title: string;
-    description: string;
-    feature1: Feature;
-    feature2: Feature;
-    feature3: Feature;
-    feature4: Feature;
+    title?: string;
+    description?: string;
+    feature1?: Feature;
+    feature2?: Feature;
+    feature3?: Feature;
+    feature4?: Feature;
     className?: string;
 }
 
 const Feature166 = ({
-    title = "Blocks built with Shadcn & Tailwind",
-    description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+    title = "The Enforcers",
+    description = "Every feature exists to close a loophole. Every screen answers one question only: did you obey or not.",
     feature1 = {
-        title: "Mention app features Design",
+        title: "Immutable Time Blocks",
         description:
-            "Creating intuitive user experiences with modern interface design principles and user-centered methodologies.",
+            "Time is segmented into immutable blocks. Once locked, they are law. Editing them mid-day is treated as failure.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
     },
     feature2 = {
-        title: "Mention app features Development",
+        title: "Violation Logging",
         description:
-            "Building websites that look and function perfectly across all devices and screen sizes.",
+            "Violations are first-class data. Each violation triggers deterministic consequences.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
     },
     feature3 = {
-        title: "Mention app features Ideology",
+        title: "Vertical Accountability",
         description:
-            "Seamlessly incorporating your brand identity into every aspect of your website's design.",
+            "Accountability is vertical, not horizontal-between you and the system, not you and a crowd.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
     },
     feature4 = {
-        title: "Mention app features Performance in real life of a person",
+        title: "Memory Collapse",
         description:
-            "Ensuring fast loading times and smooth performance through optimized code and assets.",
+            "Hourly check-ins exist to collapse memory gaps.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
     },
     className,
@@ -611,8 +600,8 @@ const Feature166 = ({
 
 interface PhoneFeaturePreviewPhotoProps {
     badge?: string;
-    heading: string;
-    description: string;
+    heading?: string;
+    description?: string;
     buttons?: {
         primary?: {
             text: string;
@@ -623,7 +612,7 @@ interface PhoneFeaturePreviewPhotoProps {
             url: string;
         };
     };
-    image: {
+    image?: {
         src: string;
         alt: string;
     };
@@ -631,22 +620,22 @@ interface PhoneFeaturePreviewPhotoProps {
 }
 
 const PhoneFeaturePreviewPhoto = ({
-    badge = "Your Website Builder",
-    heading = "Blocks Built With Shadcn & Tailwind",
-    description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+    badge = "Bird’s-Eye Life Tracking",
+    heading = "Discipline is not motivation",
+    description = "It is submission to rules you set when you were rational, enforced when you are weak. This app treats your excuses as noise.",
     buttons = {
         primary: {
-            text: "Discover all components",
-            url: "https://www.shadcnblocks.com",
+            text: "Start Tracking",
+            url: "/login",
         },
         secondary: {
-            text: "View on GitHub",
-            url: "https://www.shadcnblocks.com",
+            text: "Read Philosophy",
+            url: "/philosophy",
         },
     },
     image = {
         src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
-        alt: "Hero section demo image showing interface components",
+        alt: "Interface showing strict time blocks and violation logs",
     },
     className,
 }: PhoneFeaturePreviewPhotoProps) => {
@@ -655,11 +644,10 @@ const PhoneFeaturePreviewPhoto = ({
             <div className="container w-full mx-auto">
                 <div className="grid items-center gap-6 lg:grid-cols-3 lg:gap-12">
                     <div className="col-span-2"><Feature42 /></div>
-                    {/* <div className="gap-5 flex flex-col items-center text-center lg:items-start lg:text-left">
+                    <div className="gap-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {badge && (
               <Badge variant="outline">
                 {badge}
-                <ArrowUpRight className="ml-2 size-4" />
               </Badge>
             )}
             <h1 className="text-4xl font-bold text-pretty lg:text-6xl">
@@ -670,20 +658,18 @@ const PhoneFeaturePreviewPhoto = ({
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               {buttons.primary && (
-                <Button asChild className="w-full sm:w-auto">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                <Button size="lg" render={<a href={buttons.primary.url} />}>
+                    {buttons.primary.text}
                 </Button>
               )}
               {buttons.secondary && (
-                <Button asChild variant="outline" className="w-full sm:w-auto">
-                  <a href={buttons.secondary.url}>
+                <Button variant="outline" size="lg" render={<a href={buttons.secondary.url} />}>
                     {buttons.secondary.text}
-                    <ArrowRight className="size-4" />
-                  </a>
+                    {/* <ArrowRight className="size-4" /> */}
                 </Button>
               )}
             </div>
-          </div> */}
+          </div>
                     <img
                         src={image.src}
                         alt={image.alt}
@@ -699,60 +685,46 @@ const PhoneFeaturePreviewPhoto = ({
 
 const defaultTestimonials = [
     {
-        name: "Sarah Chen",
-        role: "CEO & Founder",
+        name: "J.R.",
+        role: "Former Negotiator",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
         content:
-            "This platform has completely transformed how we manage our projects. The intuitive interface and powerful features have increased our team's productivity by 40%. I can't imagine running our business without it. The customer support is outstanding, and the regular updates keep us ahead of the competition.",
+            "I used to negotiate with my alarm clock every morning. Now I don't. The system removed the option.",
     },
     {
-        name: "Marcus Rodriguez",
-        role: "CTO",
+        name: "Marcus T.",
+        role: "Disciplined",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp",
         content:
-            "Outstanding integration capabilities. We've connected all our existing tools seamlessly, and the real-time collaboration features have revolutionized our development workflow.",
+            "This app doesn't care if I'm tired. It just logs the failure. That clarity changed everything.",
     },
     {
-        name: "Emily Watson",
-        role: "Product Manager",
+        name: "Emily W.",
+        role: "Focused",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-7.webp",
         content:
-            "As a product manager, I need tools that help me stay organized and communicate effectively with my team. This platform delivers on both fronts with its comprehensive project management features, clear reporting dashboards, and seamless collaboration tools. The ability to track progress in real-time has been invaluable for our sprint planning and stakeholder updates.",
+            "No badges. No confetti. Just the cold hard truth of my adherence rate. It's the only thing that works.",
     },
     {
-        name: "David Kim",
-        role: "COO",
+        name: "David K.",
+        role: "Executor",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-3.webp",
         content:
-            "The analytics and reporting features have given us unprecedented visibility into our operations. We can now make data-driven decisions with confidence, and our efficiency has improved dramatically across all departments. The custom dashboards and automated reports save us hours every week.",
+            "I thought I needed motivation. I needed consequences. This app provided them.",
     },
     {
-        name: "Lisa Thompson",
-        role: "Tech Lead",
+        name: "Sarah L.",
+        role: "Builder",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-4.webp",
         content:
-            "Exceptional developer experience. The API is well-documented, the SDKs are robust.",
+            "The hourly check-ins are annoying. That's the point. They stop me from drifting.",
     },
     {
-        name: "Alex Johnson",
-        role: "Designer",
+        name: "Alex J.",
+        role: "Convert",
         avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-5.webp",
         content:
-            "The design system and component library have streamlined our design process. We can now create consistent, beautiful interfaces much faster, and the collaboration between design and development has never been smoother. The version control for design assets and the seamless handoff process have eliminated countless back-and-forth iterations.",
-    },
-    {
-        name: "Michael Brown",
-        role: "Developer",
-        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-6.webp",
-        content:
-            "The code quality and performance are top-notch. The platform handles our scale effortlessly, and the developer tools make debugging and optimization a breeze. It's been a game-changer for our development team. The comprehensive documentation and active community support make onboarding new developers incredibly smooth.",
-    },
-    {
-        name: "Rachel Green",
-        role: "Marketing Director",
-        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-8.webp",
-        content:
-            "Game-changing marketing automation. We've seen a 60% increase in engagement rates and significantly improved ROI. The platform's insights help us understand our audience better than ever.",
+            "Finally, an app that treats me like an adult who needs to get work done, not a child whoneeds a treat.",
     },
 ];
 

@@ -10,7 +10,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 
 
-interface Contact2Props {
+interface ContactProps {
   title?: string;
   description?: string;
   phone?: string;
@@ -19,7 +19,7 @@ interface Contact2Props {
   className?: string;
 }
 
-const Contact2 = ({
+const Contact = ({
   title = "Contact Us",
   description = "We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!",
   phone = "(123) 34567890",
@@ -29,7 +29,7 @@ const Contact2 = ({
     url: "https://shadcnblocks.com",
   },
   className,
-}: Contact2Props) => {
+}: ContactProps) => {
   return (
     <section className={cn("py-32", className)}>
       <div className="container">
@@ -46,11 +46,11 @@ const Contact2 = ({
                 Contact Details
               </h3>
               <ul className="ml-4 list-disc">
-                <li>
+                {/* <li>
                   <span className="font-bold">Phone: </span>
                   {phone}
-                </li>
-                <li>
+                </li> */}
+                <li> 
                   <span className="font-bold">Email: </span>
                   <a href={`mailto:${email}`} className="underline">
                     {email}
@@ -96,4 +96,4 @@ const Contact2 = ({
   );
 };
 
-export { Contact2 };
+export default Contact;
