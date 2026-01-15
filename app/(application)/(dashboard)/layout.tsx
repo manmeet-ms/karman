@@ -8,7 +8,7 @@ import RitualInputForm from "@/components/Forms/RitualInputForm";
 import UrgeInputForm from "@/components/Forms/UrgeInputForm";
 import { IconBrandGoogle, IconBrandGoogleFilled } from "@tabler/icons-react";
 import { signIn } from "next-auth/react";
-import { AppHeader } from "@/components/Header/Headers";
+import { AppHeader } from "@/components/Headers";
 
 import { PageMetaProvider, usePageMeta } from "@/contexts/PageMetaContext";
 
@@ -29,12 +29,12 @@ function HeaderActionsWrapper() {
 
   return (
     <div className="flex gap-2 items-center justify-center   lg:mt-0 ">
-      <MobileSidebar className="lg:hidden"/>
+      <MobileSidebar className="lg:hidden" />
       {meta.headerActions !== undefined ? meta.headerActions : (
-        <>  
+        <>
           <RitualInputForm />
           <Button variant="outline" onClick={() => setIsUrgeOpen(true)}>Log Urge</Button>
-          <UrgeInputForm open={isUrgeOpen} onOpenChange={setIsUrgeOpen} onSuccess={() => {}} />
+          <UrgeInputForm open={isUrgeOpen} onOpenChange={setIsUrgeOpen} onSuccess={() => { }} />
         </>
       )}
     </div>

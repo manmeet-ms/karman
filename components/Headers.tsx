@@ -45,9 +45,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ModeToggle } from "../mode-toogle";
+import { ModeToggle } from "./mode-toogle";
 import { Badge } from "@/components/ui/badge";
-import { ServiceWorkerRegister } from "../ServiceWorkerRegister";
+import { ServiceWorkerRegister } from "./ServiceWorkerRegister";
 
 interface Module {
   id: string;

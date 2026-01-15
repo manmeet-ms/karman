@@ -1,6 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Separator } from "@/components/ui/separator"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+
 import { Badge } from "@/components/ui/badge"
 
 
@@ -100,11 +111,11 @@ const Gallery6 = ({
         };
     }, [carouselApi]);
     return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
+        <section className={cn("py-16 bg-background", className)}>
+            <div className="container w-full mx-auto">
                 <div className="mb-8 flex flex-col justify-between md:mb-14 md:flex-row md:items-end lg:mb-16">
                     <div>
-                        <h2 className="mb-3 text-3xl font-semibold md:mb-4 md:text-4xl lg:mb-6">
+                        <h2 className="mb-3 text-3xl font-medium md:mb-4 md:text-4xl lg:mb-6">
                             {heading}
                         </h2>
                         <a
@@ -136,7 +147,7 @@ const Gallery6 = ({
                             disabled={!canScrollNext}
                             className="disabled:pointer-events-auto"
                         >
-                            <IconBrandGithub className="size-5" />
+                            <IconBrandGithub className="size-5 inline-flex items-center justify-center "   />
                         </Button>
                     </div>
                 </div>
@@ -181,7 +192,7 @@ const Gallery6 = ({
                                     </div>
                                     <div className="flex items-center text-sm">
                                         Read more{" "}
-                                        <IconBrandGithub className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                                        <IconBrandGithub className="inline-flex items-center justify-center size-5 ml-2 transition-transform group-hover:translate-x-1" />
                                     </div>
                                 </a>
                             </CarouselItem>
@@ -200,44 +211,24 @@ interface Community1Props {
 
 const Community1 = ({ className }: Community1Props) => {
     return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
+        <section className={cn("py-16 rounded-lg", className)}>
+            <div className="container w-full mx-auto">
                 <div className="flex flex-col items-center gap-5">
                     <img src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg" alt="logo" className="size-10" />
-                    <h2 className="text-center text-3xl font-semibold">
+                    <h2 className="text-center text-3xl font-medium">
                         Join our community
                         <br />
                         <span className="text-muted-foreground/80">
-                            of designers & developers
+                           make join the gang in discord
                         </span>
                     </h2>
                     <div className="flex items-center gap-4">
-                        <Button size="lg" variant="outline" asChild>
-                            <a
-                                href="https://x.com/shadcnblocks"
-                                target="_blank"
-                                className="size-10"
-                            >
-                                <IconBrandGithub />
-                            </a>
-                        </Button>
-                        <Button size="lg" variant="outline" asChild>
-                            <a
-                                href="https://github.com/shadcnblocks"
-                                target="_blank"
-                                className="size-10"
-                            >
-                                <IconBrandGithub />
-                            </a>
-                        </Button>
-                        <Button size="lg" variant="outline" asChild>
-                            <a
-                                href="https://shadcnblocks.com"
-                                target="_blank"
-                                className="size-10"
-                            >
-                                <IconBrandGithub />
-                            </a> 
+
+                         
+                        <Button size="icon-lg" variant="outline" asChild>
+
+                            <IconBrandGithub className="inline-flex items-center justify-center " />
+
                         </Button>
                     </div>
                 </div>
@@ -265,7 +256,7 @@ interface Cta10Props {
 }
 
 const Cta10 = ({
-    heading = "Call to Action",
+    heading = "Send Queries",
     description = "Build faster with our collection of pre-built blocks. Speed up your development and ship features in record time.",
     buttons = {
         primary: {
@@ -276,11 +267,11 @@ const Cta10 = ({
     className,
 }: Cta10Props) => {
     return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
-                <div className="flex w-full flex-col gap-16 overflow-hidden rounded-lg bg-accent p-8 md:rounded-xl lg:flex-row lg:items-center lg:p-12">
+        <section className={cn("py-16 rounded-xl", className)}>
+            <div className="container w-full mx-auto">
+                <div className="flex w-full flex-col gap-16 overflow-hidden rounded-lg   p-8 md:rounded-xl lg:flex-row lg:items-center lg:p-12">
                     <div className="flex-1">
-                        <h3 className="mb-3 text-2xl font-semibold md:mb-4 md:text-4xl lg:mb-6">
+                        <h3 className="mb-3 text-2xl font-medium md:mb-4 md:text-4xl lg:mb-6">
                             {heading}
                         </h3>
                         <p className="max-w-xl text-muted-foreground lg:text-lg">
@@ -314,8 +305,10 @@ import Link from 'next/link'
 import { HeroSection } from "@/components/hero-section-1";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { IconBrandGithub } from "@tabler/icons-react";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { LandingFooter } from "@/components/Footer";
 
-  function FAQsTwo() {
+function FAQsTwo() {
     const faqItems = [
         {
             id: 'item-1',
@@ -349,7 +342,7 @@ import { IconBrandGithub } from "@tabler/icons-react";
             <div className="mx-auto max-w-5xl px-4 md:px-6">
                 <div className="mx-auto max-w-xl text-center">
                     <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
-                    <p className="text-muted-foreground mt-4 text-balance">Discover quick and comprehensive answers to common questions about our platform, services, and features.</p>
+                    <p className="text-muted-foreground/60 mt-4 text-balance">Discover quick and comprehensive answers to common questions about our platform, services, and features.</p>
                 </div>
 
                 <div className="mx-auto mt-12 max-w-xl">
@@ -370,7 +363,7 @@ import { IconBrandGithub } from "@tabler/icons-react";
                         ))}
                     </Accordion>
 
-                    <p className="text-muted-foreground mt-6 px-8">
+                    <p className="text-muted-foreground/60 mt-6 px-8">
                         Can't find what you're looking for? Contact our{' '}
                         <Link
                             href="#"
@@ -385,79 +378,6 @@ import { IconBrandGithub } from "@tabler/icons-react";
 }
 
 
-interface Stats8Props {
-    className?: string;
-    heading?: string;
-    description?: string;
-    link?: {
-        text: string;
-        url: string;
-    };
-    stats?: Array<{
-        id: string;
-        value: string;
-        label: string;
-    }>;
-}
-
-const Stats8 = ({
-    heading = "Platform performance insights",
-    description = "Ensuring stability and scalability for all users",
-    link = {
-        text: "Read the full impact report",
-        url: "https://www.shadcnblocks.com",
-    },
-    stats = [
-        {
-            id: "stat-1",
-            value: "250%+",
-            label: "average growth in user engagement",
-        },
-        {
-            id: "stat-2",
-            value: "$2.5m",
-            label: "annual savings per enterprise partner",
-        },
-        {
-            id: "stat-3",
-            value: "200+",
-            label: "integrations with top industry platforms",
-        },
-        {
-            id: "stat-4",
-            value: "99.9%",
-            label: "customer satisfaction over the last year",
-        },
-    ],
-    className,
-}: Stats8Props) => {
-    return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
-                <div className="flex flex-col gap-4">
-                    <h2 className="text-2xl font-bold md:text-4xl">{heading}</h2>
-                    <p>{description}</p>
-                    <a
-                        href={link.url}
-                        className="flex items-center gap-1 font-bold hover:underline"
-                    >
-                        {link.text}
-                        <IconBrandGithub className="h-auto w-4" />
-                    </a>
-                </div>
-                <div className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-                    {stats.map((stat) => (
-                        <div key={stat.id} className="flex flex-col gap-5">
-                            <div className="text-6xl font-bold">{stat.value}</div>
-                            <p>{stat.label}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
-
 
 
 interface Feature42Props {
@@ -466,43 +386,47 @@ interface Feature42Props {
 
 const Feature42 = ({ className }: Feature42Props) => {
     return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
-                <div className="grid gap-8 lg:grid-cols-3">
-                    <h2 className="row-span-2 text-3xl font-semibold lg:text-5xl">
-                        Our Values and Principles
-                    </h2>
-                    <div>
-                        <h3 className="mb-2 text-xl font-medium">Team Spirit</h3>
-                        <p className="text-muted-foreground">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                            architecto atque consequuntur perferendis ratione dolorem vitae,
-                            doloribus facere.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="mb-2 text-xl font-medium">Innovation</h3>
-                        <p className="text-muted-foreground">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                            architecto atque consequuntur perferendis ratione dolorem vitae,
-                            doloribus facere.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="mb-2 text-xl font-medium">Quality</h3>
-                        <p className="text-muted-foreground">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                            architecto atque consequuntur perferendis ratione dolorem vitae,
-                            doloribus facere.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="mb-2 text-xl font-medium">Integrity</h3>
-                        <p className="text-muted-foreground">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-                            architecto atque consequuntur perferendis ratione dolorem vitae,
-                            doloribus facere.
-                        </p>
+        <section className={cn("py-16 bg-background", className)}>
+            <div className="container w-full mx-auto">
+                <div className="grid gap-8 lg:grid-cols-2">
+                    <div className="col-span-2">
+                        <h2 className="row-span-2 text-3xl font-medium lg:text-5xl">
+                            Our Values and Principles
+                        </h2>
+                        <div className="grid grid-cols-2 gap-8 mt-12 ">
+                            <div>
+                                <h3 className="mb-2 text-xl font-medium">Team Spirit</h3>
+                                <p className="text-muted-foreground/60">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+                                    architecto atque consequuntur perferendis ratione dolorem vitae,
+                                    doloribus facere.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="mb-2 text-xl font-medium">Innovation</h3>
+                                <p className="text-muted-foreground/60">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+                                    architecto atque consequuntur perferendis ratione dolorem vitae,
+                                    doloribus facere.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="mb-2 text-xl font-medium">Quality</h3>
+                                <p className="text-muted-foreground/60">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+                                    architecto atque consequuntur perferendis ratione dolorem vitae,
+                                    doloribus facere.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="mb-2 text-xl font-medium">Integrity</h3>
+                                <p className="text-muted-foreground/60">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+                                    architecto atque consequuntur perferendis ratione dolorem vitae,
+                                    doloribus facere.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -516,9 +440,67 @@ const Feature42 = ({ className }: Feature42Props) => {
 
 
 
+interface Stats6Props {
+    className?: string;
+}
 
+const Stats6 = ({ className }: Stats6Props) => {
+    return (
+        <section className={cn(" ", className)}>
+            <div className="container flex flex-col items-start text-left">
+                <div className="mb-12 w-full md:mb-16">
+                    <h2 className="w-full max-w-[24rem] text-3xl font-bold text-pretty leading-normal sm:text-4xl md:max-w-[30rem] lg:max-w-[37rem] lg:text-5xl">
+                        Platform Performance Insights
+                    </h2>
+                    {/* <div className="flex flex-col justify-start gap-2 sm:flex-row">
+            <Button className="w-full sm:w-auto">Get Started</Button>
+            <Button varian t="outline" className="w-full sm:w-auto">
+              Learn More
+            </Button>
+          </div> */}
+                </div>
+                <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-12 sm:w-fit  items-center lg:gap-16">
+                    <div className="w-full">
+                        <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
+                            90%
+                        </div>
+                        <div className="text-base leading-6 text-muted-foreground lg:text-lg">
+                            Metric 1
+                        </div>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
+                            200+
+                        </div>
+                        <div className="text-base leading-6 text-muted-foreground lg:text-lg">
+                            Metric 2
+                        </div>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
+                            99%
+                        </div>
+                        <div className="text-base leading-6 text-muted-foreground lg:text-lg">
+                            Metric 3
+                        </div>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2 text-4xl font-medium sm:text-4xl lg:text-5xl">
+                            150+
+                        </div>
+                        <div className="text-base leading-6 text-muted-foreground lg:text-lg">
+                            Metric 4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        //      <CardSpotlight >
 
+        // </CardSpotlight>
 
+    );
+};
 
 
 interface Feature {
@@ -541,25 +523,25 @@ const Feature166 = ({
     title = "Blocks built with Shadcn & Tailwind",
     description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
     feature1 = {
-        title: "UI/UX Design",
+        title: "Mention app features Design",
         description:
             "Creating intuitive user experiences with modern interface design principles and user-centered methodologies.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
     },
     feature2 = {
-        title: "Responsive Development",
+        title: "Mention app features Development",
         description:
             "Building websites that look and function perfectly across all devices and screen sizes.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
     },
     feature3 = {
-        title: "Brand Integration",
+        title: "Mention app features Ideology",
         description:
             "Seamlessly incorporating your brand identity into every aspect of your website's design.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
     },
     feature4 = {
-        title: "Performance Optimization",
+        title: "Mention app features Performance in real life of a person",
         description:
             "Ensuring fast loading times and smooth performance through optimized code and assets.",
         image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
@@ -567,10 +549,10 @@ const Feature166 = ({
     className,
 }: Feature166Props) => {
     return (
-        <section className={cn("py-16", className)}>
-            <div className="container">
+        <section className={cn("py-16 bg-background", className)}>
+            <div className="container w-full mx-auto">
                 {/* <div className="mb-24 flex flex-col items-center gap-6">
-                    <h1 className="text-center text-3xl font-semibold lg:max-w-3xl lg:text-5xl">
+                    <h1 className="text-center text-3xl font-medium lg:max-w-3xl lg:text-5xl">
                         {title}
                     </h1>
                     <p className="text-center text-lg font-medium text-muted-foreground md:max-w-4xl lg:text-xl">
@@ -581,8 +563,8 @@ const Feature166 = ({
                     <div className="border-muted2 relative flex w-full flex-col border md:w-1/2 lg:w-full">
                         <div className="relative flex flex-col lg:flex-row">
                             <div className="border-muted2 flex flex-col justify-between border-b border-solid p-10 lg:w-3/5 lg:border-r lg:border-b-0">
-                                <h2 className="text-xl font-semibold">{feature1.title}</h2>
-                                <p className="text-muted-foreground">{feature1.description}</p>
+                                <h2 className="text-xl font-medium">{feature1.title}</h2>
+                                <p className="text-muted-foreground/60">{feature1.description}</p>
                                 <img
                                     src={feature1.image}
                                     alt={feature1.title}
@@ -590,8 +572,8 @@ const Feature166 = ({
                                 />
                             </div>
                             <div className="flex flex-col justify-between p-10 lg:w-2/5">
-                                <h2 className="text-xl font-semibold">{feature2.title}</h2>
-                                <p className="text-muted-foreground">{feature2.description}</p>
+                                <h2 className="text-xl font-medium">{feature2.title}</h2>
+                                <p className="text-muted-foreground/60">{feature2.description}</p>
                                 <img
                                     src={feature2.image}
                                     alt={feature2.title}
@@ -601,8 +583,8 @@ const Feature166 = ({
                         </div>
                         <div className="border-muted2 relative flex flex-col border-t border-solid lg:flex-row">
                             <div className="border-muted2 flex flex-col justify-between border-b border-solid p-10 lg:w-2/5 lg:border-r lg:border-b-0">
-                                <h2 className="text-xl font-semibold">{feature3.title}</h2>
-                                <p className="text-muted-foreground">{feature3.description}</p>
+                                <h2 className="text-xl font-medium">{feature3.title}</h2>
+                                <p className="text-muted-foreground/60">{feature3.description}</p>
                                 <img
                                     src={feature3.image}
                                     alt={feature3.title}
@@ -610,13 +592,14 @@ const Feature166 = ({
                                 />
                             </div>
                             <div className="flex flex-col justify-between p-10 lg:w-3/5">
-                                <h2 className="text-xl font-semibold">{feature4.title}</h2>
-                                <p className="text-muted-foreground">{feature4.description}</p>
+                                {/* <h2 className="text-xl font-medium">{feature4.title}</h2>
+                                <p className="text-muted-foreground/60">{feature4.description}</p>
                                 <img
                                     src={feature4.image}
                                     alt={feature4.title}
                                     className="mt-8 aspect-[1.5] h-full w-full object-cover lg:aspect-[2.4]"
-                                />
+                                /> */}
+                                <Stats6 />
                             </div>
                         </div>
                     </div>
@@ -627,52 +610,52 @@ const Feature166 = ({
 };
 
 interface PhoneFeaturePreviewPhotoProps {
-  badge?: string;
-  heading: string;
-  description: string;
-  buttons?: {
-    primary?: {
-      text: string;
-      url: string;
+    badge?: string;
+    heading: string;
+    description: string;
+    buttons?: {
+        primary?: {
+            text: string;
+            url: string;
+        };
+        secondary?: {
+            text: string;
+            url: string;
+        };
     };
-    secondary?: {
-      text: string;
-      url: string;
+    image: {
+        src: string;
+        alt: string;
     };
-  };
-  image: {
-    src: string;
-    alt: string;
-  };
-  className?: string;
+    className?: string;
 }
 
 const PhoneFeaturePreviewPhoto = ({
-  badge = "Your Website Builder",
-  heading = "Blocks Built With Shadcn & Tailwind",
-  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
-  buttons = {
-    primary: {
-      text: "Discover all components",
-      url: "https://www.shadcnblocks.com",
+    badge = "Your Website Builder",
+    heading = "Blocks Built With Shadcn & Tailwind",
+    description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+    buttons = {
+        primary: {
+            text: "Discover all components",
+            url: "https://www.shadcnblocks.com",
+        },
+        secondary: {
+            text: "View on GitHub",
+            url: "https://www.shadcnblocks.com",
+        },
     },
-    secondary: {
-      text: "View on GitHub",
-      url: "https://www.shadcnblocks.com",
+    image = {
+        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
+        alt: "Hero section demo image showing interface components",
     },
-  },
-  image = {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
-    alt: "Hero section demo image showing interface components",
-  },
-  className,
+    className,
 }: PhoneFeaturePreviewPhotoProps) => {
-  return (
-    <section className={cn("py-16", className)}>
-      <div className="container">
-      <div className="grid items-center gap-6 lg:grid-cols-3 lg:gap-12">
-        <div className="col-span-2"><Feature42/></div>
-          {/* <div className="gap-5 flex flex-col items-center text-center lg:items-start lg:text-left">
+    return (
+        <section className={cn("py-16 bg-background", className)}>
+            <div className="container w-full mx-auto">
+                <div className="grid items-center gap-6 lg:grid-cols-3 lg:gap-12">
+                    <div className="col-span-2"><Feature42 /></div>
+                    {/* <div className="gap-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {badge && (
               <Badge variant="outline">
                 {badge}
@@ -701,52 +684,196 @@ const PhoneFeaturePreviewPhoto = ({
               )}
             </div>
           </div> */}
-          <img
-            src={image.src}
-            alt={image.alt}
-            className="w-full rounded-md object-cover aspect-video"
-          />
-        </div>
-      </div>
-    </section>
-  );
+                    <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full rounded-md object-cover aspect-video"
+                    />
+                </div>
+            </div>
+        </section>
+    );
 };
- 
+
+
+
+const defaultTestimonials = [
+    {
+        name: "Sarah Chen",
+        role: "CEO & Founder",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
+        content:
+            "This platform has completely transformed how we manage our projects. The intuitive interface and powerful features have increased our team's productivity by 40%. I can't imagine running our business without it. The customer support is outstanding, and the regular updates keep us ahead of the competition.",
+    },
+    {
+        name: "Marcus Rodriguez",
+        role: "CTO",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp",
+        content:
+            "Outstanding integration capabilities. We've connected all our existing tools seamlessly, and the real-time collaboration features have revolutionized our development workflow.",
+    },
+    {
+        name: "Emily Watson",
+        role: "Product Manager",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-7.webp",
+        content:
+            "As a product manager, I need tools that help me stay organized and communicate effectively with my team. This platform delivers on both fronts with its comprehensive project management features, clear reporting dashboards, and seamless collaboration tools. The ability to track progress in real-time has been invaluable for our sprint planning and stakeholder updates.",
+    },
+    {
+        name: "David Kim",
+        role: "COO",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-3.webp",
+        content:
+            "The analytics and reporting features have given us unprecedented visibility into our operations. We can now make data-driven decisions with confidence, and our efficiency has improved dramatically across all departments. The custom dashboards and automated reports save us hours every week.",
+    },
+    {
+        name: "Lisa Thompson",
+        role: "Tech Lead",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-4.webp",
+        content:
+            "Exceptional developer experience. The API is well-documented, the SDKs are robust.",
+    },
+    {
+        name: "Alex Johnson",
+        role: "Designer",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-5.webp",
+        content:
+            "The design system and component library have streamlined our design process. We can now create consistent, beautiful interfaces much faster, and the collaboration between design and development has never been smoother. The version control for design assets and the seamless handoff process have eliminated countless back-and-forth iterations.",
+    },
+    {
+        name: "Michael Brown",
+        role: "Developer",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-6.webp",
+        content:
+            "The code quality and performance are top-notch. The platform handles our scale effortlessly, and the developer tools make debugging and optimization a breeze. It's been a game-changer for our development team. The comprehensive documentation and active community support make onboarding new developers incredibly smooth.",
+    },
+    {
+        name: "Rachel Green",
+        role: "Marketing Director",
+        avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-8.webp",
+        content:
+            "Game-changing marketing automation. We've seen a 60% increase in engagement rates and significantly improved ROI. The platform's insights help us understand our audience better than ever.",
+    },
+];
+
+interface Testimonial8Props {
+    testimonials?: Array<{
+        name: string;
+        role: string;
+        avatar: string;
+        content: string;
+    }>;
+    className?: string;
+}
+
+const Testimonial8 = ({
+    testimonials = defaultTestimonials,
+    className,
+}: Testimonial8Props) => {
+    return (
+        <section className={cn("py-16", className)}>
+            <div className="container w-full mx-auto">
+                <div className="flex flex-col items-center gap-4">
+                    <h2 className="text-center text-3xl font-semibold lg:text-5xl">
+                        What Our Clients Say
+                    </h2>
+                    <p className="text-muted-foreground lg:text-xl">
+                        Discover how our customers are using our products to build their
+                        businesses
+                    </p>
+                </div>
+                <div className="relative mt-14 w-full after:absolute after:inset-x-0 after:-bottom-2 after:h-96 after:bg-linear-to-t after:from-background">
+                    <div
+                        className="columns-1 gap-5 md:columns-2 lg:columns-3"
+                        style={{ columnGap: "20px" }}
+                    >
+                        {testimonials.map((testimonial, idx) => {
+                            // Reorder for masonry flow: distribute across columns first
+                            const displayIdx = (idx % 3) * 3 + Math.floor(idx / 3);
+
+                            return (
+                                <div
+                                    key={idx}
+                                    className={cn(
+                                        "mb-5",
+                                        displayIdx > 3 && displayIdx <= 5 && "hidden md:block",
+                                        displayIdx > 5 && "hidden lg:block",
+                                    )}
+                                >
+                                    <Card className="break-inside-avoid p-5">
+                                        <div className="flex gap-4 leading-5">
+                                            <Avatar className="size-10 rounded-full ring-1 ring-input">
+                                                <AvatarImage
+                                                    src={testimonial.avatar}
+                                                    alt={testimonial.name}
+                                                />
+                                            </Avatar>
+                                            <div className="mb-2 text-sm">
+                                                <p className="font-semibold text-foreground">
+                                                    {testimonial.name}
+                                                </p>
+                                                <p className="text-muted-foreground">
+                                                    {testimonial.role}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="leading-7 text-foreground/60">
+                                            <q>{testimonial.content}</q>
+                                        </div>
+                                    </Card>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 export {
-    Gallery6, Community1,PhoneFeaturePreviewPhoto
+    Testimonial8,
+    Gallery6, Community1, PhoneFeaturePreviewPhoto
     , Cta10
-    , Stats8
-    , Feature42, Feature166,FAQsTwo
+    , Stats6
+    , Feature42, Feature166, FAQsTwo
 };
 export default function LandingPage() {
     return (
         <>
 
 
-          
-        
+
+
             {/* - header */}
             {/* - hero tailart gradient */}
-            <HeroSection/>
-            {/* - 4 section [] mobile preview */}
-            <PhoneFeaturePreviewPhoto/>
-          
-            {/* - feature */}
-            {/* - bento gallery */}
-            <Feature166/>
-            {/* - testimonial */}
-            
-            {/* - stats */}
-            <Stats8/>
-            {/* - faq */}
-            <FAQsTwo/>
-            {/* - cta */}
-            <Cta10/>
-            {/* - footer */}
- <Gallery6/>
+            <HeroSection />
 
-            <Community1/>
-         
+            <section className="px-8">
+                {/* - 4 section [] mobile preview */}
+                <PhoneFeaturePreviewPhoto />
+
+                {/* - feature bento gallery + stats */}
+                <Feature166 />               {/* <Gallery6 /> */}
+
+             
+                <Testimonial8 />       
+
+
+
+                <section className="flex  justify-around" >
+                    <div className="bg-card  rounded-2xl flex flex-col">
+                        <Cta10 />
+                        <Separator className={'max-w-1/2 mx-auto '}/>
+                        <Community1 />
+                    </div>
+                    <FAQsTwo />
+                </section>
+             
+                   
+            </section>
+
         </>
     )
 }
