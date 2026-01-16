@@ -347,7 +347,7 @@ export function AppHeader() {
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-2 ">
+                    <DropdownMenuItem onClick={() => signOut()} className="flex items-center gap-2 ">
                       Logout <IconLogout size={16} />
                     </DropdownMenuItem>
                   </DropdownMenuContent>

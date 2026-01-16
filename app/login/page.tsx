@@ -18,7 +18,7 @@ export default function LoginPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-4">
-                        <Button variant="outline" className="w-full" onClick={() => signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_APP_URL || "/" })}>
+                        <Button variant="outline" className="w-full" onClick={() => signIn("google")}>
                             <IconBrandGoogle className="mr-2 h-4 w-4" />
                             Continue with Google
                         </Button>

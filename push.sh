@@ -1,5 +1,5 @@
 git status --short
 git add .
-git commit -am "removedficed redirect url "
+git commit -am "removed callback redirect urls"
 git push origin main 
  
