@@ -347,11 +347,54 @@ export function AppHeader() {
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => signOut()} className="flex items-center gap-2 ">
+                    <DropdownMenuItem onClick={() => signOut({callbackUrl:"/login"})} className="flex items-center gap-2 ">
                       Logout <IconLogout size={16} />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+
+              </div>) : (
+              <Button onClick={() => signIn('google')} >Login</Button>
+            )}
+          </section>
+        </nav>
+      </header>
+    </>
+  );
+}
+export function AuthHeader() {
+
+  const session = useSession()
+   
+  return (
+    <>
+      <header className="p-4 sticky top-0 z-10  border-b  backdrop-blur-2xl ">
+        <nav className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            {" "}
+            <Image src="/logo.svg" width={24} height={24} className="w-8 h-8 rounded" alt="logo" />
+            <div className="flex flex-col">
+              {" "}
+              <span className="text-lg font-semibold tracking-tighter">Karman</span>
+              <span className="text-[10px] uppercase tracking-widest text-secondary">
+                formerly Jathedar
+              </span>
+            </div>
+          </Link>
+
+        
+
+          <section className="flex gap-2 justify-end items-center">
+            <ModeToggle />
+            {session?.status === 'authenticated' ? (
+              <div className="flex gap-2 items-center">
+                <ServiceWorkerRegister />
+<div className="flex  items-center text-xs gap-2 border px-2 py-1 rounded-full">
+  
+               <div className="animate-pulse bg-green-500  w-2 h-2" ></div>
+                authenticated
+               
+</div>
 
               </div>) : (
               <Button onClick={() => signIn('google')} >Login</Button>
