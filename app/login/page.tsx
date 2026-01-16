@@ -18,17 +18,17 @@ export default function LoginPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-4">
-                        <Button variant="outline" className="w-full" onClick={() => signIn("google", { callbackUrl: "/" })}>
+                        <Button variant="outline" className="w-full" onClick={() => signIn("google", { callbackUrl: process.env.NEXTAUTH_URL })}>
                             <IconBrandGoogle className="mr-2 h-4 w-4" />
-                            Login with Google
+                            Continue with Google
                         </Button>
                     </div>
-                    <div className="mt-4 text-center text-sm">
+                    {/* <div className="mt-4 text-center text-sm">
                         Don&apos;t have an account?{" "}
                         <span className="underline cursor-pointer" onClick={() => signIn("google", { callbackUrl: "/" })}>Sign up</span>
-                    </div>
+                    </div> */}
                 </CardContent>
-            </Card>
+            </Card> 
         </div>
     );
 }

@@ -12,8 +12,8 @@ self.addEventListener('push', (event) => {
     const title = data.title || "Time for a Check-in?";
     const options = {
         body: data.body || "How are you feeling right now? Share a thought.",
-        icon: '/icons/icon-192x192.png',
-        badge: '/icons/badge-72x72.png',
+        icon: '/logo.svg',
+        badge: '/logo.svg',
         data: { url: data.url || '/' },
         actions: [
             {

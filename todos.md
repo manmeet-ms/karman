@@ -1,3 +1,7 @@
+public private enrytion 
+
+export dta in encrypted json 
+
 gloabl advice page various folters , corporae advice, personal , psycologiacal , manipulativee tags, ebery user can create their piece of advices and crud their own advices asosicated with logged in user,  rest of them are fro jst public byt the public the curecntlyl ogged in user can udate or delete its own advices, in an dedicated page for own advices with filters 
 
 

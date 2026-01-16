@@ -7,10 +7,10 @@ import { Metadata } from 'next';
  * @param description The page description
  */
 export function constructMetadata({
-  title,
-  description = "Connect with qualified tutors, track progress, and manage schedules securely. Drona bridges the gap between passionate tutors and parents.",
+  title ="Karman — Personal Governance & Discipline System",
+  description = "Karman is a personal governance system that enforces discipline through immutable schedules, behavior tracking, violations, and consequences. No motivation. No excuses. Only recorded action and enforced accountability.",
   image = "/thumbnail.png",
-  icons = "/favicon.ico",
+  icons = "/logo.svg",
   noIndex = false
 }: {
   title?: string;
@@ -19,14 +19,14 @@ export function constructMetadata({
   icons?: string;
   noIndex?: boolean;
 } = {}): Metadata {
-  const fullTitle = title ? `Drona - ${title}` : "Drona - The Perfect Connection for Your Child's Education";
+  const fullTitle = title ? `${title}` : "A self-enforcement platform designed to eliminate self-deception. Karman tracks timeblocks, logs behavior, detects violations, and applies consequences automatically to build real discipline through structure and pressure.";
 
   return {
     title: fullTitle,
     description,
     openGraph: {
       title: fullTitle,
-      description,
+      description:"A strict accountability system built to enforce discipline when willpower fails. Immutable timeblocks, violations, penalties, and behavioral records. No comfort. Only compliance.",
       images: [
         {
           url: image
@@ -40,7 +40,7 @@ export function constructMetadata({
       images: [image],
     },
     icons,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://karman-akf.vercel.app'),
     ...(noIndex && {
       robots: {
         index: false,
