@@ -1,4 +1,5 @@
 git status --short
 git add .
-git commit -am "removed vite_ from envvars"
+git commit -am "removedficed redirect url "
 git push origin main 
+ 
