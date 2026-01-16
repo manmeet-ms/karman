@@ -1,7 +1,5 @@
 
-import { IconBarrierBlock, IconFolderCode, IconHeart, IconHeartFilled, IconHeartHandshake } from "@tabler/icons-react"
-import { ArrowUpRightIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Empty,
   EmptyContent,
@@ -9,17 +7,15 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty"
+} from "@/components/ui/empty";
+import { IconBarrierBlock, IconHeartFilled } from "@tabler/icons-react";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 
  
-interface ComingSoonProps {
-  className?: string;
-}
 
-const ComingSoon = ({ className }: ComingSoonProps) => {
+
+const ComingSoon = () => {
   return (
     <>
     <Empty className="opacity-40 container w-full mx-auto" >

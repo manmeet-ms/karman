@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
                 } else {
                     token.createdAt = (user as any).createdAt;
                 }
+                token.points = (user as any).points;
             }
 
             // Handle Profile Switching (Update session via client-side update())
@@ -51,6 +52,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.username = token.username as string;
                 session.user.isVerified = token.isVerified as boolean;
                 session.user.createdAt = token.createdAt as Date;
+                session.user.points = token.points as number || 0;
             }
             return session;
         },

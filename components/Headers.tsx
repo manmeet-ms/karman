@@ -1,14 +1,6 @@
 "use client";
 
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -19,11 +11,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { IconBolt, IconEdit, IconTrash } from "@tabler/icons-react";
 import axios from "axios";
 import { toast } from "sonner";
-import { IconTrash, IconEdit, IconBolt } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -36,7 +37,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { IconBoltFilled, IconLogout, IconPercentage10, IconPlus, IconTrendingUp, IconTrendingDown, IconCircleFilled } from "@tabler/icons-react";
+import { IconCircleFilled, IconLogout, IconPercentage10, IconPlus, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { EmblaOptionsType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -46,7 +47,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "./mode-toogle";
-import { Badge } from "@/components/ui/badge";
 import { ServiceWorkerRegister } from "./ServiceWorkerRegister";
 
 interface Module {
@@ -178,7 +178,7 @@ export function AppHeader() {
           </Link>
 
           <div className="hidden md:flex container max-w-[65%] overflow-x-scroll no-scrollbar p-1 border gap-2 rounded-full ">
-            {modules.map((item, idx) => (
+            {modules.map((item) => (
               <div key={item.id} onClick={() => openView(item)} className="bg-primary/10 text-primary cursor-pointer backdrop-blur-2xl flex flex-nowrap items-center gap-2 rounded-full px-3 py-2 text-xs/4 whitespace-nowrap ring ring-gray-950/8 dark:ring-white/10 hover:bg-gray-950/2 hover:ring-gray-950/10 dark:hover:bg-white/5 dark:hover:ring-white/20">
                 <IconPercentage10 className="text-primary size-4 " />
                 <span className="font-medium">
@@ -265,7 +265,6 @@ export function AppHeader() {
 
           <section className="flex gap-2 justify-end items-center">
             <ModeToggle />
-            <ServiceWorkerRegister />
             {session?.status === 'authenticated' ? (
               <div className="flex gap-2 items-center">
                 <ServiceWorkerRegister />

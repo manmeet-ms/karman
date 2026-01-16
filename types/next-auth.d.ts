@@ -9,6 +9,7 @@ declare module "next-auth" {
       username?: string | null
       isVerified?: boolean
       createdAt?: Date | string
+      points: number
     } & DefaultSession["user"]
   }
 
@@ -18,5 +19,6 @@ declare module "next-auth" {
     username?: string | null
     isVerified?: boolean
     createdAt?: Date
+    points: number
   }
 }

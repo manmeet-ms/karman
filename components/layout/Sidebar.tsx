@@ -19,13 +19,17 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 export function Sidebar() {
   const pathname = usePathname();
-  const points = 120; // Placeholder
+  const { data: session } = useSession();
+  const points = session?.user?.points || 0;
 
   const { currentRank, nextRank, progressValue } = React.useMemo(() => {
     const sorted = [...USER_POINTS_RANK_TABLE].sort((a, b) => a.minPoints - b.minPoints);
+    console.log(session,sorted, points);
+    
     let current = sorted[0];
     let next = sorted[1];
 
