@@ -3,13 +3,13 @@ import webPush, { PushSubscription } from 'web-push';
 import prisma from './prisma';
 
 // Configure web-push
-if (!process.env.VITE_WEBPUSH_PUBLIC_KEY || !process.env.VITE_WEBPUSH_PRIVATE_KEY) {
+if (!process.env.WEBPUSH_PUBLIC_KEY || !process.env.WEBPUSH_PRIVATE_KEY) {
     console.error("VAPID keys are missing from environment variables.");
 } else {
     webPush.setVapidDetails(
-        `mailto:${process.env.VITE_WEBPUSH_EMAIL || 'admin@example.com'}`,
-        process.env.VITE_WEBPUSH_PUBLIC_KEY,
-        process.env.VITE_WEBPUSH_PRIVATE_KEY
+        `mailto:${process.env.WEBPUSH_EMAIL || 'admin@example.com'}`,
+        process.env.WEBPUSH_PUBLIC_KEY,
+        process.env.WEBPUSH_PRIVATE_KEY
     );
 }
 
@@ -17,7 +17,7 @@ interface NotificationPayload {
     title: string;
     body: string;
     url?: string;
-    actions?: any[]; 
+    actions?: any[];
 }
 
 /**

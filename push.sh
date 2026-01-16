@@ -1,4 +1,4 @@
 git status --short
 git add .
-git commit -am "redirect logic fix"
+git commit -am "removed vite_ from envvars"
 git push origin main 

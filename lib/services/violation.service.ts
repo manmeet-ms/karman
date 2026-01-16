@@ -5,70 +5,70 @@ import { ViolationTypeEnum } from "@/generated/prisma/enums";
 import axios from "axios";
 
 export const ViolationService = {
-  async logViolation(userId: string, type: ViolationTypeEnum, timeBlockId?: string) {
-    const taunt = getRandomTaunt();
-    
-    // Fetch timeblock if ID provided
-    let blockData = {};
-    if (timeBlockId) {
-        const block = await prisma.timeBlock.findUnique({ where: { id: timeBlockId } });
-        if (block) blockData = block; // Store block snapshot
-    }
+    async logViolation(userId: string, type: ViolationTypeEnum, timeBlockId?: string) {
+        const taunt = getRandomTaunt();
 
-    const violation = await prisma.violation.create({
-        data: {
-            userId: userId,
-            type: type,
-            tauntStatement: taunt,
-            blockData: blockData as any, // Json
+        // Fetch timeblock if ID provided
+        let blockData = {};
+        if (timeBlockId) {
+            const block = await prisma.timeBlock.findUnique({ where: { id: timeBlockId } });
+            if (block) blockData = block; // Store block snapshot
         }
-    });
 
-    // Send Discord Webhook (Non-blocking)
-    this.sendDiscordWebhook(userId, violation, blockData).catch(err => console.error("Discord webhook failed", err));
+        const violation = await prisma.violation.create({
+            data: {
+                userId: userId,
+                type: type,
+                tauntStatement: taunt,
+                blockData: blockData as any, // Json
+            }
+        });
 
-    return violation;
-  },
+        // Send Discord Webhook (Non-blocking)
+        this.sendDiscordWebhook(userId, violation, blockData).catch(err => console.error("Discord webhook failed", err));
 
-  async getViolations(userId: string) {
-      return await prisma.violation.findMany({
-          where: { userId: userId }, // Scoped to user
-          orderBy: { timestamp: 'desc' },
-      });
-  },
+        return violation;
+    },
 
-  async resolveViolation(userId: string, id: string) {
-      // Legacy: findByIdAndDelete OR findByIdAndUpdate(resolved: true) logic was commented out.
-      // `violation.controller.js` used `findByIdAndDelete`.
-      // I will implement delete.
-      const exists = await prisma.violation.findFirst({ where: { id, userId: userId } }); // Check ownership
-      if (!exists) throw new Error("Violation not found");
+    async getViolations(userId: string) {
+        return await prisma.violation.findMany({
+            where: { userId: userId }, // Scoped to user
+            orderBy: { timestamp: 'desc' },
+        });
+    },
 
-      return await prisma.violation.delete({
-          where: { id }
-      });
-  },
+    async resolveViolation(userId: string, id: string) {
+        // Legacy: findByIdAndDelete OR findByIdAndUpdate(resolved: true) logic was commented out.
+        // `violation.controller.js` used `findByIdAndDelete`.
+        // I will implement delete.
+        const exists = await prisma.violation.findFirst({ where: { id, userId: userId } }); // Check ownership
+        if (!exists) throw new Error("Violation not found");
 
-  async flushViolations(userId: string) {
-      return await prisma.violation.deleteMany({
-          where: { userId: userId } // Scoped to user
-      });
-  },
+        return await prisma.violation.delete({
+            where: { id }
+        });
+    },
 
-  async sendDiscordWebhook(userId: string, violation: any, blockData: any) {
-      const webHookUrl = process.env.VITE_DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL;
-      if (!webHookUrl) return;
+    async flushViolations(userId: string) {
+        return await prisma.violation.deleteMany({
+            where: { userId: userId } // Scoped to user
+        });
+    },
 
-      const user = await prisma.user.findUnique({ where: { id: userId } });
-      const userName = user?.name || "User";
-      
-      const taskName = blockData?.task || "Unknown Task";
-      const taskTime = blockData?.startTime ? `${blockData.startTime} – ${blockData.endTime}` : "Unknown Time";
+    async sendDiscordWebhook(userId: string, violation: any, blockData: any) {
+        const webHookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL;
+        if (!webHookUrl) return;
 
-      const message = `⚠ ${userName} failed "${taskName}" scheduled at ${taskTime}\nViolation type: \`${violation.type}\``;
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        const userName = user?.name || "User";
 
-      await axios.post(webHookUrl, {
-          content: message
-      });
-  }
+        const taskName = blockData?.task || "Unknown Task";
+        const taskTime = blockData?.startTime ? `${blockData.startTime} – ${blockData.endTime}` : "Unknown Time";
+
+        const message = `⚠ ${userName} failed "${taskName}" scheduled at ${taskTime}\nViolation type: \`${violation.type}\``;
+
+        await axios.post(webHookUrl, {
+            content: message
+        });
+    }
 };
