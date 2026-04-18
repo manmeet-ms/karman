@@ -69,7 +69,6 @@ export const authOptions: NextAuthOptions = {
     // 5. Pages
     pages: {
         signIn: '/login',
-        newUser: '/login', // Redirect to login for registration too since it's Google only
         error: '/auth/error',
     },
 

@@ -14,7 +14,7 @@ async function main() {
   console.log('Start seeding ...');
 
   // Create 10 dummy users
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 40; i++) {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
     const email = faker.internet.email({ firstName, lastName });

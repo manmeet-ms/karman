@@ -1,7 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { Geist, Geist_Mono, JetBrains_Mono, Public_Sans, Roboto } from "next/font/google";
+import { Geist, Geist_Mono,Gloock, JetBrains_Mono, Public_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./provider";
 import LoginPage from "./login/page";
@@ -9,17 +9,18 @@ import LoginPage from "./login/page";
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' });
 const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-sans' });
 
+const gloock = Gloock({
+  variable: "--font-gloock",
+   subsets: ['latin'],
+  weight: '400',
+});
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -37,9 +38,9 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html className={roboto.variable} data-scroll-behavior="smooth">
+    <html className={roboto.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${jetBrainsMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
         <Providers session={session}>
           {children}
