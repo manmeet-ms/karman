@@ -123,7 +123,7 @@ async function main() {
         }
     });
     
-     // 8. Mood Tracker
+    // 8. Mood Tracker
     await prisma.moodTracker.create({
         data: {
             userId: user.id,
@@ -133,6 +133,27 @@ async function main() {
             date: new Date().toISOString().split('T')[0]
         }
     });
+
+    // 9. Global Posts
+    const postTypes = ['QUOTE', 'TECHNIQUE', 'ACHIEVEMENT', 'ADVICE'];
+    const randomType = postTypes[Math.floor(Math.random() * postTypes.length)] as 'QUOTE' | 'TECHNIQUE' | 'ACHIEVEMENT' | 'ADVICE';
+    const contentMap = {
+      QUOTE: "The impediment to action advances action. What stands in the way becomes the way.",
+      TECHNIQUE: "Try the Pomodoro technique combined with strict phone blocking.",
+      ACHIEVEMENT: "Finally reached a 30-day streak on my reading habits!",
+      ADVICE: "Don't beat yourself up over one missed day, focus on the recovery."
+    };
+
+    if (Math.random() > 0.3) {
+      await prisma.globalPost.create({
+        data: {
+          userId: user.id,
+          type: randomType,
+          content: contentMap[randomType],
+          likes: faker.number.int({ min: 0, max: 100 })
+        }
+      });
+    }
 
   }
 

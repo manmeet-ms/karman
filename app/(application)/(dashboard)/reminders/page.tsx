@@ -23,6 +23,8 @@ import { usePageMeta } from "@/contexts/PageMetaContext";
 interface Reminder {
     id: string;
     title: string;
+    description: string | null;
+    time: string | null;
     type: string;
     interval: number;
     enabled: boolean;
@@ -49,6 +51,8 @@ export default function RemindersPage() {
     // New Reminder State
     const [open, setOpen] = useState(false);
     const [newTitle, setNewTitle] = useState("");
+    const [newDescription, setNewDescription] = useState("");
+    const [newTime, setNewTime] = useState("");
     const [newInterval, setNewInterval] = useState(60);
 
     // Edit State
@@ -102,19 +106,23 @@ export default function RemindersPage() {
     };
 
     const handleSaveNew = async () => {
-        if (!newTitle || newInterval < 1) {
-            toast.error("Invalid input");
+        if (!newTitle) {
+            toast.error("Title is required");
             return;
         }
         
         try {
             await axios.post("/api/reminders", {
                 title: newTitle,
-                interval: newInterval
+                description: newDescription,
+                time: newTime,
+                interval: newInterval || 0
             });
             toast.success("Reminder created");
             setOpen(false);
             setNewTitle("");
+            setNewDescription("");
+            setNewTime("");
             setNewInterval(60);
             fetchReminders();
         } catch {
@@ -154,13 +162,27 @@ export default function RemindersPage() {
                             <Input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="e.g. Stretch" />
                         </div>
                         <div className="grid gap-2">
-                            <Label>Interval (minutes)</Label>
-                            <Input 
-                                type="number" 
-                                min={1} 
-                                value={newInterval} 
-                                onChange={(e) => setNewInterval(parseInt(e.target.value))} 
-                            />
+                            <Label>Description</Label>
+                            <Input value={newDescription} onChange={(e) => setNewDescription(e.target.value)} placeholder="e.g. Stand up to stretch legs" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-2">
+                                <Label>Interval (minutes)</Label>
+                                <Input 
+                                    type="number" 
+                                    min={0} 
+                                    value={newInterval} 
+                                    onChange={(e) => setNewInterval(parseInt(e.target.value))} 
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label>Specific Time</Label>
+                                <Input 
+                                    type="time" 
+                                    value={newTime} 
+                                    onChange={(e) => setNewTime(e.target.value)} 
+                                />
+                            </div>
                         </div>
                     </div>
                     <DialogFooter>
@@ -179,7 +201,8 @@ export default function RemindersPage() {
                                     <span className="font-semibold text-lg">{r.title}</span>
                                     <span className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground uppercase">{r.type}</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                {r.description && <p className="text-xs text-muted-foreground mt-1">{r.description}</p>}
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
                                     <IconClock size={14} />
                                     {editingId === r.id ? (
                                         <div className="flex items-center gap-2">
@@ -194,7 +217,7 @@ export default function RemindersPage() {
                                         </div>
                                     ) : (
                                         <span onClick={() => startEditing(r)} className="cursor-pointer hover:underline underline-offset-4 decoration-dashed" title="Click to edit interval">
-                                            Every {r.interval} minutes
+                                            {r.time ? `At ${r.time}` : r.interval ? `Every ${r.interval} mins` : "No timing set"}
                                         </span>
                                     )}
                                 </div>

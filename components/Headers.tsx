@@ -67,6 +67,7 @@ export function AppHeader() {
   const session = useSession()
   const [emblaRef, emblaApi] = useEmblaCarousel({ axis: 'y', loop: true }, [Autoplay()])
   const [stats, setStats] = useState<any>({ points: 0, rank: "Rookie" });
+  const [pointsLedgerFe, setPointsLedgerFe] = useState<any[]>([]);
 
   // Module State
   const [modules, setModules] = useState<Module[]>([]);
@@ -100,9 +101,19 @@ export function AppHeader() {
     }
   };
 
+  const fetchPointsTxn = async () => {
+    try {
+      const res = await axios.get("/api/points");
+      setPointsLedgerFe(res.data);
+    } catch (error) {
+      console.error("Failed to fetch points transactions", error);
+    }
+  };
+
   useEffect(() => {
     fetchUserData();
     fetchModules();
+    fetchPointsTxn();
   }, []);
 
   const handleCreate = async () => {
@@ -159,7 +170,7 @@ export function AppHeader() {
     return dayjs().diff(dayjs(startDate), "days");
   };
 
-  const pointsLedgerFe: any[] = []
+  // removed hardcoded array
 
   return (
     <>

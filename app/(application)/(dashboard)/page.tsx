@@ -37,8 +37,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
   const { setPageMeta } = usePageMeta();
+  const session = useSession();
   const [ritual, setRitual] = useState<any[]>([]);
-  //   const [stats, setStats] = useState<any>({ points: 0, rank: "Rookie" });
   const [violations, setViolations] = useState<any[]>([]);
 
   const fetchViolations = async () => {
@@ -76,16 +76,34 @@ export default function Dashboard() {
       }
   }
 
+  const triggerStrictCheck = async (userId: string) => {
+      try {
+          const res = await fetch(`/api/cron/strict-check?userId=${userId}`);
+          if (res.ok) {
+              const data = await res.json();
+              if (data.newViolations > 0) {
+                  toast.error(`Strict Mode: You received ${data.newViolations} new violations! Points deducted.`);
+                  fetchViolations(); // Refresh logs
+              }
+          }
+      } catch (e) {
+          console.error("Failed to trigger strict check", e);
+      }
+  };
+
   useEffect(() => {
     setPageMeta({
       title: 'Dashboard',
       subtitle: ' Your mirror, centralized Monitoring',
       headerActions: undefined
     });
-    // fetchUserData();
     fetchViolations();
     fetchRituals();
-  }, [setPageMeta]);
+    
+    if (session?.data?.user?.id) {
+        triggerStrictCheck(session.data.user.id);
+    }
+  }, [setPageMeta, session?.data?.user?.id]);
 
   const todayRitual = ritual.find((r: any) => r.date === dayjs().format("YYYY-MM-DD"));
 

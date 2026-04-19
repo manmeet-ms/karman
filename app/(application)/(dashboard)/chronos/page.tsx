@@ -164,6 +164,7 @@ export default function ChronosPage() {
     const { setPageMeta } = usePageMeta();
     const [timers, setTimers] = useState<Timer[]>([]);
     const [loading, setLoading] = useState(true);
+    const [resetTimerId, setResetTimerId] = useState<string | null>(null);
     const { play } = useSound("/sounds/window_open.mp3");
 
     const fetchTimers = async () => {
@@ -203,6 +204,7 @@ export default function ChronosPage() {
             await axios.put(`/api/chronos/${id}`, { action: "RESET" });
             toast.success("Timer reset! Points deducted.");
             play();
+            setResetTimerId(null); // Close the modal
             fetchTimers();
         } catch {
             toast.error("Failed to reset timer");
@@ -337,7 +339,7 @@ export default function ChronosPage() {
                                                 <span>Failures: <span className="text-red-500 font-semibold">{timer.failures}</span></span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <AlertDialog>
+                                                <AlertDialog open={resetTimerId === timer.id} onOpenChange={(open) => setResetTimerId(open ? timer.id : null)}>
                                                     <AlertDialogTrigger className={buttonVariants({ variant: "ghost", size: "sm", className: "h-8 text-destructive hover:text-destructive hover:bg-destructive/10" })}>
                                                         <IconRefresh size={14} className="mr-1" /> Reset
                                                     </AlertDialogTrigger>
@@ -350,7 +352,7 @@ export default function ChronosPage() {
                                                         </AlertDialogHeader>
                                                         <AlertDialogFooter>
                                                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                            <AlertDialogAction onClick={() => handleReset(timer.id)} className="bg-destructive hover:bg-destructive/90">Confirm Reset</AlertDialogAction>
+                                                            <Button onClick={() => handleReset(timer.id)} className="bg-destructive hover:bg-destructive/90 text-destructive-foreground">Confirm Reset</Button>
                                                         </AlertDialogFooter>
                                                     </AlertDialogContent>
                                                 </AlertDialog>

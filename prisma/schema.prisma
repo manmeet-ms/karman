@@ -153,6 +153,7 @@ model User {
   reminders          Reminder[]
   advice             Advice[]
   pushSubscriptions  PushSubscription[]
+  globalPosts        GlobalPost[]
   
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -422,10 +423,12 @@ model Reminder {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  title     String
-  type      String
-  interval  Int
-  enabled   Boolean  @default(true)
+  title       String
+  description String?  @db.Text
+  time        String?
+  type        String
+  interval    Int
+  enabled     Boolean  @default(true)
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -454,3 +457,25 @@ model Advice {
 
   @@index([userId])
 }
+
+enum GlobalPostType {
+  QUOTE
+  TECHNIQUE
+  ACHIEVEMENT
+  ADVICE
+}
+
+model GlobalPost {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      GlobalPostType
+  content   String         @db.Text
+  likes     Int            @default(0)
+  
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([userId, type])
+}
+

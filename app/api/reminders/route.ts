@@ -7,8 +7,8 @@ import { authOptions } from "@/lib/auth";
 const DEFAULT_REMINDERS = [
     { title: "Work Session", type: "WORK", interval: 120, enabled: true },
     { title: "Philosophy Quote", type: "PHILOSOPHY", interval: 120, enabled: true },
-    { title: "Prolonged Sitting", type: "SITTING", interval: 40, enabled: true },
-    { title: "Drink Water", type: "WATER", interval: 60, enabled: true },
+    { title: "Prolonged Sitting", description: "Stand up and stretch for 5 minutes.", type: "SITTING", interval: 40, enabled: true },
+    { title: "Drink Water", description: "Stay hydrated.", type: "WATER", interval: 60, enabled: true },
 ];
 
 export async function GET(req: NextRequest) {
@@ -57,18 +57,20 @@ export async function POST(req: NextRequest) {
 
     try {
         const body = await req.json();
-        const { title, interval, enabled = true } = body;
+        const { title, description, time, interval, enabled = true } = body;
 
-        if (!title || !interval) {
-            return NextResponse.json({ error: "Title and interval are required" }, { status: 400 });
+        if (!title) {
+            return NextResponse.json({ error: "Title is required" }, { status: 400 });
         }
 
         const reminder = await prisma.reminder.create({
             data: {
                 userId: user.id,
                 title,
+                description,
+                time,
                 type: "CUSTOM",
-                interval: parseInt(interval),
+                interval: parseInt(interval) || 0,
                 enabled
             }
         });

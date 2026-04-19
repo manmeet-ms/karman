@@ -1,3 +1,36 @@
+caveats 
+ - missing points verfaiable point credit and deduct for user and additon in plive feed in the leaderboard dan public shame and credit , diesnt have to live at this moment , proper points txn and notifs of punishements of deducted points 
+
+Points Ledger sidebar is not showin any entried for a users logged what has happended 
+Total Entries till 19 Apr, 2026 - 0
+seed.js to create http://localhost:3000/global,Advices,  
+
+Quotes Quotes from our communityTechniques Techniques from the community. , Achievements Grateful moments to get you driving., Advices Advices from the community., 
+
+
+is crud ready for http://localhost:3000/reminders or ther are just placeholders  
+
+way tt trigeers and Strict Mode Active
+Uncompleted strict tasks will trigger punishments. from Dashboard
+@ http://localhost:3000/ CRUD for timeblocks  
+implement CRUD for Today’s Ritual  
+seedjs to make 40 users with 
+resetting times should clse that reset modal and Reset Timer?
+This will reset your streak to zero and increment the failure count. Points will be deducted. as the page is refreshing fom the backgroun but not closin gthe modal  
+
+implemetn profile seing feature and page to trigger social things 
+
+dashbord, Timeblocks, should filder the eact same entries shall not allow duplicate entries like if they are same on time or 
+Lunch, Healthy meal, false, 12:00, 13:00;
+Meeting, Team sync, true, 14:00, 15:00
+Lunch, Healthy meal, false, 12:00, 13:00;
+Lunch, Healthy meal, false, 12:00, 13:00;
+Meeting, Team sync, true, 14:00, 15:00
+Meeting, Team sync, true, 14:00, 15:00
+should be duplicate like thi 
+
+
+=============
 accepting as any atribute 
 
 
