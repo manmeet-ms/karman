@@ -62,7 +62,7 @@ export function ServiceWorkerRegister() {
         try {
             const permission = await Notification.requestPermission();
             if (permission === 'granted') {
-                const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "BNXdOLXOR4kGTndVs6K1rS4TC5Z0n2AT6kdu42EDAXFFx9iqh7jiIWjDXQvUxrtawgguSp4SE4KQEKW4G2VvmkI"; // Fallback to key found in .env
+                const vapidKey = process.env.NEXT_PUBLIC_WEBPUSH_PUBLIC_KEY || "BNXdOLXOR4kGTndVs6K1rS4TC5Z0n2AT6kdu42EDAXFFx9iqh7jiIWjDXQvUxrtawgguSp4SE4KQEKW4G2VvmkI"; // Fallback to key found in .env
                 const convertedKey = urlBase64ToUint8Array(vapidKey);
 
                 const subscription = await registration.pushManager.subscribe({

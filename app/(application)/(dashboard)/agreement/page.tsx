@@ -141,7 +141,7 @@ function AgreementSection({ category, items, onUpdate }: { category: string, ite
                             <Textarea 
                                 value={text} 
                                 onChange={(e) => setText(e.target.value)} 
-                                className="min-h-[300px] font-mono text-sm leading-relaxed"
+                                className="min-h-[300px] max-h-[400px] overflow-y-auto font-mono text-sm leading-relaxed"
                             />
                         </div>
                         <DialogFooter>
