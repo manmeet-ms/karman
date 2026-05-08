@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import dayjs from "dayjs";
 import { applyPoints } from "@/lib/points";
+import { sendNotificationToUser } from "@/lib/notifications";
 
 export async function POST(req: NextRequest) {
     try {
@@ -60,6 +61,12 @@ export async function POST(req: NextRequest) {
                         });
 
                         await applyPoints(user.id, "RITUAL_MISS_PENALTY", { violationId: violation.id });
+                        
+                        await sendNotificationToUser(user.id, {
+                            title: "Violation Logged",
+                            body: "You failed to complete your daily ritual. Penalty applied."
+                        }).catch(err => console.error("Push Error:", err));
+
                         newViolationsCount++;
                     }
                  }

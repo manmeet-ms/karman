@@ -25,6 +25,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { IconTrash, IconEdit } from "@tabler/icons-react";
 import { useSound } from "react-sounds";
 interface TimeBlock {
   id: string;
@@ -43,7 +47,17 @@ export default function TimeBlockCard() {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-const {play}=useSound('ui/window_open')
+  // Edit State
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingBlock, setEditingBlock] = useState<TimeBlock | null>(null);
+
+  const {play}=useSound('ui/window_open')
+
+  useEffect(() => {
+      if ("Notification" in window) {
+          Notification.requestPermission();
+      }
+  }, []);
 
   const fetchBlocks = async () => {
     try {
@@ -76,6 +90,9 @@ const {play}=useSound('ui/window_open')
           toast.info(`Block Started: ${block.task}`, {
             description: `${block.startTime} - ${block.endTime}. ${block.description || ''}`,
           });
+          if ("Notification" in window && Notification.permission === "granted") {
+              new Notification(`Block Started: ${block.task}`, { body: `${block.startTime} - ${block.endTime}` });
+          }
         }
 
         // End Notification
@@ -83,6 +100,9 @@ const {play}=useSound('ui/window_open')
           toast.info(`Block Ended: ${block.task}`, {
             description: "Block time is over.",
           });
+          if ("Notification" in window && Notification.permission === "granted") {
+              new Notification(`Block Ended: ${block.task}`, { body: "Block time is over." });
+          }
         }
 
         return currentTime >= start && currentTime < end;
@@ -109,6 +129,42 @@ const {play}=useSound('ui/window_open')
       // Fetch to sync
       fetchBlocks();
     }
+  };
+
+  const handleDelete = async (id: string) => {
+      if (!confirm("Are you sure you want to delete this block?")) return;
+      try {
+          const res = await fetch(`/api/timeblocks/${id}`, { method: "DELETE" });
+          if (res.ok) {
+              toast.success("Deleted successfully");
+              fetchBlocks();
+          }
+      } catch (e) {
+          toast.error("Failed to delete");
+      }
+  };
+
+  const handleUpdate = async () => {
+      if (!editingBlock) return;
+      try {
+          const res = await fetch(`/api/timeblocks/${editingBlock.id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(editingBlock)
+          });
+          if (res.ok) {
+              toast.success("Updated successfully");
+              setEditOpen(false);
+              fetchBlocks();
+          }
+      } catch (e) {
+          toast.error("Failed to update");
+      }
+  };
+
+  const openEdit = (block: TimeBlock) => {
+      setEditingBlock(block);
+      setEditOpen(true);
   };
 
   const handleBulkAdd = async () => {
@@ -226,18 +282,27 @@ const {play}=useSound('ui/window_open')
             return (
               <TableRow key={block.id} className={cn(isActive ? "bg-muted/50" : "")}>
                 <TableCell>
-                  {!block.completed ? (
-                    <span
-                      className="cursor-pointer font-medium text-primary hover:underline"
-                      onClick={() => handleComplete(block.id)}
-                    >
-                      Complete
-                    </span>
-                  ) : (
-                    <span className="text-muted-foreground/40">
-                      Completed
-                    </span>
-                  )}
+                  <div className="flex gap-2 items-center">
+                      {!block.completed ? (
+                        <span
+                          className="cursor-pointer font-medium text-primary hover:underline"
+                          onClick={() => handleComplete(block.id)}
+                        >
+                          Complete
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground/40">
+                          Completed
+                        </span>
+                      )}
+                      
+                      <Button variant="ghost" size="icon" className="h-6 w-6 ml-2" onClick={() => openEdit(block)}>
+                          <IconEdit size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10" onClick={() => handleDelete(block.id)}>
+                          <IconTrash size={14} />
+                      </Button>
+                  </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   {block.startTime} - {block.endTime}
@@ -276,6 +341,47 @@ const {play}=useSound('ui/window_open')
      </CardContent>
      
    </Card>
+   
+   <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>Edit Timeblock</DialogTitle>
+            </DialogHeader>
+            {editingBlock && (
+                <div className="grid gap-4 py-4">
+                    <div className="grid gap-2">
+                        <Label>Task</Label>
+                        <Input value={editingBlock.task} onChange={e => setEditingBlock({ ...editingBlock, task: e.target.value })} />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label>Description</Label>
+                        <Input value={editingBlock.description || ""} onChange={e => setEditingBlock({ ...editingBlock, description: e.target.value })} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                            <Label>Start Time</Label>
+                            <Input type="time" value={editingBlock.startTime} onChange={e => setEditingBlock({ ...editingBlock, startTime: e.target.value })} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>End Time</Label>
+                            <Input type="time" value={editingBlock.endTime} onChange={e => setEditingBlock({ ...editingBlock, endTime: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-2 mt-2">
+                        <Checkbox 
+                            id="strict" 
+                            checked={editingBlock.strict} 
+                            onCheckedChange={(c) => setEditingBlock({ ...editingBlock, strict: !!c })} 
+                        />
+                        <Label htmlFor="strict">Strict Block</Label>
+                    </div>
+                </div>
+            )}
+            <DialogFooter>
+                <Button onClick={handleUpdate}>Save Changes</Button>
+            </DialogFooter>
+        </DialogContent>
+   </Dialog>
     
    </>
   );

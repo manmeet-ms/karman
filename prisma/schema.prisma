@@ -244,6 +244,7 @@ model Violation {
   resolved       Boolean           @default(false)
   tauntStatement String?
   blockData      Json?
+  reason         String?
   dateString     String?           // For indexing by date
 
   createdAt      DateTime          @default(now())

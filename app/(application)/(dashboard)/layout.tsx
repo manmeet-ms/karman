@@ -7,8 +7,8 @@ import { MobileSidebar, Sidebar } from "@/components/layout/Sidebar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import React from "react";
-
 import { PageMetaProvider, usePageMeta } from "@/contexts/PageMetaContext";
+import { PointsProvider } from "@/contexts/PointsContext";
 
 function PageHead() {
   const { meta } = usePageMeta();
@@ -27,7 +27,6 @@ function HeaderActionsWrapper() {
 
   return (
     <div className="flex gap-2 items-center justify-center   lg:mt-0 ">
-      <MobileSidebar  />
       {meta.headerActions !== undefined ? meta.headerActions : (
         <>
           <RitualInputForm />
@@ -41,6 +40,7 @@ function HeaderActionsWrapper() {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
+    <PointsProvider>
     <PageMetaProvider>
       <main className="overflow-hidden max-h-screen" >
 
@@ -76,5 +76,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </main>
     </PageMetaProvider>
+    </PointsProvider>
   );
 }

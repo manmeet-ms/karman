@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import dayjs from "dayjs";
 import { applyPoints } from "@/lib/points";
+import { sendNotificationToUser } from "@/lib/notifications";
 
 // Ideally this endpoint should be protected by a secret key found in headers
 // e.g., if (req.headers.get("x-cron-secret") !== process.env.CRON_SECRET) return 401;
@@ -74,6 +75,11 @@ export async function POST(req: NextRequest) {
                 
                 await applyPoints(block.userId, "BLOCK_MISS_PENALTY", { violationId: violation.id });
                 
+                await sendNotificationToUser(block.userId, {
+                    title: "Violation Logged",
+                    body: `You failed to complete strict block: ${block.task}. Penalty applied.`
+                }).catch(err => console.error("Push Error:", err));
+
                 newViolationsCount++;
             }
         }

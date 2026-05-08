@@ -48,6 +48,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "./mode-toogle";
 import { ServiceWorkerRegister } from "./ServiceWorkerRegister";
+import { usePoints } from "@/contexts/PointsContext";
+import { MobileSidebar } from "@/components/layout/Sidebar";
 
 interface Module {
   id: string;
@@ -66,7 +68,7 @@ export function AppHeader() {
 
   const session = useSession()
   const [emblaRef, emblaApi] = useEmblaCarousel({ axis: 'y', loop: true }, [Autoplay()])
-  const [stats, setStats] = useState<any>({ points: 0, rank: "Rookie" });
+  const { points } = usePoints();
   const [pointsLedgerFe, setPointsLedgerFe] = useState<any[]>([]);
 
   // Module State
@@ -77,18 +79,6 @@ export function AppHeader() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState({ title: "", description: "", content: "", startDate: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const fetchUserData = async () => {
-    try {
-      const res = await fetch("/api/user/me");
-      if (res.ok) {
-        const data = await res.json();
-        setStats((prev: any) => ({ ...prev, points: data.points }));
-      }
-    } catch (e) {
-      console.error("Failed to fetch user data", e);
-    }
-  }
 
   const fetchModules = async () => {
     try {
@@ -111,10 +101,12 @@ export function AppHeader() {
   };
 
   useEffect(() => {
-    fetchUserData();
     fetchModules();
-    fetchPointsTxn();
   }, []);
+
+  useEffect(() => {
+    fetchPointsTxn();
+  }, [points]);
 
   const handleCreate = async () => {
     setIsSubmitting(true);
@@ -283,9 +275,9 @@ export function AppHeader() {
                 <Sheet>
                   <SheetTrigger>
                     {" "}
-                    <span className={cn("text-sm flex justify-center items-center px-3 gap-1.5 py-2 rounded-full bg-accent/50  ", (stats.points || 0) < 0 ? "text-red-600" : "")}>
+                    <span className={cn("text-sm flex justify-center items-center px-3 gap-1.5 py-2 rounded-full bg-accent/50  ", (points || 0) < 0 ? "text-red-600" : "")}>
                       <IconBolt size={16} />
-                      {Number.parseFloat(stats.points ?? 0).toFixed(0)}
+                      {Number.parseFloat(points.toString() ?? 0).toFixed(0)}
                     </span>
                   </SheetTrigger>
                   <SheetContent>
@@ -307,20 +299,22 @@ export function AppHeader() {
                                     <div className="flex gap-4 items-center justify-start">
                                       <span className="opacity-30">#{idx + 1}</span>
                                       <div>
-                                        <Badge variant="outline" className="border-0 px-0 ">
-                                          {entry.type.includes("credit")}
+                                          <Badge variant="outline" className="border-0 px-0 ">
+                                            {entry.type.includes("credit")}
 
-                                          {entry.type.includes("credit".toUpperCase()) ? <IconTrendingUp className="text-green-400" /> : <IconTrendingDown className="text-red-400" />}
-                                          {entry.type.replace(/_/g, " ")}
-                                          <IconCircleFilled className="inline mx-1 size-2" />
-                                          <span className={cn("text-sm font-normal leading-none ", entry.balanceAfter - entry.points > 0 ? "text-green-400" : "text-red-400")}>{entry.balanceAfter - entry.points}</span>
-                                        </Badge>{" "}
-                                        <p className="text-xs pl-4 text-secondary-foreground/40">
-                                          Balance{" "}
-                                          <span className="text-secondary-foreground/40 font-medium">
-                                            {entry?.points} → {entry?.balanceAfter}
-                                          </span>
-                                        </p>
+                                            {entry.type.includes("CREDIT") || entry.points > 0 ? <IconTrendingUp className="text-green-400" /> : <IconTrendingDown className="text-red-400" />}
+                                            {entry.type.replace(/_/g, " ")}
+                                            <IconCircleFilled className="inline mx-1 size-2" />
+                                            <span className={cn("text-sm font-normal leading-none ", entry.points > 0 ? "text-green-400" : "text-red-400")}>
+                                              {entry.points > 0 ? `+${entry.points}` : entry.points}
+                                            </span>
+                                          </Badge>{" "}
+                                          <p className="text-xs pl-4 text-secondary-foreground/40">
+                                            Balance{" "}
+                                            <span className="text-secondary-foreground/40 font-medium">
+                                              {entry?.balanceAfter - entry?.points} → {entry?.balanceAfter}
+                                            </span>
+                                          </p>
                                       </div>{" "}
                                     </div>{" "}
                                   </div>
@@ -358,12 +352,23 @@ export function AppHeader() {
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={async () => {
+                        toast.info("Sending test notification...");
+                        await axios.post("/api/notifications/test");
+                    }}>
+                      Test Push Notification
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => signOut({callbackUrl:"/login"})} className="flex items-center gap-2 ">
                       Logout <IconLogout size={16} />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
 
+                <div className="lg:hidden">
+                  <MobileSidebar />
+                </div>
               </div>) : (
               <Button onClick={() => signIn('google')} >Login</Button>
             )}
