@@ -1,3 +1,19 @@
+can we incporporate gsap in button opening animations, popovers, in smooth scroll, elastic scroll and end hitting , just aa subtle, premium feel not too flashy, 
+button nav background fillin glike now they are just show up active green, need microinterations to be implemented later 
+
+
+
+
+------------------------------------------------
+google login is wokring and unauthroized users accesing protected app routes to be redirected to login page,
+Base URL: localhost:3000 or karman-akf.vercel.app 
+Marketing pages here: /landing, /about 
+Auth pages here: /login, /register, /forgot-password, /reset-password
+App Core pages: /dashboard, /setting
+General: All other routes start from the base URL.
+------------------------------------------------
+
+
 caveats 
  - missing points verfaiable point credit and deduct for user and additon in plive feed in the leaderboard dan public shame and credit , diesnt have to live at this moment , proper points txn and notifs of punishements of deducted points 
 
